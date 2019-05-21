@@ -10,10 +10,10 @@ export default {
     ...mapGetters(['hasGrantedWeb3Access'])
   },
   methods: {
-    ...mapActions(['setWeb3RequestOpen']),
+    ...mapActions(['setAccountRequestOpen']),
     checkRequestAccess() {
       if (!this.hasGrantedWeb3Access) {
-        this.setWeb3RequestOpen(true)
+        this.setAccountRequestOpen(true)
       }
     }
   }

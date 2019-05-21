@@ -33,14 +33,19 @@ export default {
     return {
       items: [
         {
-          icon: 'mdi-rocket',
+          icon: 'mdi-home',
           title: 'Home',
           to: '/'
         },
         {
-          icon: 'info',
+          icon: 'mdi-information',
           title: 'About',
           to: '/about'
+        },
+        {
+          icon: 'mdi-wallet',
+          title: 'Wallet',
+          to: '/wallet'
         }
       ]
     }

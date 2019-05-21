@@ -25,8 +25,8 @@ export const dismissNotification = ({ commit, getters }) => {
   commit('toggleNotification')
 }
 
-export const setWeb3RequestOpen = ({ commit }, web3RequestOpen) => {
-  commit('setWeb3RequestOpen', web3RequestOpen)
+export const setAccountRequestOpen = ({ commit }, accountRequestOpen) => {
+  commit('setAccountRequestOpen', accountRequestOpen)
 }
 
 export const setHideTokenDepositWarnings = ({ commit }, hide) => {

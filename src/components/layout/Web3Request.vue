@@ -1,54 +1,55 @@
 <template>
-  <v-dialog v-model="web3RequestOpenModel" persistent width="500">
+  <v-dialog v-model="accountRequestOpenModel" persistent width="500">
     <v-card>
       <v-card-title class="headline primary" primary-title>
-        Enable MetaMask
+        Activate Account
       </v-card-title>
 
       <v-card-text>
-        <p class="subheading" v-if="metaMaskInstalled">
-          This is a Decentralized Application. It needs <b>MetaMask</b> in order
-          to interact with the blockchain. Please click
-          <b>"ENABLE METAMASK"</b> below. You will be prompted by MetaMask,
-          click confirm and you will be ready to go.
+        <p class="subheading" v-if="encryptedMnemonicExists">
+          An encrypted account has been detected. Please enter your password to
+          continue.
         </p>
 
-        <p class="subheading" v-if="!metaMaskInstalled">
-          This is a Decentralized Application. It needs <b>MetaMask</b> in order
-          to interact with the blockchain. Please go to
-          <a target="_blank" href="https://metamask.io/">metamask.io</a> and
-          install MetaMask. Once finished, refresh the page.
+        <p class="subheading" v-if="!encryptedMnemonicExists">
+          You need to setup an account in order to do stuff.
         </p>
 
         <p class="subheading">
           If you do not wish to interact with anything and simply want to look
-          around, feel free to click "Don't Enable/Install MetaMask". You can
-          Enable at any time by clicking the "Enable MetaMask" button at the top
-          right of the screen.
+          around, feel free to click "Don't Activate". You can Activate at any
+          time by clicking the "Activate Account" button at the top right of the
+          screen.
         </p>
       </v-card-text>
 
-      <v-divider></v-divider>
+      <v-divider v-if="!encryptedMnemonicExists"></v-divider>
 
+      <v-form v-if="encryptedMnemonicExists" ref="password-form" class="pa-2">
+        <v-text-field
+          outline
+          v-model="password"
+          label="password"
+          placeholder=""
+          :rules="passwordRules"
+          type="text"
+          required
+        />
+      </v-form>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn @click="continueWithoutPermission" color="secondary">
-          Don't Enable/Install MetaMask
+          Don't Activate Account
         </v-btn>
         <v-btn
-          v-if="!metaMaskInstalled"
+          v-if="encryptedMnemonicExists"
+          @click="unlockWallet"
           color="primary"
-          href="https://metamask.io"
-          target="_blank"
         >
-          Install MetaMask
+          Unlock Account
         </v-btn>
-        <v-btn
-          v-if="!!metaMaskInstalled"
-          @click="continueWithPermission"
-          color="primary"
-        >
-          Enable MetaMask
+        <v-btn v-if="!encryptedMnemonicExists" color="primary" to="/wallet">
+          Create Account
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -59,14 +60,20 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
+  data() {
+    return {
+      password: '',
+      passwordRules: [v => !!v || 'must be non empty value']
+    }
+  },
   computed: {
-    ...mapGetters(['web3RequestOpen']),
-    web3RequestOpenModel: {
+    ...mapGetters(['accountRequestOpen', 'encryptedMnemonicExists']),
+    accountRequestOpenModel: {
       get() {
-        return this.web3RequestOpen
+        return this.accountRequestOpen
       },
-      set(web3RequestOpen) {
-        this.setWeb3RequestOpen(web3RequestOpen)
+      set(accountRequestOpen) {
+        this.setAccountRequestOpen(accountRequestOpen)
       }
     },
     metaMaskInstalled() {
@@ -74,13 +81,18 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['setWeb3RequestOpen', 'getWeb3Access']),
-    continueWithPermission() {
-      this.getWeb3Access()
-      this.setWeb3RequestOpen(false)
+    ...mapActions(['setAccountRequestOpen', 'decryptAndLoadWallet']),
+    unlockWallet() {
+      if (this.$refs['password-form'].validate()) {
+        this.decryptAndLoadWallet(this.password)
+        this.clearWalletForm()
+      }
     },
     continueWithoutPermission() {
-      this.setWeb3RequestOpen(false)
+      this.setAccountRequestOpen(false)
+    },
+    clearWalletForm() {
+      this.$refs['password-form'].reset()
     }
   }
 }

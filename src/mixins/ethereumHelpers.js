@@ -69,25 +69,6 @@ export default {
     addressZero: () => '0x' + '0'.repeat(40),
     bytes32Zero: () => '0x' + '0'.repeat(64),
     decimals18: () => toBN(10).pow(toBN(18)),
-    decimalsAccuracy: () => toBN(10).pow(toBN(5)),
-    stageEnum: () => ({
-      '0': 'Uninitialized',
-      '1': 'Created',
-      '2': 'Cancelled',
-      '3': 'Ready',
-      '4': 'Committed',
-      '5': 'Timing Out',
-      '6': 'Timed Out',
-      '7': 'Tied',
-      '8': 'Winner Decided',
-      '9': 'Paid'
-    }),
-
-    choiceEnum: () => ({
-      '0': 'Undecided',
-      '1': 'Rock',
-      '2': 'Paper',
-      '3': 'Scissors'
-    })
+    decimalsAccuracy: () => toBN(10).pow(toBN(5))
   }
 }

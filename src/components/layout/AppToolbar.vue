@@ -5,18 +5,18 @@
     <v-spacer />
     <v-progress-circular v-show="hasPendingTxs" indeterminate color="primary" />
     <v-btn
-      v-if="hasGrantedWeb3Access"
+      v-if="accountReady"
       @click="toggleShowTransactions"
       color="secondary"
     >
       {{ showTransactionsText }}
     </v-btn>
     <v-btn
-      v-if="!hasGrantedWeb3Access"
-      @click="setWeb3RequestOpen(true)"
+      v-if="!accountReady"
+      @click="setAccountRequestOpen(true)"
       color="secondary"
     >
-      enable metamask
+      activate account
     </v-btn>
   </v-toolbar>
 </template>
@@ -30,7 +30,7 @@ export default {
       'name',
       'hasPendingTxs',
       'showTransactions',
-      'hasGrantedWeb3Access'
+      'accountReady'
     ]),
     showTransactionsText() {
       return this.showTransactions
@@ -42,7 +42,7 @@ export default {
     ...mapActions([
       'toggleDrawer',
       'setShowTransactions',
-      'setWeb3RequestOpen'
+      'setAccountRequestOpen'
     ]),
     toggleShowTransactions() {
       this.setShowTransactions(!this.showTransactions)

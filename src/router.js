@@ -18,6 +18,11 @@ export default new Router({
       component: () => import('@/components/pages/About.vue')
     },
     {
+      path: '/wallet',
+      name: 'Wallet',
+      component: () => import('@/components/pages/Wallet.vue')
+    },
+    {
       path: '/no-account',
       name: 'No Account',
       component: () => import('@/components/layout/NoAccount.vue')

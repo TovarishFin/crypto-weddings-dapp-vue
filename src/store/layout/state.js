@@ -1,7 +1,7 @@
 export default {
   drawerOpen: false,
   notificationOpen: false,
-  web3RequestOpen: false,
+  accountRequestOpen: false,
   notificationMessages: [],
   hideTokenDepositWarnings: false,
   hideEtherDepositWarnings: false,
