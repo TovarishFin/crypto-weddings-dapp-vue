@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import Vuex, { Store } from 'vuex'
 import VuexPersistence from 'vuex-persist'
+import stateWatchers from './plugins/stateWatchers'
+import route from './route'
+import layout from './layout'
 import network from './network'
 import wallet from './wallet'
-import layout from './layout'
-import route from './route'
-import stateWatchers from './plugins/stateWatchers'
+import weddingManager from './weddingManager'
 
 Vue.use(Vuex)
 
@@ -25,10 +26,11 @@ export default new Store({
   mutations: {},
   actions: {},
   modules: {
-    network,
+    route,
     layout,
+    network,
     wallet,
-    route
+    weddingManager
   },
   plugins: [stateWatchers, vuexLocal.plugin]
 })

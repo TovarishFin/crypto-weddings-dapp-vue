@@ -9,7 +9,11 @@ export const encryptedMnemonicExists = state =>
 
 export const wallet = state => {
   const mnemonicValue = mnemonic(state)
-  return mnemonicValue ? new ethers.Wallet.fromMnemonic(mnemonicValue) : null
+  try {
+    return mnemonicValue ? new ethers.Wallet.fromMnemonic(mnemonicValue) : null
+  } catch {
+    return null
+  }
 }
 
 export const mnemonic = state => pathOr(null, ['mnemonic'], state)

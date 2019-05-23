@@ -5,7 +5,7 @@ export const setupProvider = async ({ getters, commit }) => {
   let provider
 
   if (network === 'private') {
-    provider = new ethers.providers.JsonRpcProvider('ws://localhost:8545')
+    provider = new ethers.providers.JsonRpcProvider('http://localhost:8545')
   } else {
     provider = new ethers.getDefaultProvider(network)
   }
@@ -17,6 +17,7 @@ export const setupProvider = async ({ getters, commit }) => {
 export const bootstrapEth = async ({ dispatch, getters }) => {
   const { encryptedMnemonicExists } = getters
   await dispatch('setupProvider')
+  await dispatch('setupWeddingManager')
 
   if (encryptedMnemonicExists) {
     dispatch('setAccountRequestOpen', true)
