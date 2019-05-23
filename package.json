@@ -1,12 +1,12 @@
 {
   "name": "crypto-weddings-dapp",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "clean:install": "rimraf node_modules && yarn install",
     "serve": "vue-cli-service serve",
     "build:dapp": "vue-cli-service build",
-    "lint:js": "vue-cli-service lint",
+    "lint": "vue-cli-service lint",
     "test:e2e": "vue-cli-service test:e2e",
     "test:dapp": "vue-cli-service test:unit",
     "deploy": "./deploy.sh"
@@ -15,6 +15,7 @@
     "@babel/polyfill": "^7.0.0",
     "@mdi/font": "^2.8.94",
     "crypto-js": "^3.1.9-1",
+    "crypto-weddings-contracts": "^0.1.3",
     "ethers": "^4.0.27",
     "ramda": "^0.25.0",
     "rimraf": "^2.6.2",

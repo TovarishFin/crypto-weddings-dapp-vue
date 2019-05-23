@@ -3666,6 +3666,13 @@ crypto-js@^3.1.9-1:
   resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-3.1.9-1.tgz#fda19e761fc077e01ffbfdc6e9fdfc59e8806cd8"
   integrity sha1-/aGedh/Ad+Af+/3G6f38WeiAbNg=
 
+crypto-weddings-contracts@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/crypto-weddings-contracts/-/crypto-weddings-contracts-0.1.3.tgz#e0a036862dbd807a489e448926613fa7f7f62f3c"
+  integrity sha512-bOYdwhdCu7z3Z2VCSbLsKa6OOy38c5EW0aSm1nLqKGwaKhuEX6J4Hihbl55PWZ/aUpZjs+dFvtO+JHHk/v/EUA==
+  dependencies:
+    openzeppelin-solidity "^2.2.0"
+
 css-color-names@0.0.4, css-color-names@^0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/css-color-names/-/css-color-names-0.0.4.tgz#808adc2e79cf84738069b646cb20ec27beb629e0"
@@ -8820,6 +8827,11 @@ opener@^1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/opener/-/opener-1.5.1.tgz#6d2f0e77f1a0af0032aca716c2c1fbb8e7e8abed"
   integrity sha512-goYSy5c2UXE4Ra1xixabeVh1guIX/ZV/YokJksb6q2lubWu6UbvPQ20p542/sFIll1nl8JnCyK9oBaOcCWXwvA==
+
+openzeppelin-solidity@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/openzeppelin-solidity/-/openzeppelin-solidity-2.2.0.tgz#1f0e857f53bda29b77a8e72f9a629db81015fd34"
+  integrity sha512-HfQq0xyT+EPs/lTWEd5Odu4T7CYdYe+qwf54EH28FQZthp4Bs6IWvOlOumTdS2dvpwZoTXURAopHn2LN1pwAGQ==
 
 opn@^5.3.0, opn@^5.5.0:
   version "5.5.0"
