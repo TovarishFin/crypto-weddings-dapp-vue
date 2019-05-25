@@ -7,12 +7,12 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters(['hasGrantedWeb3Access'])
+    ...mapGetters(['hasUnlockedAccount'])
   },
   methods: {
     ...mapActions(['setAccountRequestOpen']),
     checkRequestAccess() {
-      if (!this.hasGrantedWeb3Access) {
+      if (!this.hasUnlockedAccount) {
         this.setAccountRequestOpen(true)
       }
     }

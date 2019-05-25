@@ -13,7 +13,7 @@
 
     <app-notifier />
 
-    <web3-request />
+    <account-request />
     <app-transactions />
 
     <app-footer />
@@ -25,7 +25,7 @@ import AppDrawer from '@/components/layout/AppDrawer'
 import AppToolbar from '@/components/layout/AppToolbar'
 import AppFooter from '@/components/layout/AppFooter'
 import AppNotifier from '@/components/layout/AppNotifier'
-import Web3Request from '@/components/layout/Web3Request'
+import AccountRequest from '@/components/layout/AccountRequest'
 import RouterHandler from '@/components/layout/RouterHandler'
 import AppTransactions from '@/components/Transactions'
 import store from '@/store'
@@ -36,7 +36,7 @@ export default {
     AppToolbar,
     AppFooter,
     AppNotifier,
-    Web3Request,
+    AccountRequest,
     RouterHandler,
     AppTransactions
   },

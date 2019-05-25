@@ -50,8 +50,8 @@ export const setAccountTabs = (state, tabsIndex) => {
   state.accountTabs = tabsIndex
 }
 
-export const setHasGrantedWeb3Access = (state, hasGrantedWeb3Access) => {
-  state.hasGrantedWeb3Access = hasGrantedWeb3Access
+export const setHasUnlockedAccount = (state, hasUnlockedAccount) => {
+  state.hasUnlockedAccount = hasUnlockedAccount
 }
 
 export const setShowTransactions = (state, showTransactions) => {

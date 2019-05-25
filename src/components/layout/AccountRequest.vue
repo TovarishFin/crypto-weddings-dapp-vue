@@ -25,7 +25,12 @@
 
       <v-divider v-if="!encryptedMnemonicExists"></v-divider>
 
-      <v-form v-if="encryptedMnemonicExists" ref="password-form" class="pa-2">
+      <v-form
+        @submit="unlockWallet"
+        v-if="encryptedMnemonicExists"
+        ref="password-form"
+        class="pa-2"
+      >
         <v-text-field
           outline
           v-model="password"
@@ -33,6 +38,7 @@
           placeholder=""
           :rules="passwordRules"
           type="text"
+          ref="pass"
           required
         />
       </v-form>
@@ -76,13 +82,15 @@ export default {
         this.setAccountRequestOpen(accountRequestOpen)
       }
     },
+    // we leave this for now because we might want to enable metamask connections later as well
     metaMaskInstalled() {
       return !!window.web3 || !!window.ethereum
     }
   },
   methods: {
     ...mapActions(['setAccountRequestOpen', 'decryptAndLoadWallet']),
-    unlockWallet() {
+    unlockWallet(e) {
+      e.preventDefault()
       if (this.$refs['password-form'].validate()) {
         this.decryptAndLoadWallet(this.password)
         this.clearWalletForm()
@@ -93,6 +101,11 @@ export default {
     },
     clearWalletForm() {
       this.$refs['password-form'].reset()
+    }
+  },
+  mounted() {
+    if (this.encryptedMnemonicExists) {
+      this.$nextTick(this.$refs.pass.focus)
     }
   }
 }

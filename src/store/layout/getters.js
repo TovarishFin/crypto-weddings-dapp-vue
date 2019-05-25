@@ -18,6 +18,6 @@ export const bankTabs = state => state.bankTabs
 
 export const accountTabs = state => state.accountTabs
 
-export const hasGrantedWeb3Access = state => state.hasGrantedWeb3Access
+export const hasUnlockedAccount = state => state.hasUnlockedAccount
 
 export const showTransactions = state => state.showTransactions

@@ -8,6 +8,6 @@ export default {
   homeTabs: 0,
   bankTabs: 0,
   accountTabs: 0,
-  hasGrantedWeb3Access: false,
+  hasUnlockedAccount: false,
   showTransactions: false
 }

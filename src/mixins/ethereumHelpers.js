@@ -1,16 +1,7 @@
-import { toBN, toWei, fromWei } from 'web3-utils'
 import sha3 from 'crypto-js/sha3'
 
 export default {
   methods: {
-    ethToWei(eth) {
-      eth = eth ? eth.toString() : '0'
-      return toBN(toWei(eth))
-    },
-    weiToEth(wei) {
-      wei = wei ? wei.toString() : '0'
-      return fromWei(wei)
-    },
     networkIdToName(id) {
       switch (id) {
         case 3:
@@ -67,8 +58,6 @@ export default {
   },
   computed: {
     addressZero: () => '0x' + '0'.repeat(40),
-    bytes32Zero: () => '0x' + '0'.repeat(64),
-    decimals18: () => toBN(10).pow(toBN(18)),
-    decimalsAccuracy: () => toBN(10).pow(toBN(5))
+    bytes32Zero: () => '0x' + '0'.repeat(64)
   }
 }

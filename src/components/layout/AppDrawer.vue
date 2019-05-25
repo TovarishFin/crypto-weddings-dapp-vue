@@ -46,6 +46,11 @@ export default {
           icon: 'mdi-wallet',
           title: 'Wallet',
           to: '/wallet'
+        },
+        {
+          icon: 'mdi-heart',
+          title: 'Get Married',
+          to: 'get-married'
         }
       ]
     }

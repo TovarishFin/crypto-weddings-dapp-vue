@@ -23,14 +23,9 @@ export default new Router({
       component: () => import('@/components/pages/Wallet.vue')
     },
     {
-      path: '/no-account',
-      name: 'No Account',
-      component: () => import('@/components/layout/NoAccount.vue')
-    },
-    {
-      path: '/no-web3',
-      name: 'No Web3',
-      component: () => import('@/components/layout/NoWeb3.vue')
+      path: '/get-married',
+      name: 'Get married',
+      component: () => import('@/components/pages/GetMarried.vue')
     },
     {
       path: '*',

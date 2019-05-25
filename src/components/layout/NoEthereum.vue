@@ -8,8 +8,8 @@
         :width="10"
       />
     </v-flex>
-    <v-flex xs12>
-      <p class="display-1 text-uppercase">Web3 is Loading...</p>
+    <v-flex ma-4>
+      <p class="display-1 text-uppercase">Connecting to blockchain...</p>
     </v-flex>
   </v-layout>
 </template>

@@ -49,8 +49,8 @@ export const setAccountTabs = ({ commit }, tabIndex) => {
   commit('setAccountTabs', tabIndex)
 }
 
-export const setHasGrantedWeb3Access = ({ commit }, hasGrantedWeb3Access) => {
-  commit('setHasGrantedWeb3Access', hasGrantedWeb3Access)
+export const setHasUnlockedAccount = ({ commit }, hasUnlockedAccount) => {
+  commit('setHasUnlockedAccount', hasUnlockedAccount)
 }
 
 export const setShowTransactions = ({ commit }, showTransactions) => {

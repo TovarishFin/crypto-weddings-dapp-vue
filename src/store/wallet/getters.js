@@ -7,10 +7,15 @@ export const encryptedMnemonic = state =>
 export const encryptedMnemonicExists = state =>
   pathSatisfies(x => !!x, ['encryptedMnemonic'], state)
 
-export const wallet = state => {
-  const mnemonicValue = mnemonic(state)
+export const wallet = (state, getters, rootState) => {
+  const { mnemonic } = getters
+  const {
+    network: { provider }
+  } = rootState
   try {
-    return mnemonicValue ? new ethers.Wallet.fromMnemonic(mnemonicValue) : null
+    return mnemonic
+      ? new ethers.Wallet.fromMnemonic(mnemonic).connect(provider)
+      : null
   } catch {
     return null
   }

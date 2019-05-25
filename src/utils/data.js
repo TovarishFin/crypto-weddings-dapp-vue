@@ -1,66 +1,8 @@
-import { toBN, toWei, fromWei } from 'web3-utils'
 import sha3 from 'crypto-js/sha3'
-
-export const isClient = () => typeof window === 'object' && window.document
 
 export const addressZero = '0x' + '0'.repeat(40)
 
 export const bytes32Zero = '0x' + '0'.repeat(64)
-
-export const tokenZero = {
-  name: 'Not Found',
-  symbol: 'N/A',
-  address: addressZero,
-  balance: 0,
-  depositedBalance: 0,
-  allocatedBalance: 0
-}
-
-export const gameZero = {
-  addressP1: addressZero,
-  addressP2: addressZero,
-  winner: addressZero,
-  tokenAddress: addressZero,
-  bet: 0,
-  choiceP1: 0,
-  choiceP2: 0,
-  choiceSecretP1: bytes32Zero,
-  choiceSecretP2: bytes32Zero,
-  stage: 0,
-  gameId: 0
-}
-
-export const stageEnum = {
-  '0': 'Uninitialized',
-  '1': 'Created',
-  '2': 'Cancelled',
-  '3': 'Ready',
-  '4': 'Committed',
-  '5': 'Timing Out',
-  '6': 'Timed Out',
-  '7': 'Tied',
-  '8': 'Winner Decided',
-  '9': 'Paid'
-}
-
-export const choiceEnum = {
-  '0': 'Undecided',
-  '1': 'Rock',
-  '2': 'Paper',
-  '3': 'Scissors'
-}
-
-export const decimals18 = toBN(10).pow(toBN(18))
-
-export const decimalsAccuracy = toBN(10).pow(toBN(5))
-
-export const ethToWei = eth => {
-  return toWei(eth)
-}
-
-export const weiToEth = wei => {
-  return fromWei(wei)
-}
 
 export const networkIdToName = id => {
   switch (id) {
@@ -75,6 +17,15 @@ export const networkIdToName = id => {
     default:
       return 'mainnet'
   }
+}
+
+export const weddingTypeToEnum = {
+  OtherAndOther: 0,
+  Traditional: 1,
+  ManAndMan: 2,
+  WomanAndWoman: 3,
+  ManAndOther: 4,
+  WomanAndOther: 5
 }
 
 export const shortenAddress = address =>

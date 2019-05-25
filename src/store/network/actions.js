@@ -1,6 +1,6 @@
 import { ethers } from 'ethers'
 
-export const setupProvider = async ({ getters, commit }) => {
+export const setupProvider = ({ getters, commit }) => {
   const { network } = getters
   let provider
 
@@ -18,24 +18,33 @@ export const bootstrapEth = async ({ dispatch, getters }) => {
   const { encryptedMnemonicExists } = getters
   await dispatch('setupProvider')
   await dispatch('setupWeddingManager')
+  await dispatch('getWeddingsLength')
 
   if (encryptedMnemonicExists) {
     dispatch('setAccountRequestOpen', true)
   }
 }
 
-export const watchPendingTx = async ({ commit }, { tx, description }) => {
-  tx.once('transactionHash', transactionHash =>
-    commit('setSentTransaction', {
-      transactionHash,
-      status: 'pending',
-      description
+export const watchPendingTx = ({ commit }, { tx, description }) => {
+  commit('setSentTransaction', {
+    transactionHash: tx.hash,
+    status: 'pending',
+    description
+  })
+
+  tx.wait()
+    .then(receipt => {
+      commit('setSentTransaction', {
+        ...receipt,
+        status: 'complete',
+        description
+      })
     })
-  ).once('receipt', receipt =>
-    commit('setSentTransaction', {
-      ...receipt,
-      status: 'complete',
-      description
+    .catch(() => {
+      commit('setSentTransaction', {
+        transactionHash: tx.hash,
+        status: 'error',
+        description
+      })
     })
-  )
 }

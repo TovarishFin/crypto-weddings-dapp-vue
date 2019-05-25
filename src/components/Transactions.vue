@@ -1,7 +1,12 @@
 <template>
   <v-bottom-sheet v-model="showTransactionsModel">
     <v-list class="mb-4">
-      <v-subheader> Pending Transactions </v-subheader>
+      <v-subheader v-if="sentTxs.length === 0">
+        No Transactions
+      </v-subheader>
+      <v-subheader v-if="pendingTxs.length > 0">
+        Pending Transactions
+      </v-subheader>
       <v-list-tile
         v-for="pendingTx in pendingTxs"
         :key="pendingTx.transactionHash"
@@ -14,7 +19,9 @@
           description: {{ pendingTx.description }}
         </v-list-tile-sub-title>
       </v-list-tile>
-      <v-subheader> Completed Transactions </v-subheader>
+      <v-subheader v-if="completeTxs.length > 0">
+        Completed Transactions
+      </v-subheader>
       <v-list-tile
         v-for="completeTx in completeTxs"
         :key="completeTx.transactionHash"
@@ -29,6 +36,23 @@
           description: {{ completeTx.description }}
         </v-list-tile-sub-title>
       </v-list-tile>
+      <v-subheader v-if="erroredTxs.length > 0">
+        Errored Transactions
+      </v-subheader>
+      <v-list-tile
+        v-for="errTx in erroredTxs"
+        :key="errTx.transactionHash"
+        value="true"
+        target="_blank"
+        :href="txLink(errTx.transactionHash)"
+      >
+        <v-list-tile-title>
+          {{ errTx.transactionHash }}
+        </v-list-tile-title>
+        <v-list-tile-sub-title>
+          description: {{ errTx.description }}
+        </v-list-tile-sub-title>
+      </v-list-tile>
     </v-list>
   </v-bottom-sheet>
 </template>
@@ -38,7 +62,14 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters(['pendingTxs', 'completeTxs', 'network', 'showTransactions']),
+    ...mapGetters([
+      'sentTxs',
+      'pendingTxs',
+      'completeTxs',
+      'erroredTxs',
+      'network',
+      'showTransactions'
+    ]),
     showTransactionsModel: {
       get() {
         return this.showTransactions

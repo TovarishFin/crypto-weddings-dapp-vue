@@ -1,3 +1,4 @@
 export default {
-  weddingManager: null
+  weddingManager: null,
+  weddingsLength: 0
 }

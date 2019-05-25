@@ -2,4 +2,6 @@ export const setWeddingManager = (state, weddingManager) => {
   state.weddingManager = weddingManager
 }
 
-export default setWeddingManager
+export const setWeddingsLength = (state, weddingsLength) => {
+  state.weddingsLength = weddingsLength
+}
