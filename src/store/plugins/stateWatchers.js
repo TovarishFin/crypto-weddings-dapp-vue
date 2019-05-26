@@ -1,10 +1,18 @@
 const actionIdWatcher = store => {
-  // eslint-disable-next-line no-unused-vars
   store.subscribe(async ({ type, payload }) => {
     switch (type) {
       case 'setAccountReady':
         store.dispatch('setupWeddingManager')
         break
+
+      case 'setAddress':
+        store.dispatch('mapUserToWedding', payload)
+        break
+
+      case 'setWeddingCursor':
+        store.dispatch('getCompleteWeddingData', payload)
+        break
+
       default:
         break
     }

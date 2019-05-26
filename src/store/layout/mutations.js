@@ -30,24 +30,8 @@ export const setAccountRequestOpen = (state, accountRequestOpen) => {
   state.accountRequestOpen = accountRequestOpen
 }
 
-export const setHideTokenDepositWarnings = (state, hide) => {
-  state.hideTokenDepositWarnings = hide
-}
-
-export const setHideEtherDepositWarnings = (state, hide) => {
-  state.hideEtherDepositWarnings = hide
-}
-
-export const setHomeTabs = (state, tabsIndex) => {
-  state.homeTabs = tabsIndex
-}
-
-export const setBankTabs = (state, tabsIndex) => {
-  state.bankTabs = tabsIndex
-}
-
-export const setAccountTabs = (state, tabsIndex) => {
-  state.accountTabs = tabsIndex
+export const setWeddingInProgressTabs = (state, tabsIndex) => {
+  state.weddingInProgressTabs = tabsIndex
 }
 
 export const setHasUnlockedAccount = (state, hasUnlockedAccount) => {

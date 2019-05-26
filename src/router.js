@@ -28,6 +28,11 @@ export default new Router({
       component: () => import('@/components/pages/GetMarried.vue')
     },
     {
+      path: '/wedding/:address',
+      name: 'Wedding',
+      component: () => import('@/components/pages/Wedding.vue')
+    },
+    {
       path: '*',
       name: 'Not Found',
       component: () => import('@/components/layout/NotFound.vue')

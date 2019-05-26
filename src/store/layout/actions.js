@@ -29,24 +29,8 @@ export const setAccountRequestOpen = ({ commit }, accountRequestOpen) => {
   commit('setAccountRequestOpen', accountRequestOpen)
 }
 
-export const setHideTokenDepositWarnings = ({ commit }, hide) => {
-  commit('setHideTokenDepositWarnings', hide)
-}
-
-export const setHideEtherDepositWarnings = ({ commit }, hide) => {
-  commit('setHideEtherDepositWarnings', hide)
-}
-
-export const setHomeTabs = ({ commit }, tabIndex) => {
-  commit('setHomeTabs', tabIndex)
-}
-
-export const setBankTabs = ({ commit }, tabIndex) => {
-  commit('setBankTabs', tabIndex)
-}
-
-export const setAccountTabs = ({ commit }, tabIndex) => {
-  commit('setAccountTabs', tabIndex)
+export const setWeddingInProgressTabs = ({ commit }, tabIndex) => {
+  commit('setWeddingInProgressTabs', tabIndex)
 }
 
 export const setHasUnlockedAccount = ({ commit }, hasUnlockedAccount) => {

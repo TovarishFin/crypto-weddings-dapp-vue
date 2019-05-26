@@ -50,7 +50,7 @@ export default {
         {
           icon: 'mdi-heart',
           title: 'Get Married',
-          to: 'get-married'
+          to: '/get-married'
         }
       ]
     }

@@ -42,3 +42,36 @@ export const getWeddingsLength = async ({ getters, commit }) => {
 
   commit('setWeddingsLength', weddingsLength.toString())
 }
+
+export const getWeddings = async ({ getters, dispatch }) => {
+  const { weddingManager, weddingsLength: wedLenStr } = getters
+
+  const weddingsLength = parseInt(wedLenStr)
+  const start = weddingsLength >= 10 ? weddingsLength - 10 : 0
+  const end = weddingsLength
+
+  for (let i = start; i < end; i++) {
+    const wedding = await weddingManager.weddings(i)
+    dispatch('getBasicWeddingData', wedding)
+  }
+}
+
+export const mapUserToWedding = async ({ getters, commit }, userAddress) => {
+  const { weddingManager } = getters
+
+  const weddingAddress = await weddingManager.weddingOf(userAddress)
+
+  commit('setUserWeddingMap', { userAddress, weddingAddress })
+  commit('setUserWeddingCursor', weddingAddress)
+}
+
+export const getWeddingExists = async ({ getters, commit }, weddingAddress) => {
+  const { weddingManager } = getters
+
+  try {
+    const exists = await weddingManager.weddingExists(weddingAddress)
+    commit('setWeddingExists', { weddingAddress, exists })
+  } catch {
+    commit('setWeddingExists', { weddingAddress, exists: false })
+  }
+}

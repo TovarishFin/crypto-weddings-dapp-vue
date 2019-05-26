@@ -18,10 +18,17 @@ export const bootstrapEth = async ({ dispatch, getters }) => {
   const { encryptedMnemonicExists } = getters
   await dispatch('setupProvider')
   await dispatch('setupWeddingManager')
+  await dispatch('watchWeddingManagerEvents')
   await dispatch('getWeddingsLength')
+  await dispatch('getWeddings')
 
-  if (encryptedMnemonicExists) {
-    dispatch('setAccountRequestOpen', true)
+  // TODO: should probably remove or improve this at some point...
+  if (process.env.NODE_ENV === 'development') {
+    dispatch('decryptAndLoadWallet', '123')
+  } else {
+    if (encryptedMnemonicExists) {
+      dispatch('setAccountRequestOpen', true)
+    }
   }
 }
 

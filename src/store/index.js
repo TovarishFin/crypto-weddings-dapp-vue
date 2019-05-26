@@ -7,6 +7,8 @@ import layout from './layout'
 import network from './network'
 import wallet from './wallet'
 import weddingManager from './weddingManager'
+import wedding from './wedding'
+import contractEvents from './contractEvents'
 
 Vue.use(Vuex)
 
@@ -30,7 +32,9 @@ export default new Store({
     layout,
     network,
     wallet,
-    weddingManager
+    weddingManager,
+    wedding,
+    contractEvents
   },
   plugins: [stateWatchers, vuexLocal.plugin]
 })

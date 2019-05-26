@@ -4,6 +4,22 @@ export const addressZero = '0x' + '0'.repeat(40)
 
 export const bytes32Zero = '0x' + '0'.repeat(64)
 
+export const weddingZero = {
+  address: addressZero,
+  married: false,
+  p1Answer: false,
+  p1Name: '',
+  p1Vows: '',
+  p2Answer: false,
+  p2Name: '',
+  p2Vows: '',
+  partner1: addressZero,
+  partner2: addressZero,
+  weddingPhoto: '',
+  weddingType: 0,
+  stage: 0
+}
+
 export const networkIdToName = id => {
   switch (id) {
     case 3:

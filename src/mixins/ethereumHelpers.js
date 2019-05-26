@@ -1,6 +1,25 @@
 import sha3 from 'crypto-js/sha3'
 
 export default {
+  data() {
+    return {
+      stageText: {
+        '0': 'Uninitialized',
+        '1': 'Initialized',
+        '2': 'InProgress',
+        '3': 'Married',
+        '4': 'Divorced'
+      },
+      weddingType: {
+        '0': 'OtherAndOther',
+        '1': 'Traditional',
+        '2': 'ManAndMan',
+        '3': 'WomanAndWoman',
+        '4': 'ManAndOther',
+        '5': 'WomanAndOther'
+      }
+    }
+  },
   methods: {
     networkIdToName(id) {
       switch (id) {

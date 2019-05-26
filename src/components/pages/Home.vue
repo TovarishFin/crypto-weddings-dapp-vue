@@ -4,8 +4,15 @@
     <p class="headline">
       Get Married on the Blockchain
     </p>
+    <weddings />
   </span>
 </template>
 <script>
-export default {}
+import Weddings from '@/components/Weddings'
+
+export default {
+  components: {
+    Weddings
+  }
+}
 </script>

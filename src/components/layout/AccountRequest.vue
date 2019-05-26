@@ -37,7 +37,7 @@
           label="password"
           placeholder=""
           :rules="passwordRules"
-          type="text"
+          type="password"
           ref="pass"
           required
         />
