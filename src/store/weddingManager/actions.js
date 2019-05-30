@@ -2,8 +2,8 @@ import { ethers } from 'ethers'
 import deployments from 'crypto-weddings-contracts/deployments'
 import { abi } from 'crypto-weddings-contracts/build/WeddingManager'
 
-export const setupWeddingManager = ({ commit, getters }) => {
-  const { provider, network, wallet } = getters
+export const setupWeddingManager = ({ commit, rootGetters }) => {
+  const { provider, network, wallet } = rootGetters
   const {
     [network]: { weddingManager: address }
   } = deployments

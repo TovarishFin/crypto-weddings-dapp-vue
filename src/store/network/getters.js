@@ -1,14 +1,23 @@
 import { pathOr } from 'ramda'
+import { ethers } from 'ethers'
+import deployments from 'crypto-weddings-contracts/deployments'
 
-export const network = state => state.network
+export const availableNetworks = () => Object.keys(deployments)
 
-export const gasLimit = state => state.gasLimit
+export const network = state => pathOr('ropsten', ['network'], state)
 
-export const provider = state => state.provider
+export const gasLimit = state => pathOr(5e6, ['gasLimit'], state)
+
+export const provider = (_, getters) => {
+  const { network: currentNetwork } = getters
+  if (currentNetwork === 'private') {
+    return new ethers.providers.JsonRpcProvider('http://localhost:8545')
+  } else {
+    return new ethers.getDefaultProvider(currentNetwork)
+  }
+}
 
 export const currentBlock = state => state.currentBlock
-
-export const networkId = state => state.networkId
 
 export const accountReady = state => state.accountReady
 

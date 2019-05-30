@@ -1,21 +1,22 @@
 import { ethers } from 'ethers'
 
+// this is really just checking that the provider works now...
 export const setupProvider = ({ getters, commit }) => {
   const { network } = getters
-  let provider
 
   if (network === 'private') {
-    provider = new ethers.providers.JsonRpcProvider('http://localhost:8545')
+    new ethers.providers.JsonRpcProvider('http://localhost:8545')
   } else {
-    provider = new ethers.getDefaultProvider(network)
+    new ethers.getDefaultProvider(network)
   }
 
-  commit('setProvider', provider)
   commit('setProviderReady', true)
 }
 
-export const bootstrapEth = async ({ dispatch, getters }) => {
+export const bootstrapEth = async ({ commit, dispatch, getters }) => {
   const { encryptedMnemonicExists } = getters
+  commit('setProviderReady', false)
+  commit('setAccountReady', false)
   await dispatch('setupProvider')
   await dispatch('setupWeddingManager')
   await dispatch('watchWeddingManagerEvents')

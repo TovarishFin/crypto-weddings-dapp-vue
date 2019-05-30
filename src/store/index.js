@@ -16,8 +16,10 @@ const vuexLocal = new VuexPersistence({
   storage: window.localStorage,
   reducer: state => ({
     layout: state.layout,
+    network: state.network,
     wallet: {
-      encryptedMnemonic: state.wallet.encryptedMnemonic
+      encryptedMnemonic: state.wallet.encryptedMnemonic,
+      pathDerivation: state.wallet.pathDerivation
     }
   })
 })

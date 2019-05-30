@@ -1,3 +1,5 @@
+import router from '@/router'
+
 export const watchWeddingManagerEvents = context => {
   const { getters } = context
   const { weddingManager } = getters
@@ -25,8 +27,9 @@ export const handleWeddingAdded = ({ dispatch, rootGetters }) => (
   dispatch('getBasicWeddingData', wedding)
 
   if (address === partner1 || address === partner2) {
-    dispatch('mapUserToWedding', wedding)
+    dispatch('mapUserToWedding', address)
     dispatch('createNotification', 'Your wedding has been created!')
+    router.push(`/wedding/${wedding}`)
   }
 }
 
@@ -40,7 +43,7 @@ export const handleWeddingRemoved = ({ dispatch, rootGetters, commit }) => (
   commit('removeWedding', wedding)
 
   if (address === partner1 || address === partner2) {
-    dispatch('mapUserToWedding', wedding)
+    dispatch('mapUserToWedding', address)
     dispatch('createNotification', 'Your wedding has been removed!')
   }
 }

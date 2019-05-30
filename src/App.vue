@@ -42,14 +42,6 @@ export default {
   },
   beforeCreate() {
     store.dispatch('bootstrapEth')
-  },
-  watch: {
-    $route() {
-      const coinbaseReferrer = this.$route.query.ref
-      if (this.isAddress(coinbaseReferrer)) {
-        store.dispatch('setCoinbaseReferrer', coinbaseReferrer)
-      }
-    }
   }
 }
 </script>

@@ -23,6 +23,11 @@ export default new Router({
       component: () => import('@/components/pages/Wallet.vue')
     },
     {
+      path: '/settings',
+      name: 'Settings',
+      component: () => import('@/components/pages/Settings.vue')
+    },
+    {
       path: '/get-married',
       name: 'Get married',
       component: () => import('@/components/pages/GetMarried.vue')

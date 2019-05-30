@@ -9,3 +9,7 @@ export const setAddress = (state, address) => {
 export const setEncryptedMnemonic = (state, encryptedMnemonic) => {
   state.encryptedMnemonic = encryptedMnemonic
 }
+
+export const setPathDerivation = (state, pathDerivation) => {
+  state.pathDerivation = pathDerivation
+}

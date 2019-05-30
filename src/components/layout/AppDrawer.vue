@@ -21,6 +21,26 @@
           <v-list-tile-title v-text="item.title"></v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
+
+      <v-list-tile v-if="!userHasWedding" value="true" to="/get-married">
+        <v-list-tile-action>
+          <v-icon>mdi-heart</v-icon>
+        </v-list-tile-action>
+
+        <v-list-tile-content>
+          <v-list-tile-title>Get Married</v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
+
+      <v-list-tile v-if="userHasWedding" value="true" :to="userWeddingLink">
+        <v-list-tile-action>
+          <v-icon>mdi-account</v-icon>
+        </v-list-tile-action>
+
+        <v-list-tile-content>
+          <v-list-tile-title>Your Wedding</v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -48,9 +68,9 @@ export default {
           to: '/wallet'
         },
         {
-          icon: 'mdi-heart',
-          title: 'Get Married',
-          to: '/get-married'
+          icon: 'mdi-settings',
+          title: 'Settings',
+          to: '/settings'
         }
       ]
     }
@@ -59,7 +79,7 @@ export default {
     ...mapActions(['setDrawer'])
   },
   computed: {
-    ...mapGetters(['drawerOpen', 'coinbase']),
+    ...mapGetters(['drawerOpen', 'userWeddingCursor']),
     drawerStatus: {
       get() {
         return this.drawerOpen
@@ -67,6 +87,14 @@ export default {
       set(status) {
         this.setDrawer(status)
       }
+    },
+    userWeddingLink() {
+      return `/wedding/${this.userWeddingCursor}`
+    },
+    userHasWedding() {
+      return (
+        !!this.userWeddingCursor && this.userWeddingCursor !== this.addressZero
+      )
     }
   }
 }

@@ -17,11 +17,11 @@ export const setNetworkData = (state, payload) => {
   state.networkId = networkId
 }
 
-export const setEthReady = async (state, payload) => {
+export const setEthReady = (state, payload) => {
   state.ethReady = payload
 }
 
-export const setSentTransaction = async (state, transaction) => {
+export const setSentTransaction = (state, transaction) => {
   const { transactionHash } = transaction
   state.sentTransactions = {
     ...state.sentTransactions,
@@ -29,14 +29,14 @@ export const setSentTransaction = async (state, transaction) => {
   }
 }
 
-export const setProvider = async (state, payload) => {
-  state.provider = payload
-}
-
-export const setProviderReady = (state, payload) => {
-  state.providerReady = payload
+export const setProviderReady = (state, ready) => {
+  state.providerReady = ready
 }
 
 export const setAccountReady = (state, ready) => {
   state.accountReady = ready
+}
+
+export const setGasLimit = (state, gasLimit) => {
+  state.gasLimit = gasLimit
 }

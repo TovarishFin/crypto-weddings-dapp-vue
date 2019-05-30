@@ -18,12 +18,12 @@ export const decryptAndLoadWallet = (
   { commit, getters, dispatch },
   password
 ) => {
-  const { encryptedMnemonic } = getters
+  const { encryptedMnemonic, pathDerivation } = getters
   try {
     const decrypted = AES.decrypt(encryptedMnemonic, password).toString(
       enc.Utf8
     )
-    const wallet = Wallet.fromMnemonic(decrypted)
+    const wallet = Wallet.fromMnemonic(decrypted, pathDerivation)
     commit('setMnemonic', wallet.mnemonic)
     commit('setAddress', wallet.address)
     commit('setAccountReady', true)
