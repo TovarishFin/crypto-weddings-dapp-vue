@@ -29,12 +29,15 @@ export const setAccountRequestOpen = ({ commit }, accountRequestOpen) => {
   commit('setAccountRequestOpen', accountRequestOpen)
 }
 
-export const setWeddingInProgressTabs = ({ commit }, tabIndex) => {
-  commit('setWeddingInProgressTabs', tabIndex)
+export const setConfirmTransactionOpen = (
+  { commit },
+  confirmTransactionOpen
+) => {
+  commit('setConfirmTransactionOpen', confirmTransactionOpen)
 }
 
-export const setHasUnlockedAccount = ({ commit }, hasUnlockedAccount) => {
-  commit('setHasUnlockedAccount', hasUnlockedAccount)
+export const setWeddingInProgressTabs = ({ commit }, tabIndex) => {
+  commit('setWeddingInProgressTabs', tabIndex)
 }
 
 export const setShowTransactions = ({ commit }, showTransactions) => {

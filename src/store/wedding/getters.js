@@ -24,9 +24,11 @@ export const userWedding = state => wedding(state)(userWeddingCursor(state))
 export const userWeddingStage = state =>
   pathOr(0, ['stage'], userWedding(state))
 
-export const userPartner1 = state => pathOr(null, ['partner1'], state)
+export const userPartner1 = state =>
+  pathOr(null, ['partner1'], userWedding(state))
 
-export const userPartner2 = state => pathOr(null, ['partner2'], state)
+export const userPartner2 = state =>
+  pathOr(null, ['partner2'], userWedding(state))
 
 export const userPartner = (state, _, __, { address }) => {
   if (address) {

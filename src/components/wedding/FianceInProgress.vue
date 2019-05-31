@@ -58,12 +58,6 @@ import UpdateVows from '@/components/wedding/UpdateVows'
 import AnswerProposal from '@/components/wedding/AnswerProposal'
 
 export default {
-  data() {
-    return {
-      vows: '',
-      vowRules: [v => !!v || 'vows must be non-empty value']
-    }
-  },
   components: {
     UpdateVows,
     AnswerProposal
@@ -96,24 +90,14 @@ export default {
     partnerVows() {
       const { p1Vows, p2Vows } = this.userWedding
       return this.userIsPartner1 ? p2Vows : p1Vows
+    },
+    partnerName() {
+      const { p1Name, p2Name } = this.userWedding
+      return this.userIsPartner1 ? p2Name : p1Name
     }
   },
   methods: {
-    ...mapActions([
-      'updateVows',
-      'acceptProposal',
-      'rejectProposal',
-      'setWeddingInProgressTabs'
-    ]),
-    clearVowsForm() {
-      this.$refs['vows-form'].reset()
-    },
-    validateAndUpdateVows() {
-      if (this.$refs['vows-form'].validate()) {
-        this.updateVows(this.vows)
-        this.clearVowsForm()
-      }
-    }
+    ...mapActions(['setWeddingInProgressTabs'])
   }
 }
 </script>

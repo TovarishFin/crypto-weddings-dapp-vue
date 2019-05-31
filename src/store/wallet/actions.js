@@ -1,5 +1,6 @@
-import { Wallet } from 'ethers'
+import { Wallet, utils } from 'ethers'
 import { AES, enc } from 'crypto-js'
+import QR from 'qrcode'
 
 export const generateMnemonic = async ({ commit }) => {
   const wallet = Wallet.createRandom()
@@ -31,4 +32,48 @@ export const decryptAndLoadWallet = (
     commit('setAccountReady', false)
     dispatch('createNotification', 'incorrect password... try again')
   }
+}
+
+export const setPendingTransaction = (
+  { commit, dispatch },
+  { action, description, payload }
+) => {
+  dispatch('getUserBalance')
+  commit('setPendingAction', action)
+  commit('setPendingActionDescription', description)
+  commit('setPendingPayload', payload)
+  dispatch('setConfirmTransactionOpen', true)
+}
+
+export const confirmTransaction = ({ dispatch, commit, getters }) => {
+  const { pendingAction, pendingPayload } = getters
+  dispatch(pendingAction, pendingPayload)
+  commit('setPendingAction', null)
+  commit('setPendingActionDescription', null)
+  commit('setPendingPayload', null)
+  dispatch('setConfirmTransactionOpen', false)
+}
+
+export const cancelTransaction = ({ dispatch, commit }) => {
+  commit('setPendingAction', null)
+  commit('setPendingActionDescription', null)
+  commit('setPendingPayload', null)
+  dispatch('setConfirmTransactionOpen', false)
+}
+
+export const getUserBalance = async ({ getters, rootGetters, commit }) => {
+  const { address } = getters
+  const { provider } = rootGetters
+
+  const balance = await provider.getBalance(address)
+  const etherBalance = parseFloat(utils.formatEther(balance.toString()))
+
+  commit('setUserBalance', etherBalance)
+}
+
+export const getUserQrCode = async ({ getters, commit }) => {
+  const { address } = getters
+
+  const qrCode = await QR.toDataURL(address)
+  commit('setUserQrCode', qrCode)
 }

@@ -34,7 +34,7 @@ export const bootstrapEth = async ({ commit, dispatch, getters }) => {
   dispatch('getWeddings')
 }
 
-export const watchPendingTx = ({ commit }, { tx, description }) => {
+export const watchPendingTx = ({ commit, dispatch }, { tx, description }) => {
   commit('setSentTransaction', {
     transactionHash: tx.hash,
     status: 'pending',
@@ -48,6 +48,7 @@ export const watchPendingTx = ({ commit }, { tx, description }) => {
         status: 'complete',
         description
       })
+      dispatch('getUserBalance')
     })
     .catch(() => {
       commit('setSentTransaction', {
@@ -55,5 +56,6 @@ export const watchPendingTx = ({ commit }, { tx, description }) => {
         status: 'error',
         description
       })
+      dispatch('getUserBalance')
     })
 }

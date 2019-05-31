@@ -5,6 +5,7 @@ const actionIdWatcher = store => {
         if (payload) {
           store.dispatch('setupWeddingManager')
           store.dispatch('mapUserToWedding')
+          store.dispatch('getUserQrCode')
         }
 
         break

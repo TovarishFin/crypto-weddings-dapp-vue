@@ -36,3 +36,16 @@ export const mnemonic = state => pathOr(null, ['mnemonic'], state)
 
 export const pathDerivation = state =>
   pathOr('m/44’/60’/0’/0/0', ['pathDerivation'], state)
+
+export const pendingAction = state => pathOr(null, ['pendingAction'], state)
+
+export const pendingActionDescription = state =>
+  pathOr(null, ['pendingActionDescription'], state)
+
+export const pendingPayload = state => pathOr(null, ['pendingPayload'], state)
+
+export const userBalance = state => pathOr(0, ['userBalance'], state)
+
+export const userHasGas = state => userBalance(state) >= 0.001
+
+export const userQrCode = state => pathOr(null, ['userQrCode'], state)

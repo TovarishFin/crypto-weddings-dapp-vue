@@ -14,6 +14,7 @@
     <app-notifier />
 
     <account-request />
+    <confirm-transaction />
     <app-transactions />
 
     <app-footer />
@@ -26,6 +27,7 @@ import AppToolbar from '@/components/layout/AppToolbar'
 import AppFooter from '@/components/layout/AppFooter'
 import AppNotifier from '@/components/layout/AppNotifier'
 import AccountRequest from '@/components/layout/AccountRequest'
+import ConfirmTransaction from '@/components/layout/ConfirmTransaction'
 import RouterHandler from '@/components/layout/RouterHandler'
 import AppTransactions from '@/components/Transactions'
 import store from '@/store'
@@ -37,6 +39,7 @@ export default {
     AppFooter,
     AppNotifier,
     AccountRequest,
+    ConfirmTransaction,
     RouterHandler,
     AppTransactions
   },

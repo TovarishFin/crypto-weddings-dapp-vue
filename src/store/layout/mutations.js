@@ -30,12 +30,16 @@ export const setAccountRequestOpen = (state, accountRequestOpen) => {
   state.accountRequestOpen = accountRequestOpen
 }
 
+export const setConfirmTransactionOpen = (state, confirmTransactionOpen) => {
+  state.confirmTransactionOpen = confirmTransactionOpen
+}
+
 export const setWeddingInProgressTabs = (state, tabsIndex) => {
   state.weddingInProgressTabs = tabsIndex
 }
 
-export const setHasUnlockedAccount = (state, hasUnlockedAccount) => {
-  state.hasUnlockedAccount = hasUnlockedAccount
+export const setWeddingMarriedTabs = (state, tabsIndex) => {
+  state.weddingMarriedTabs = tabsIndex
 }
 
 export const setShowTransactions = (state, showTransactions) => {
