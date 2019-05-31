@@ -4,7 +4,6 @@ import { AES, enc } from 'crypto-js'
 export const generateMnemonic = async ({ commit }) => {
   const wallet = Wallet.createRandom()
   commit('setMnemonic', wallet.mnemonic)
-  commit('setAddress', wallet.address)
 }
 
 export const encryptAndSaveWallet = ({ commit, getters }, password) => {
@@ -25,12 +24,10 @@ export const decryptAndLoadWallet = (
     )
     const wallet = Wallet.fromMnemonic(decrypted, pathDerivation)
     commit('setMnemonic', wallet.mnemonic)
-    commit('setAddress', wallet.address)
     commit('setAccountReady', true)
     commit('setAccountRequestOpen', false)
   } catch {
     commit('setMnemonic', '')
-    commit('setAddress', '')
     commit('setAccountReady', false)
     dispatch('createNotification', 'incorrect password... try again')
   }

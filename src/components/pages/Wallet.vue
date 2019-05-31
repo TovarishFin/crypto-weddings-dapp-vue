@@ -41,7 +41,22 @@ export default {
       customMnemonic: false,
       password: '',
       passwordRules: [v => !!v || 'must be non empty value'],
-      pathLevels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+      pathLevels: [
+        '0',
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        '10',
+        '11',
+        '12',
+        '13'
+      ]
     }
   },
   computed: {
@@ -56,10 +71,9 @@ export default {
     },
     pathDerivationModel: {
       get() {
-        return parseInt(this.pathDerivation.slice(-1))
+        return this.pathDerivation.split('/').slice(-1)[0]
       },
       set(pathLevel) {
-        this.pathLevel = pathLevel
         this.setPathDerivation(`m/44'/60'/0'/0/${pathLevel}`)
       }
     }

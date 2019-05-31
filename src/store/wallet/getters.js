@@ -21,9 +21,18 @@ export const wallet = (_, getters, __, rootGetters) => {
   }
 }
 
-export const mnemonic = state => pathOr(null, ['mnemonic'], state)
+export const address = (_, getters) => {
+  const { mnemonic, pathDerivation } = getters
+  try {
+    return mnemonic
+      ? new ethers.Wallet.fromMnemonic(mnemonic, pathDerivation).address
+      : null
+  } catch (err) {
+    return null
+  }
+}
 
-export const address = state => pathOr(null, ['address'], state)
+export const mnemonic = state => pathOr(null, ['mnemonic'], state)
 
 export const pathDerivation = state =>
   pathOr('m/44’/60’/0’/0/0', ['pathDerivation'], state)
