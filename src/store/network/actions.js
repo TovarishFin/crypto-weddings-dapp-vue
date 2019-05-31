@@ -23,9 +23,9 @@ export const bootstrapEth = async ({ commit, dispatch, getters }) => {
   await dispatch('getWeddingsLength')
   await dispatch('getWeddings')
 
-  // TODO: should probably remove or improve this at some point...
   if (process.env.NODE_ENV === 'development') {
-    dispatch('decryptAndLoadWallet', '123')
+    commit('setMnemonic', process.env.VUE_APP_MNEMONIC)
+    dispatch('encryptAndSaveWallet', process.env.VUE_APP_PASSWORD)
   } else {
     if (encryptedMnemonicExists) {
       dispatch('setAccountRequestOpen', true)
