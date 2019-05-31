@@ -6,10 +6,10 @@ export const setWeddingsLength = (state, weddingsLength) => {
   state.weddingsLength = weddingsLength
 }
 
-export const setUserWeddingMap = (state, userMap) => {
+export const setUserWeddingMap = (state, { userAddress, weddingAddress }) => {
   state.weddingOf = {
     ...state.weddingOf,
-    [userMap.userAddress]: userMap.weddingAddress
+    [userAddress]: weddingAddress
   }
 }
 

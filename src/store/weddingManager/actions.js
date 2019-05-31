@@ -56,8 +56,9 @@ export const getWeddings = async ({ getters, dispatch }) => {
   }
 }
 
-export const mapUserToWedding = async ({ getters, commit }, userAddress) => {
+export const mapUserToWedding = async ({ getters, commit, rootGetters }) => {
   const { weddingManager } = getters
+  const { address: userAddress } = rootGetters
 
   const weddingAddress = await weddingManager.weddingOf(userAddress)
 

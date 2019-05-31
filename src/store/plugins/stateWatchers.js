@@ -2,20 +2,19 @@ const actionIdWatcher = store => {
   store.subscribe(async ({ type, payload }) => {
     switch (type) {
       case 'setAccountReady':
-        if (payload) store.dispatch('setupWeddingManager')
+        if (payload) {
+          store.dispatch('setupWeddingManager')
+          store.dispatch('mapUserToWedding')
+        }
 
-        break
-
-      case 'setAddress':
-        store.dispatch('mapUserToWedding', payload)
-        break
-
-      case 'setPathDerivation':
-        store.dispatch('bootstrapEth')
         break
 
       case 'setWeddingCursor':
         store.dispatch('getCompleteWeddingData', payload)
+        break
+
+      case 'setPathDerivation':
+        store.dispatch('bootstrapEth')
         break
 
       case 'setNetwork':

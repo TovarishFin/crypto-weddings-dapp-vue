@@ -18,10 +18,6 @@ export const bootstrapEth = async ({ commit, dispatch, getters }) => {
   commit('setProviderReady', false)
   commit('setAccountReady', false)
   await dispatch('setupProvider')
-  await dispatch('setupWeddingManager')
-  await dispatch('watchWeddingManagerEvents')
-  await dispatch('getWeddingsLength')
-  await dispatch('getWeddings')
 
   if (process.env.NODE_ENV === 'development') {
     commit('setMnemonic', process.env.VUE_APP_MNEMONIC)
@@ -31,6 +27,11 @@ export const bootstrapEth = async ({ commit, dispatch, getters }) => {
       dispatch('setAccountRequestOpen', true)
     }
   }
+
+  await dispatch('setupWeddingManager')
+  await dispatch('getWeddingsLength')
+  dispatch('watchWeddingManagerEvents')
+  dispatch('getWeddings')
 }
 
 export const watchPendingTx = ({ commit }, { tx, description }) => {
