@@ -1,5 +1,5 @@
 <template>
-  <v-form ref="vows-form" class="pt-4 pb-4">
+  <v-form @submit="validateAndUpdateVows" ref="vows-form" class="pt-4 pb-4">
     <v-text-field
       v-model="vows"
       label="your vows"
@@ -7,7 +7,7 @@
       type="text"
       required
     />
-    <v-btn @click="validateAndUpdateVows">
+    <v-btn type="submit">
       set vows
     </v-btn>
   </v-form>
@@ -23,13 +23,18 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['updateVows']),
+    ...mapActions(['setPendingTransaction']),
     clearVowsForm() {
       this.$refs['vows-form'].reset()
     },
-    validateAndUpdateVows() {
+    validateAndUpdateVows(e) {
+      e.preventDefault()
       if (this.$refs['vows-form'].validate()) {
-        this.updateVows(this.vows)
+        this.setPendingTransaction({
+          action: 'updateVows',
+          payload: this.vows,
+          description: 'update your wedding vows'
+        })
         this.clearVowsForm()
       }
     }

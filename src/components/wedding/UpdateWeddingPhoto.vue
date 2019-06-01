@@ -1,5 +1,5 @@
 <template>
-  <v-form ref="photo-form" class="pt-4 pb-4">
+  <v-form @submit="validateAndUpdatePhoto" ref="photo-form" class="pt-4 pb-4">
     <v-text-field
       v-model="photo"
       label="wedding photo"
@@ -7,7 +7,7 @@
       type="text"
       required
     />
-    <v-btn @click="validateAndUpdatePhoto">
+    <v-btn type="submit">
       update photo
     </v-btn>
   </v-form>
@@ -23,13 +23,18 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['updateWeddingPhoto']),
+    ...mapActions(['setPendingTransaction']),
     clearPhotoForm() {
       this.$refs['photo-form'].reset()
     },
-    validateAndUpdatePhoto() {
+    validateAndUpdatePhoto(e) {
+      e.preventDefault()
       if (this.$refs['photo-form'].validate()) {
-        this.updateWeddingPhoto(this.photo)
+        this.setPendingTransaction({
+          action: 'updateWeddingPhoto',
+          payload: this.photo,
+          description: 'update your wedding photo on the blockchain'
+        })
         this.clearPhotoForm()
       }
     }

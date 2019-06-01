@@ -45,7 +45,7 @@
     </v-list>
 
     <v-tabs grow v-model="tabsIndex">
-      <v-tab ripple> Set Vows </v-tab>
+      <v-tab ripple> Update Vows </v-tab>
       <v-tab ripple> Answer Proposal </v-tab>
       <v-tab-item> <update-vows /> </v-tab-item>
       <v-tab-item> <answer-proposal /> </v-tab-item>
