@@ -35,7 +35,7 @@ export const getCompleteWeddingData = async (
 ) => {
   const { provider } = getters
   await dispatch('getWeddingExists', weddingAddress)
-  dispatch('getWeddingGiftEvents')
+  dispatch('getWeddingGiftEvents', weddingAddress)
   const { weddingExists } = getters
   if (!weddingExists(weddingAddress)) {
     return
@@ -230,13 +230,14 @@ export const claimWeddingGifts = async ({ rootGetters, getters, dispatch }) => {
 
 export const sendWeddingGift = async (
   { rootGetters, getters, dispatch },
-  message
+  { message, smallValue }
 ) => {
-  const { wallet, userWeddingCursor } = getters
+  const { wallet, weddingCursor } = getters
   const { gasLimit } = rootGetters
-  const wedding = new ethers.Contract(userWeddingCursor, abi, wallet)
+  const value = utils.parseEther(smallValue.toString(), 'wei')
+  const wedding = new ethers.Contract(weddingCursor, abi, wallet)
 
-  const tx = await wedding.sendWeddingGift(message, { gasLimit })
+  const tx = await wedding.sendWeddingGift(message, { gasLimit, value })
 
   dispatch('watchPendingTx', { tx, description: 'send wedding gift' })
 }

@@ -15,3 +15,14 @@ export const setWeddingCursor = (state, weddingCursor) =>
 
 export const setUserWeddingCursor = (state, userWeddingCursor) =>
   (state.userWeddingCursor = userWeddingCursor)
+
+export const addGiftEvent = (state, { wedding, gifter, value, message }) =>
+  (state.weddings = {
+    ...state.weddings,
+    [wedding]: {
+      ...state.weddings[wedding],
+      giftEvents: state.weddings[wedding].giftEvents
+        ? [...state.weddings[wedding].giftEvents, { gifter, value, message }]
+        : [{ gifter, value, message }]
+    }
+  })

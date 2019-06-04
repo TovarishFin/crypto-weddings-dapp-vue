@@ -1,5 +1,9 @@
 <template>
-  <v-form ref="wedding-form" class="pt-4 pb-4">
+  <v-form
+    @submit="validateAndStartWedding"
+    ref="wedding-form"
+    class="pt-4 pb-4"
+  >
     <v-text-field
       v-model="name1"
       label="your name"
@@ -27,7 +31,7 @@
       label="wedding type"
       required
     />
-    <v-btn @click="validateAndStartWedding">
+    <v-btn type="submit">
       create wedding
     </v-btn>
   </v-form>
@@ -59,17 +63,22 @@ export default {
     ...mapGetters(['address'])
   },
   methods: {
-    ...mapActions(['startWedding']),
+    ...mapActions(['setPendingTransaction']),
     clearWeddingForm() {
       this.$refs['wedding-form'].reset()
     },
-    validateAndStartWedding() {
+    validateAndStartWedding(e) {
+      e.preventDefault()
       if (this.$refs['wedding-form'].validate()) {
-        this.startWedding({
-          name1: this.name1,
-          name2: this.name2,
-          partner2: this.partnerAddress,
-          weddingType: weddingTypeToEnum[this.weddingType]
+        this.setPendingTransaction({
+          action: 'startWedding',
+          payload: {
+            name1: this.name1,
+            name2: this.name2,
+            partner2: this.partnerAddress,
+            weddingType: weddingTypeToEnum[this.weddingType]
+          },
+          description: 'start a wedding on the blockchain'
         })
         this.clearWeddingForm()
       }

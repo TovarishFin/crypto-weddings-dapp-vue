@@ -13,6 +13,8 @@ export const setupProvider = ({ getters, commit }) => {
   commit('setProviderReady', true)
 }
 
+// we do some state clearing here because we use this function not
+// only on start but also no account / network change
 export const bootstrapEth = async ({ commit, dispatch, getters }) => {
   const { encryptedMnemonicExists } = getters
   commit('setProviderReady', false)
@@ -30,6 +32,7 @@ export const bootstrapEth = async ({ commit, dispatch, getters }) => {
 
   await dispatch('setupWeddingManager')
   await dispatch('getWeddingsLength')
+  dispatch('unwatchWeddingManagerEvents')
   dispatch('watchWeddingManagerEvents')
   dispatch('getWeddings')
 }

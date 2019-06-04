@@ -1,95 +1,41 @@
 <template>
   <span>
-    <v-form ref="wallet-form" class="pt-4 pb-4">
-      <v-text-field
-        v-model="mnemonicModel"
-        label="mnemonic"
-        :disabled="!customMnemonic"
-      />
-      <v-text-field :value="address" label="address" disabled />
-
-      <v-text-field
-        v-model="password"
-        label="password"
-        placeholder=""
-        :rules="passwordRules"
-        type="password"
-        required
-      />
-      <v-checkbox v-model="customMnemonic" label="use custom mnemonic" />
-      <v-select
-        v-model="pathDerivationModel"
-        :items="pathLevels"
-        label="which account do you want to use?"
-      />
-      <v-btn @click="generateMnemonic">
-        Generate New
-      </v-btn>
-      <v-btn @click="setWallet">
-        Set Wallet
-      </v-btn>
-    </v-form>
+    <v-tabs grow v-model="tabsIndex">
+      <v-tab ripple>Wallet</v-tab>
+      <v-tab ripple>Settings</v-tab>
+      <v-tab ripple>Funding</v-tab>
+      <v-tab-item> <wallet-basic /> </v-tab-item>
+      <v-tab-item> <wallet-settings /> </v-tab-item>
+      <v-tab-item> <wallet-funding /> </v-tab-item>
+    </v-tabs>
   </span>
 </template>
 
 <script>
-import { mapGetters, mapActions, mapMutations } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
+import WalletBasic from '@/components/wallet/WalletBasic'
+import WalletSettings from '@/components/wallet/WalletSettings'
+import WalletFunding from '@/components/wallet/WalletFunding'
 
 export default {
-  data() {
-    return {
-      customMnemonic: false,
-      password: '',
-      passwordRules: [v => !!v || 'must be non empty value'],
-      pathLevels: [
-        '0',
-        '1',
-        '2',
-        '3',
-        '4',
-        '5',
-        '6',
-        '7',
-        '8',
-        '9',
-        '10',
-        '11',
-        '12',
-        '13'
-      ]
-    }
+  components: {
+    WalletBasic,
+    WalletSettings,
+    WalletFunding
   },
   computed: {
-    ...mapGetters(['address', 'mnemonic', 'accountReady', 'pathDerivation']),
-    mnemonicModel: {
+    ...mapGetters(['walletTabs', 'accountReady']),
+    tabsIndex: {
       get() {
-        return this.mnemonic
+        return this.walleTabs
       },
-      set(val) {
-        this.setMnemonic(val)
-      }
-    },
-    pathDerivationModel: {
-      get() {
-        return this.pathDerivation.split('/').slice(-1)[0]
-      },
-      set(pathLevel) {
-        this.setPathDerivation(`m/44'/60'/0'/0/${pathLevel}`)
+      set(index) {
+        return this.setWalletTabs(index)
       }
     }
   },
   methods: {
-    ...mapActions(['generateMnemonic', 'encryptAndSaveWallet']),
-    ...mapMutations(['setMnemonic', 'setPathDerivation']),
-    clearWalletForm() {
-      this.$refs['wallet-form'].reset()
-    },
-    setWallet() {
-      if (this.$refs['wallet-form'].validate()) {
-        this.encryptAndSaveWallet(this.password)
-        this.clearWalletForm()
-      }
-    }
+    ...mapActions(['setWalletTabs', 'generateMnemonic'])
   },
   mounted() {
     if (!this.accountReady) {

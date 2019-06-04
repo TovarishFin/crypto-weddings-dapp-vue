@@ -36,8 +36,12 @@ export const setConfirmTransactionOpen = (
   commit('setConfirmTransactionOpen', confirmTransactionOpen)
 }
 
-export const setWeddingInProgressTabs = ({ commit }, tabIndex) => {
-  commit('setWeddingInProgressTabs', tabIndex)
+export const setWeddingInProgressTabs = ({ commit }, tabsIndex) => {
+  commit('setWeddingInProgressTabs', tabsIndex)
+}
+
+export const setWalletTabs = ({ commit }, tabsIndex) => {
+  commit('setWalletTabs', tabsIndex)
 }
 
 export const setShowTransactions = ({ commit }, showTransactions) => {

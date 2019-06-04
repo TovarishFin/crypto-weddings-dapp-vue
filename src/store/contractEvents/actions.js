@@ -1,5 +1,5 @@
 import router from '@/router'
-import { ethers } from 'ethers'
+import { ethers, utils } from 'ethers'
 import { abi } from 'crypto-weddings-contracts/build/WeddingManager'
 import deployments from 'crypto-weddings-contracts/deployments'
 
@@ -8,7 +8,6 @@ export const watchWeddingManagerEvents = context => {
   const { weddingManager } = getters
 
   weddingManager.on('WeddingAdded', handleWeddingAdded(context))
-  weddingManager.on('WeddingRemoved', handleWeddingRemoved(context))
   weddingManager.on('VowsUpdated', handleVowsUpdated(context))
   weddingManager.on('PartnerAccepts', handlePartnerAccepts(context))
   weddingManager.on('PartnerDivorces', handlePartnerDivorces(context))
@@ -18,6 +17,22 @@ export const watchWeddingManagerEvents = context => {
   weddingManager.on('Divorced', handleDivorced(context))
   weddingManager.on('GiftReceived', handleGiftReceived(context))
   weddingManager.on('GiftClaimed', handleGiftClaimed(context))
+}
+
+export const unwatchWeddingManagerEvents = ({ getters }) => {
+  const { weddingManager } = getters
+
+  weddingManager.removeAllListeners('WeddingAdded')
+  weddingManager.removeAllListeners('WeddingRemoved')
+  weddingManager.removeAllListeners('VowsUpdated')
+  weddingManager.removeAllListeners('PartnerAccepts')
+  weddingManager.removeAllListeners('PartnerDivorces')
+  weddingManager.removeAllListeners('WeddingPhotoUpdated')
+  weddingManager.removeAllListeners('WeddingCancelled')
+  weddingManager.removeAllListeners('Married')
+  weddingManager.removeAllListeners('Divorced')
+  weddingManager.removeAllListeners('GiftReceived')
+  weddingManager.removeAllListeners('GiftClaimed')
 }
 
 export const handleWeddingAdded = ({ dispatch, rootGetters }) => (
@@ -36,42 +51,27 @@ export const handleWeddingAdded = ({ dispatch, rootGetters }) => (
   }
 }
 
-export const handleWeddingRemoved = ({ dispatch, rootGetters, commit }) => (
-  wedding,
-  partner1,
-  partner2
-) => {
-  const { weddingCursor, address } = rootGetters
-
-  commit('removeWedding', wedding)
-
-  if (address === partner1 || address === partner2) {
-    dispatch('mapUserToWedding')
-    dispatch('createNotification', 'Your wedding has been removed!')
-  } else if (wedding === weddingCursor) {
-    dispatch('createNotification', 'The wedding has been removed!')
-  }
-}
-
 export const handleVowsUpdated = ({ dispatch, rootGetters }) => (
   wedding,
   partner
 ) => {
   const { weddingCursor, address, userPartner } = rootGetters
 
-  if (address === partner) {
+  if (partner === address) {
     dispatch('getVows', wedding)
     dispatch('createNotification', 'Your wedding vows have been updated!')
-  } else if (address === userPartner) {
+  } else if (partner === userPartner) {
+    const { wedding: weddingGetter } = rootGetters
+    const { partner1, p1Name, p2Name } = weddingGetter(wedding)
+    const name = userPartner === partner1 ? p1Name : p2Name
     dispatch('getVows', wedding)
-    dispatch(
-      'createNotification',
-      "Your partner's wedding vows have been updated!"
-    )
-  } else if (weddingCursor === wedding) {
+    dispatch('createNotification', `${name}'s wedding vows have been updated!`)
+  } else if (wedding === weddingCursor) {
+    const { wedding: weddingGetter } = rootGetters
+    const { partner1, p1Name, p2Name } = weddingGetter(wedding)
+    const name = partner === partner1 ? p1Name : p2Name
     dispatch('getVows', wedding)
-    // TODO: retrieve name from already existing contract data and use in message
-    dispatch('createNotification', 'one of them has updated their vows!')
+    dispatch('createNotification', `${name}'s wedding vows have been updated!`)
   }
 }
 
@@ -81,16 +81,21 @@ export const handlePartnerAccepts = ({ rootGetters, dispatch }) => (
 ) => {
   const { weddingCursor, address, userPartner } = rootGetters
 
-  if (address === partner) {
+  if (partner === address) {
     dispatch('getAnswers', wedding)
     dispatch('createNotification', 'You have said yes!')
-  } else if (address === userPartner) {
+  } else if (partner === userPartner) {
+    const { wedding: weddingGetter } = rootGetters
+    const { partner1, p1Name, p2Name } = weddingGetter(wedding)
+    const name = userPartner === partner1 ? p1Name : p2Name
     dispatch('getAnswers', wedding)
-    dispatch('createNotification', 'Your partner has said yes!')
+    dispatch('createNotification', `${name} has said yes!`)
   } else if (weddingCursor === wedding) {
+    const { wedding: weddingGetter } = rootGetters
+    const { partner1, p1Name, p2Name } = weddingGetter(wedding)
+    const name = partner === partner1 ? p1Name : p2Name
     dispatch('getAnswers', wedding)
-    // TODO: retrieve name from already existing contract data and use in message
-    dispatch('createNotification', 'one of them has said yes!')
+    dispatch('createNotification', `${name} has said yes!`)
   }
 }
 
@@ -100,12 +105,22 @@ export const handleWeddingCancelled = ({ rootGetters, dispatch, commit }) => (
 ) => {
   const { weddingCursor, address, userPartner } = rootGetters
 
-  if (address === cancellor) {
+  if (cancellor === address) {
     commit('removeWedding', wedding)
+    dispatch('getCompleteWeddingData', wedding)
+    dispatch('mapUserToWedding')
     dispatch('createNotification', 'You have said no!')
-  } else if (address === userPartner) {
+  } else if (cancellor === userPartner) {
+    const { wedding: weddingGetter } = rootGetters
+    const { partner1, p1Name, p2Name } = weddingGetter(wedding)
+    const name = userPartner === partner1 ? p1Name : p2Name
     commit('removeWedding', wedding)
-    dispatch('createNotification', 'Your partner has said no!')
+    dispatch('getCompleteWeddingData', wedding)
+    dispatch('mapUserToWedding')
+    dispatch(
+      'createNotification',
+      `${name} has said no and the wedding is cancelled!`
+    )
   } else if (wedding === weddingCursor) {
     commit('removeWedding', wedding)
     dispatch('createNotification', 'The wedding has been cancelled!')
@@ -120,12 +135,22 @@ export const handleMarried = ({ rootGetters, dispatch }) => (
   const { address, weddingCursor } = rootGetters
 
   if (address === partner1 || address === partner2) {
+    const { wedding: weddingGetter } = rootGetters
+    const { p1Name, p2Name } = weddingGetter(wedding)
+    const name = address === partner1 ? p2Name : p1Name
     dispatch('getMarried', wedding)
-    dispatch('createNotification', 'Your partner has said no!')
+    dispatch(
+      'createNotification',
+      `You are now married to ${name} on the blockchain, congratulations!`
+    )
   } else if (wedding === weddingCursor) {
+    const { wedding: weddingGetter } = rootGetters
+    const { p1Name, p2Name } = weddingGetter(wedding)
     dispatch('getMarried', wedding)
-    // TODO: get names and use in the notification...
-    dispatch('createNotification', 'they are married!')
+    dispatch(
+      'createNotification',
+      `${p1Name} and ${p2Name} are now married on the blockchain!`
+    )
   }
 }
 
@@ -135,16 +160,18 @@ export const handlePartnerDivorces = ({ rootGetters, dispatch }) => (
 ) => {
   const { weddingCursor, address, userPartner } = rootGetters
 
-  if (address === partner) {
+  if (partner === address) {
     dispatch('getAnswers', wedding)
-    dispatch('createNotification', 'You have submitted your divorce!')
-  } else if (address === userPartner) {
+    dispatch('createNotification', 'You have submitted a divorce.')
+  } else if (partner === userPartner) {
+    const { wedding: weddingGetter } = rootGetters
+    const { partner1, p1Name, p2Name } = weddingGetter(wedding)
+    const name = userPartner === partner1 ? p1Name : p2Name
     dispatch('getAnswers', wedding)
-    dispatch('createNotification', 'Your partner has submitted a divorce!')
+    dispatch('createNotification', `${name} has submitted a divorce.`)
   } else if (wedding === weddingCursor) {
     dispatch('getAnswers', wedding)
-    // TODO: get names and use them here...
-    dispatch('createNotification', 'one of them has filed for divorce...')
+    dispatch('createNotification', 'one of the two has submited a divorce.')
   }
 }
 
@@ -159,7 +186,7 @@ export const handleWeddingPhotoUpdated = ({
   }
 }
 
-export const handleDivorced = ({ rootGetters, dispatch }) => (
+export const handleDivorced = ({ commit, rootGetters, dispatch }) => (
   wedding,
   partner1,
   partner2
@@ -171,6 +198,9 @@ export const handleDivorced = ({ rootGetters, dispatch }) => (
     address === partner2 ||
     weddingCursor === wedding
   ) {
+    commit('removeWedding', wedding)
+    dispatch('getCompleteWeddingData', wedding)
+    dispatch('mapUserToWedding')
     dispatch('getCompleteWeddingData', wedding)
     dispatch('createNotification', 'Divorce complete.')
   }
@@ -178,23 +208,16 @@ export const handleDivorced = ({ rootGetters, dispatch }) => (
 
 export const handleGiftReceived = ({ rootGetters, dispatch }) => (
   wedding,
-  gifter,
-  _,
-  message
+  gifter
 ) => {
-  // TODO: make a setting which will dictate whether or not messages are shown...
   const { weddingCursor, address } = rootGetters
 
-  // TODO: will need to do something else here as well in order to record events and display them...
   if (gifter === address) {
     dispatch('getGiftBalance', wedding)
     dispatch('createNotification', 'Your gift has been sent!')
   } else if (weddingCursor === wedding) {
     dispatch('getGiftBalance', wedding)
-    dispatch(
-      'createNotification',
-      `a gift has been sent! The message is: ${message}`
-    )
+    dispatch('createNotification', 'a gift has been sent!')
   }
 }
 
@@ -208,21 +231,22 @@ export const handleGiftClaimed = ({ rootGetters, dispatch }) => (
     dispatch('getGiftBalance', wedding)
     dispatch('createNotification', 'You have claimed the wedding gifts!')
   } else if (userPartner === claimer) {
+    const { wedding: weddingGetter } = rootGetters
+    const { partner1, p1Name, p2Name } = weddingGetter(wedding)
+    const name = userPartner === partner1 ? p1Name : p2Name
     dispatch('getGiftBalance', wedding)
-    dispatch(
-      'createNotification',
-      'Your partner has claimed the wedding gifts!'
-    )
+    dispatch('createNotification', `${name} has claimed the wedding gifts!`)
   }
 }
 
+// TODO: event listeners need to be removed at when navigating away / to another wedding somehow...
 export const getWeddingGiftEvents = async (
   { rootGetters, commit },
   weddingAddress
 ) => {
   const { network } = rootGetters
   const {
-    [network]: { weddingManager: address }
+    [network]: { deploymentBlock, weddingManager: address }
   } = deployments
   // we need a fresh provider in order to not retrigger events
   const provider =
@@ -232,10 +256,9 @@ export const getWeddingGiftEvents = async (
 
   const wmr = new ethers.Contract(address, abi, provider)
   const filter = wmr.filters.GiftReceived(weddingAddress, null, null, null)
-  wmr.on(filter, (_, gifter, __, message) => {
-    commit('addGiftEvent', { weddingAddress, gifter, message })
+  wmr.on(filter, (wedding, gifter, bigValue, message) => {
+    const value = utils.formatEther(bigValue.toString())
+    commit('addGiftEvent', { wedding, gifter, value, message })
   })
-
-  // TODO: change this to a more reasonable number...
-  provider.resetEventsBlock(0)
+  provider.resetEventsBlock(deploymentBlock)
 }

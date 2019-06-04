@@ -6,5 +6,6 @@ export default {
   confirmTransactionOpen: false,
   weddingInProgressTabs: 0,
   weddingMarriedTabs: 0,
+  walletTabs: 0,
   showTransactions: false
 }

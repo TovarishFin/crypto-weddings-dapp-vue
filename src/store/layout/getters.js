@@ -14,4 +14,6 @@ export const weddingInProgressTabs = state => state.weddingInProgressTabs
 
 export const weddingMarriedTabs = state => state.weddingInProgressTabs
 
+export const walletTabs = state => state.walletTabs
+
 export const showTransactions = state => state.showTransactions

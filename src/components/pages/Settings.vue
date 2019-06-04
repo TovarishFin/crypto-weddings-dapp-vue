@@ -45,7 +45,6 @@ export default {
     }
   },
   methods: {
-    // TODO: implement pathDerivation...
     ...mapMutations(['setNetwork', 'setGasLimit', 'setPathDerivation'])
   }
 }
