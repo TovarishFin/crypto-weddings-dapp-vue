@@ -38,7 +38,6 @@ export const setPendingTransaction = (
   { commit, dispatch },
   { action, description, payload }
 ) => {
-  dispatch('getUserBalance')
   commit('setPendingAction', action)
   commit('setPendingActionDescription', description)
   commit('setPendingPayload', payload)
@@ -61,16 +60,6 @@ export const cancelTransaction = ({ dispatch, commit }) => {
   dispatch('setConfirmTransactionOpen', false)
 }
 
-export const getUserBalance = async ({ getters, rootGetters, commit }) => {
-  const { address } = getters
-  const { provider } = rootGetters
-
-  const balance = await provider.getBalance(address)
-  const etherBalance = parseFloat(utils.formatEther(balance.toString()))
-
-  commit('setUserBalance', etherBalance)
-}
-
 export const getUserQrCode = async ({ getters, commit }) => {
   const { address } = getters
 
@@ -88,4 +77,14 @@ export const sendEther = async ({ getters, dispatch }, { to, smallValue }) => {
   })
 
   dispatch('watchPendingTx', { tx, description: 'send ether' })
+}
+
+export const watchBalance = ({ rootGetters, getters, commit }) => {
+  const { address } = getters
+  const { provider } = rootGetters
+  provider.removeAllListeners(address)
+  provider.on(address, balance => {
+    const etherBalance = parseFloat(utils.formatEther(balance.toString()))
+    commit('setUserBalance', etherBalance)
+  })
 }

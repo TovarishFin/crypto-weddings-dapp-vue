@@ -6,7 +6,7 @@ const actionIdWatcher = store => {
           store.dispatch('setupWeddingManager')
           store.dispatch('mapUserToWedding')
           store.dispatch('getUserQrCode')
-          store.dispatch('getUserBalance')
+          store.dispatch('watchBalance')
         }
 
         break
