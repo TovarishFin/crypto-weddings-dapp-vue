@@ -77,3 +77,15 @@ export const getUserQrCode = async ({ getters, commit }) => {
   const qrCode = await QR.toDataURL(address)
   commit('setUserQrCode', qrCode)
 }
+
+export const sendEther = async ({ getters, dispatch }, { to, smallValue }) => {
+  const { wallet } = getters
+  const value = utils.parseEther(smallValue.toString())
+
+  const tx = await wallet.sendTransaction({
+    to,
+    value
+  })
+
+  dispatch('watchPendingTx', { tx, description: 'send ether' })
+}

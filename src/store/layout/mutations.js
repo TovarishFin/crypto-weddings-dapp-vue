@@ -43,7 +43,7 @@ export const setWeddingMarriedTabs = (state, tabsIndex) => {
 }
 
 export const setWalletTabs = (state, tabsIndex) => {
-  state.setWalletTabs = tabsIndex
+  state.walletTabs = tabsIndex
 }
 
 export const setShowTransactions = (state, showTransactions) => {

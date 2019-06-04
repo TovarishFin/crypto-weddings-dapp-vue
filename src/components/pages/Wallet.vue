@@ -27,7 +27,7 @@ export default {
     ...mapGetters(['walletTabs', 'accountReady']),
     tabsIndex: {
       get() {
-        return this.walleTabs
+        return this.walletTabs
       },
       set(index) {
         return this.setWalletTabs(index)

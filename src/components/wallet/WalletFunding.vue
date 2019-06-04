@@ -1,96 +1,81 @@
 <template>
   <span>
-    <v-form @submit="setWallet" ref="wallet-form" class="pt-4 pb-4">
-      <v-text-field
-        v-model="mnemonicModel"
-        label="mnemonic"
-        :disabled="!customMnemonic"
-      />
-      <v-text-field :value="address" label="address" disabled />
+    <v-text-field
+      readonly
+      :value="address"
+      label="copy your address to clipboard"
+      prepend-icon="mdi-content-copy"
+      @click:prepend="copyAddressToClipboad"
+    />
 
+    <v-img :src="userQrCode" contain width="300">
+      <template v-slot:placeholder>
+        <v-layout fill-height align-center justify-center ma-0>
+          <v-progress-circular indeterminate />
+        </v-layout>
+      </template>
+    </v-img>
+
+    <v-form @submit="validateAndSendEther" ref="send-form" class="pt-4 pb-4">
       <v-text-field
-        v-model="password"
-        label="password"
-        placeholder=""
-        :rules="passwordRules"
-        type="password"
+        v-model="recipient"
+        label="address to send ether to"
+        :rules="recipientRules"
+        type="text"
         required
       />
-      <v-checkbox v-model="customMnemonic" label="use custom mnemonic" />
-      <v-select
-        v-model="pathDerivationModel"
-        :items="pathLevels"
-        label="which account do you want to use?"
+
+      <v-text-field
+        v-model="smallValue"
+        label="amount in ether to send"
+        :rules="valueRules"
+        type="text"
+        required
       />
-      <v-btn @click="generateMnemonic">
-        Generate New
-      </v-btn>
+
       <v-btn type="submit">
-        Set Wallet
+        send ether
       </v-btn>
     </v-form>
   </span>
 </template>
 
 <script>
-import { mapGetters, mapActions, mapMutations } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   data() {
     return {
-      customMnemonic: false,
-      password: '',
-      passwordRules: [v => !!v || 'must be non empty value'],
-      pathLevels: [
-        '0',
-        '1',
-        '2',
-        '3',
-        '4',
-        '5',
-        '6',
-        '7',
-        '8',
-        '9',
-        '10',
-        '11',
-        '12',
-        '13'
-      ]
+      recipient: '',
+      to: '',
+      smallValue: 0,
+      recipientRules: [
+        v => this.isAddress(v) || 'recipient must be a valid ethereum address'
+      ],
+      valueRules: [v => parseFloat(v) > 0 || 'value must be greater than 0']
     }
   },
   computed: {
-    ...mapGetters(['address', 'mnemonic', 'accountReady', 'pathDerivation']),
-    mnemonicModel: {
-      get() {
-        return this.mnemonic
-      },
-      set(val) {
-        this.setMnemonic(val)
-      }
-    },
-    pathDerivationModel: {
-      get() {
-        return this.pathDerivation.split('/').slice(-1)[0]
-      },
-      set(pathLevel) {
-        this.setPathDerivation(`m/44'/60'/0'/0/${pathLevel}`)
-      }
-    }
+    ...mapGetters(['address', 'userBalance', 'userQrCode'])
   },
   methods: {
-    ...mapActions(['generateMnemonic', 'encryptAndSaveWallet']),
-    ...mapMutations(['setMnemonic', 'setPathDerivation']),
-    clearWalletForm() {
-      this.$refs['wallet-form'].reset()
+    ...mapActions(['sendEther', 'createNotification']),
+    clearSendForm() {
+      this.$refs['send-form'].reset()
     },
-    setWallet() {
-      if (this.$refs['wallet-form'].validate()) {
-        this.encryptAndSaveWallet(this.password)
-        this.clearWalletForm()
+    validateAndSendEther(e) {
+      e.preventDefault()
+      if (this.$refs['send-form'].validate()) {
+        const { recipient: to, smallValue } = this
+        this.sendEther({ to, smallValue })
+
+        this.clearSendForm()
       }
+    },
+    copyAddressToClipboad() {
+      this.$copyText(this.address)
+      this.createNotification('ethereum address copied to clipboard')
     }
   }
 }
 </script>
-
