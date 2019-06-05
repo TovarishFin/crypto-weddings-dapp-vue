@@ -40,3 +40,7 @@ export const setAccountReady = (state, ready) => {
 export const setGasLimit = (state, gasLimit) => {
   state.gasLimit = gasLimit
 }
+
+export const setUseMetaMask = (state, useMetaMask) => {
+  state.useMetaMask = useMetaMask
+}

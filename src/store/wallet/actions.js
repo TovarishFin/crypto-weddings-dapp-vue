@@ -79,6 +79,29 @@ export const sendEther = async ({ getters, dispatch }, { to, smallValue }) => {
   dispatch('watchPendingTx', { tx, description: 'send ether' })
 }
 
+export const sweepEther = async ({ getters, rootGetters, dispatch }, to) => {
+  const { wallet } = getters
+  const { provider } = rootGetters
+  const gasLimit = 21000
+  const code = await provider.getCode(to)
+  if (code != '0x') {
+    return dispatch('createNotification', 'cannot withdraw funds to contract')
+  }
+
+  const balance = await wallet.getBalance()
+  const gasPrice = await provider.getGasPrice()
+  const value = balance.sub(gasPrice.mul(gasLimit))
+
+  const tx = await wallet.sendTransaction({
+    gasLimit,
+    gasPrice,
+    to,
+    value
+  })
+
+  dispatch('watchPendingTx', { tx, description: 'send ether' })
+}
+
 export const watchBalance = ({ rootGetters, getters, commit }) => {
   const { address } = getters
   const { provider } = rootGetters

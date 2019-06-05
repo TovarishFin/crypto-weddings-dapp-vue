@@ -5,7 +5,8 @@
         Activate Account
       </v-card-title>
 
-      <v-card-text>
+      <v-card-text v-if="!useMetaMask">
+        <v-switch v-model="useMetaMaskModel" :label="metamaskMessage" />
         <p class="subheading" v-if="encryptedMnemonicExists">
           An encrypted account has been detected. Please enter your password to
           continue.
@@ -20,6 +21,13 @@
           around, feel free to click "Don't Activate". You can Activate at any
           time by clicking the "Activate Account" button at the top right of the
           screen.
+        </p>
+      </v-card-text>
+      <v-card-text v-if="useMetaMask">
+        <v-switch v-model="useMetaMaskModel" :label="metamaskMessage" />
+        <p class="subheading">
+          In order to use MetMask you need to give permission. Click "Activate
+          MetaMask" below.
         </p>
       </v-card-text>
 
@@ -42,8 +50,7 @@
           required
         />
       </v-form>
-      <v-card-actions>
-        <v-spacer></v-spacer>
+      <v-card-actions v-if="!useMetaMask">
         <v-btn @click="continueWithoutPermission" color="secondary">
           Don't Activate Account
         </v-btn>
@@ -54,8 +61,22 @@
         >
           Unlock Account
         </v-btn>
-        <v-btn v-if="!encryptedMnemonicExists" color="primary" to="/wallet">
+        <v-btn
+          @click="setAccountRequestOpen(false)"
+          v-if="!encryptedMnemonicExists"
+          color="primary"
+          to="/wallet"
+        >
           Create Account
+        </v-btn>
+      </v-card-actions>
+      <v-card-actions v-if="useMetaMask">
+        <v-btn @click="continueWithoutPermission" color="secondary">
+          Don't Activate Account
+        </v-btn>
+
+        <v-btn color="primary" @click="setupWeb3Provider">
+          activate MetaMask
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -63,7 +84,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 
 export default {
   data() {
@@ -73,7 +94,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['accountRequestOpen', 'encryptedMnemonicExists']),
+    ...mapGetters([
+      'accountRequestOpen',
+      'encryptedMnemonicExists',
+      'useMetaMask'
+    ]),
     accountRequestOpenModel: {
       get() {
         return this.accountRequestOpen
@@ -82,13 +107,28 @@ export default {
         this.setAccountRequestOpen(accountRequestOpen)
       }
     },
-    // we leave this for now because we might want to enable metamask connections later as well
+    useMetaMaskModel: {
+      get() {
+        return this.useMetaMask
+      },
+      set(useMetaMask) {
+        this.setUseMetaMask(useMetaMask)
+      }
+    },
     metaMaskInstalled() {
       return !!window.web3 || !!window.ethereum
+    },
+    metamaskMessage() {
+      return this.useMetaMask ? 'disable MetaMask' : 'enable MetaMask'
     }
   },
   methods: {
-    ...mapActions(['setAccountRequestOpen', 'decryptAndLoadWallet']),
+    ...mapActions([
+      'setAccountRequestOpen',
+      'decryptAndLoadWallet',
+      'setupWeb3Provider'
+    ]),
+    ...mapMutations(['setUseMetaMask']),
     unlockWallet(e) {
       e.preventDefault()
       if (this.$refs['password-form'].validate()) {

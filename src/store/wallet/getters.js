@@ -9,9 +9,12 @@ export const encryptedMnemonicExists = state =>
 
 export const wallet = (_, getters, __, rootGetters) => {
   const { mnemonic, pathDerivation } = getters
-  const { provider } = rootGetters
+  const { provider, useMetaMask } = rootGetters
+
   try {
-    return mnemonic
+    return useMetaMask
+      ? provider.getSigner()
+      : mnemonic
       ? new ethers.Wallet.fromMnemonic(mnemonic, pathDerivation).connect(
           provider
         )
@@ -21,15 +24,14 @@ export const wallet = (_, getters, __, rootGetters) => {
   }
 }
 
-export const address = (_, getters) => {
-  const { mnemonic, pathDerivation } = getters
-  try {
-    return mnemonic
-      ? new ethers.Wallet.fromMnemonic(mnemonic, pathDerivation).address
-      : null
-  } catch (err) {
-    return null
-  }
+export const address = (_, getters, __, rootGetters) => {
+  const { wallet: currentWallet } = getters
+  const { useMetaMask } = rootGetters
+  return currentWallet
+    ? useMetaMask
+      ? window.ethereum.selectedAddress
+      : currentWallet.address
+    : null
 }
 
 export const mnemonic = state => pathOr(null, ['mnemonic'], state)

@@ -36,6 +36,10 @@
       <v-btn type="submit">
         send ether
       </v-btn>
+
+      <v-btn @click="validateAndSweepEther">
+        sweep ether
+      </v-btn>
     </v-form>
   </span>
 </template>
@@ -59,7 +63,7 @@ export default {
     ...mapGetters(['address', 'userBalance', 'userQrCode'])
   },
   methods: {
-    ...mapActions(['sendEther', 'createNotification']),
+    ...mapActions(['sendEther', 'sweepEther', 'createNotification']),
     clearSendForm() {
       this.$refs['send-form'].reset()
     },
@@ -71,6 +75,9 @@ export default {
 
         this.clearSendForm()
       }
+    },
+    validateAndSweepEther() {
+      this.sweepEther(this.recipient)
     },
     copyAddressToClipboad() {
       this.$copyText(this.address)

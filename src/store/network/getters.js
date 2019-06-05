@@ -9,12 +9,12 @@ export const network = state => pathOr('ropsten', ['network'], state)
 export const gasLimit = state => pathOr(5e6, ['gasLimit'], state)
 
 export const provider = (_, getters) => {
-  const { network: currentNetwork } = getters
-  if (currentNetwork === 'private') {
-    return new ethers.providers.JsonRpcProvider('http://localhost:8545')
-  } else {
-    return new ethers.getDefaultProvider(currentNetwork)
-  }
+  const { network: currentNetwork, useMetaMask: currentUseMetaMask } = getters
+  return currentNetwork === 'private'
+    ? new ethers.providers.JsonRpcProvider('http://localhost:8545')
+    : currentUseMetaMask
+    ? new ethers.providers.Web3Provider(window.web3.currentProvider)
+    : new ethers.getDefaultProvider(currentNetwork)
 }
 
 export const currentBlock = state => state.currentBlock
@@ -42,3 +42,5 @@ export const erroredTxs = state =>
   )
 
 export const hasPendingTxs = state => pendingTxs(state).length > 0
+
+export const useMetaMask = state => pathOr(false, ['useMetaMask'], state)

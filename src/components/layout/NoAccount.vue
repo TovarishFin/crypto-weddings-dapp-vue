@@ -5,7 +5,7 @@
     </v-flex>
     <v-flex xs12>
       <p class="display-1 text-uppercase">
-        Install Metamask or Unlock your account to get started...
+        Install MetaMask or Unlock your account to get started...
       </p>
     </v-flex>
   </v-layout>
