@@ -4,7 +4,7 @@
   "private": false,
   "scripts": {
     "clean:install": "rimraf node_modules && yarn install",
-    "serve": "vue-cli-service serve",
+    "serve:dev": "vue-cli-service serve",
     "build:dapp": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:e2e": "vue-cli-service test:e2e",

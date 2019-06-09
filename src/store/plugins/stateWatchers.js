@@ -23,6 +23,11 @@ const actionIdWatcher = store => {
         store.dispatch('bootstrapEth')
         break
 
+      case 'setMetaMaskPollingInterval':
+        clearInterval(store.getters.metaMaskPoller)
+        store.dispatch('watchMetaMask')
+        break
+
       default:
         break
     }

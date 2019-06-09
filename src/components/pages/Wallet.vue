@@ -1,6 +1,6 @@
 <template>
   <span>
-    <v-tabs grow v-model="tabsIndex">
+    <v-tabs v-if="!useMetaMask" grow v-model="tabsIndex">
       <v-tab ripple>Wallet</v-tab>
       <v-tab ripple>Settings</v-tab>
       <v-tab ripple>Funding</v-tab>
@@ -8,6 +8,20 @@
       <v-tab-item> <wallet-settings /> </v-tab-item>
       <v-tab-item> <wallet-funding /> </v-tab-item>
     </v-tabs>
+    <span v-if="useMetaMask" class="display-2">
+      <p class="display-2">
+        Built in Wallet Disabled
+      </p>
+
+      <p></p>
+      <p class="body-1">
+        Turn off <b class="accent--text">MetaMask</b> in
+        <router-link to="/settings">settings</router-link> to access the built
+        in wallet.
+      </p>
+
+      <p></p
+    ></span>
   </span>
 </template>
 
@@ -24,7 +38,7 @@ export default {
     WalletFunding
   },
   computed: {
-    ...mapGetters(['walletTabs', 'accountReady']),
+    ...mapGetters(['walletTabs', 'accountReady', 'useMetaMask']),
     tabsIndex: {
       get() {
         return this.walletTabs

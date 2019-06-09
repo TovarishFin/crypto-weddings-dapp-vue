@@ -6,5 +6,6 @@ export default {
   pendingActionDescription: '',
   pendingPayload: null,
   userBalance: 0,
-  userQrCode: ''
+  userQrCode: '',
+  metaMaskAddress: ''
 }

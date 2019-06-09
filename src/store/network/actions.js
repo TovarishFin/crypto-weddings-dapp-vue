@@ -1,26 +1,31 @@
+import { utils, constants } from 'ethers'
+import { pathOr } from 'ramda'
+import { networkIdToName } from '@/utils/data'
+
 // we do some state clearing here because we use this function not
 // only on start but also no account / network change
 export const bootstrapEth = async ({ commit, dispatch, getters }) => {
   const { encryptedMnemonicExists, useMetaMask } = getters
   commit('setProviderReady', false)
   commit('setAccountReady', false)
+  dispatch('watchMetaMask')
   commit('setProviderReady', true)
 
-  if (useMetaMask) {
-    if (!window.ethereum.selectedAddress) {
-      dispatch('setAccountRequestOpen', true)
-    } else {
-      commit('setAccountReady', true)
-    }
-  } else {
-    if (process.env.NODE_ENV === 'development') {
-      commit('setMnemonic', process.env.VUE_APP_MNEMONIC)
-      dispatch('encryptAndSaveWallet', process.env.VUE_APP_PASSWORD)
-    } else {
-      if (encryptedMnemonicExists) {
-        dispatch('setAccountRequestOpen', true)
-      }
-    }
+  if (useMetaMask && !window.ethereum.selectedAddress) {
+    dispatch('setAccountRequestOpen', true)
+  }
+
+  if (!useMetaMask && process.env.VUE_APP_AUTO_LOAD_WALLET) {
+    commit('setMnemonic', process.env.VUE_APP_MNEMONIC)
+    dispatch('encryptAndSaveWallet', process.env.VUE_APP_PASSWORD)
+  }
+
+  if (
+    !useMetaMask &&
+    encryptedMnemonicExists &&
+    !process.env.VUE_APP_AUTO_LOAD_WALLET
+  ) {
+    dispatch('setAccountRequestOpen', true)
   }
 
   await dispatch('setupWeddingManager')
@@ -54,6 +59,11 @@ export const watchPendingTx = ({ commit }, { tx, description }) => {
     )
 }
 
+export const clearTransactions = ({ dispatch, commit }) => {
+  commit('clearTransactions')
+  dispatch('createNotification', 'transactions cleared.')
+}
+
 export const setupWeb3Provider = async ({ dispatch, commit }) => {
   switch (true) {
     case !!window.ethereum:
@@ -71,4 +81,45 @@ export const setupWeb3Provider = async ({ dispatch, commit }) => {
       dispatch('createNotification', 'no metamask detected...')
       break
   }
+}
+
+export const watchMetaMask = async ({ getters, rootGetters, commit }) => {
+  const { metaMaskPollingInterval } = getters
+  const metaMaskPoller = setInterval(() => {
+    const { network, useMetaMask } = getters
+    const { metaMaskAddress } = rootGetters
+    const currentNetwork = networkIdToName(
+      pathOr(null, ['ethereum', 'networkVersion'], window)
+    )
+    const currentAddress = utils.getAddress(
+      pathOr(constants.AddressZero, ['ethereum', 'selectedAddress'], window)
+    )
+
+    if (network !== currentNetwork) {
+      if (useMetaMask) {
+        commit('setNetwork', currentNetwork)
+      }
+    }
+
+    if (metaMaskAddress !== currentAddress) {
+      commit('setMetaMaskAddress', currentAddress)
+
+      if (useMetaMask) {
+        commit('setAccountReady', true)
+      }
+    }
+  }, metaMaskPollingInterval)
+
+  commit('setMetaMaskPoller', metaMaskPoller)
+}
+
+export const setSkipConfirmations = (
+  { dispatch, commit },
+  skipConfirmations
+) => {
+  commit('setSkipConfirmations', skipConfirmations)
+  const message = skipConfirmations
+    ? 'blockchain transactions will now run with NO confirmations!'
+    : 'blockchain transactions will now require confirmations.'
+  dispatch('createNotification', message)
 }

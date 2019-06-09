@@ -16,7 +16,7 @@
       </template>
     </v-img>
 
-    <v-form @submit="validateAndSendEther" ref="send-form" class="pt-4 pb-4">
+    <v-form @submit="validateAndSweepEther" ref="send-form" class="pt-4 pb-4">
       <v-text-field
         v-model="recipient"
         label="address to send ether to"
@@ -25,19 +25,7 @@
         required
       />
 
-      <v-text-field
-        v-model="smallValue"
-        label="amount in ether to send"
-        :rules="valueRules"
-        type="text"
-        required
-      />
-
       <v-btn type="submit">
-        send ether
-      </v-btn>
-
-      <v-btn @click="validateAndSweepEther">
         sweep ether
       </v-btn>
     </v-form>
@@ -51,33 +39,25 @@ export default {
   data() {
     return {
       recipient: '',
-      to: '',
-      smallValue: 0,
       recipientRules: [
         v => this.isAddress(v) || 'recipient must be a valid ethereum address'
-      ],
-      valueRules: [v => parseFloat(v) > 0 || 'value must be greater than 0']
+      ]
     }
   },
   computed: {
     ...mapGetters(['address', 'userBalance', 'userQrCode'])
   },
   methods: {
-    ...mapActions(['sendEther', 'sweepEther', 'createNotification']),
-    clearSendForm() {
+    ...mapActions(['sweepEther', 'createNotification']),
+    clearSweepForm() {
       this.$refs['send-form'].reset()
     },
-    validateAndSendEther(e) {
+    validateAndSweepEther(e) {
       e.preventDefault()
       if (this.$refs['send-form'].validate()) {
-        const { recipient: to, smallValue } = this
-        this.sendEther({ to, smallValue })
-
-        this.clearSendForm()
+        this.sweepEther(this.recipient)
+        this.clearSweepForm()
       }
-    },
-    validateAndSweepEther() {
-      this.sweepEther(this.recipient)
     },
     copyAddressToClipboad() {
       this.$copyText(this.address)

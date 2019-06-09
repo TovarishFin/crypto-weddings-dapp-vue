@@ -35,7 +35,7 @@
 
       <v-form
         @submit="unlockWallet"
-        v-if="encryptedMnemonicExists"
+        v-if="encryptedMnemonicExists && !useMetaMask"
         ref="password-form"
         class="pa-2"
       >
@@ -144,7 +144,7 @@ export default {
     }
   },
   mounted() {
-    if (this.encryptedMnemonicExists) {
+    if (this.encryptedMnemonicExists && !this.useMetaMask) {
       this.$nextTick(this.$refs.pass.focus)
     }
   }

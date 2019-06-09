@@ -1,19 +1,47 @@
 <template>
   <span>
-    <v-btn @click="acceptProposal">
+    <v-btn @click="checkAndAcceptProposal">
       accept
     </v-btn>
-    <v-btn @click="rejectProposal">
+    <v-btn @click="checkAndRejectProposal">
       reject
     </v-btn>
+
+    <br />
+
+    <voice-input :matches="matches" />
   </span>
 </template>
 <script>
 import { mapActions } from 'vuex'
+import VoiceInput from '@/components/VoiceInput'
 
 export default {
+  components: {
+    VoiceInput
+  },
+  data() {
+    return {
+      matches: {
+        'i do': this.checkAndAcceptProposal,
+        'i do not': this.checkAndRejectProposal
+      }
+    }
+  },
   methods: {
-    ...mapActions(['acceptProposal', 'rejectProposal'])
+    ...mapActions(['setPendingTransaction']),
+    checkAndAcceptProposal() {
+      this.setPendingTransaction({
+        action: 'acceptProposal',
+        description: 'Say yes to getting married!'
+      })
+    },
+    checkAndRejectProposal() {
+      this.setPendingTransaction({
+        action: 'rejectProposal',
+        description: 'Say no to getting married!'
+      })
+    }
   }
 }
 </script>

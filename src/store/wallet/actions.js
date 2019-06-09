@@ -7,24 +7,27 @@ export const generateMnemonic = async ({ commit }) => {
   commit('setMnemonic', wallet.mnemonic)
 }
 
-export const encryptAndSaveWallet = ({ commit, getters }, password) => {
+export const encryptAndSaveWallet = (
+  { dispatch, commit, getters },
+  password
+) => {
   const { mnemonic } = getters
   const encrypted = AES.encrypt(mnemonic, password).toString()
   commit('setEncryptedMnemonic', encrypted)
-  commit('setAccountReady', true)
+  dispatch('decryptAndLoadWallet', password)
 }
 
 export const decryptAndLoadWallet = (
   { commit, getters, dispatch },
   password
 ) => {
-  const { encryptedMnemonic, pathDerivation } = getters
+  const { encryptedMnemonic } = getters
   try {
     const decrypted = AES.decrypt(encryptedMnemonic, password).toString(
       enc.Utf8
     )
-    const wallet = Wallet.fromMnemonic(decrypted, pathDerivation)
-    commit('setMnemonic', wallet.mnemonic)
+
+    commit('setMnemonic', decrypted)
     commit('setAccountReady', true)
     commit('setAccountRequestOpen', false)
   } catch {
@@ -35,13 +38,25 @@ export const decryptAndLoadWallet = (
 }
 
 export const setPendingTransaction = (
-  { commit, dispatch },
+  { rootGetters, commit, dispatch },
   { action, description, payload }
 ) => {
-  commit('setPendingAction', action)
-  commit('setPendingActionDescription', description)
-  commit('setPendingPayload', payload)
-  dispatch('setConfirmTransactionOpen', true)
+  const { skipConfirmations, accountReady } = rootGetters
+
+  if (accountReady) {
+    commit('setPendingAction', action)
+    commit('setPendingActionDescription', description)
+    commit('setPendingPayload', payload)
+
+    skipConfirmations
+      ? dispatch('confirmTransaction')
+      : dispatch('setConfirmTransactionOpen', true)
+
+    return
+  }
+
+  dispatch('setAccountRequestOpen', true)
+  dispatch('createNotification', 'you need an account to do that...')
 }
 
 export const confirmTransaction = ({ dispatch, commit, getters }) => {
@@ -62,18 +77,25 @@ export const cancelTransaction = ({ dispatch, commit }) => {
 
 export const getUserQrCode = async ({ getters, commit }) => {
   const { address } = getters
-
   const qrCode = await QR.toDataURL(address)
   commit('setUserQrCode', qrCode)
 }
 
-export const sendEther = async ({ getters, dispatch }, { to, smallValue }) => {
+export const sendEther = async (
+  { getters, rootGetters, dispatch },
+  { to, smallValue }
+) => {
   const { wallet } = getters
+  const { provider, customGasPrice } = rootGetters
   const value = utils.parseEther(smallValue.toString())
+  const gasPrice = parseInt(customGasPrice)
+    ? utils.parseUnits(customGasPrice, 'gwei')
+    : await provider.getGasPrice()
 
   const tx = await wallet.sendTransaction({
     to,
-    value
+    value,
+    gasPrice
   })
 
   dispatch('watchPendingTx', { tx, description: 'send ether' })
@@ -81,7 +103,7 @@ export const sendEther = async ({ getters, dispatch }, { to, smallValue }) => {
 
 export const sweepEther = async ({ getters, rootGetters, dispatch }, to) => {
   const { wallet } = getters
-  const { provider } = rootGetters
+  const { provider, customGasPrice } = rootGetters
   const gasLimit = 21000
   const code = await provider.getCode(to)
   if (code != '0x') {
@@ -89,7 +111,9 @@ export const sweepEther = async ({ getters, rootGetters, dispatch }, to) => {
   }
 
   const balance = await wallet.getBalance()
-  const gasPrice = await provider.getGasPrice()
+  const gasPrice = parseInt(customGasPrice)
+    ? utils.parseUnits(customGasPrice, 'gwei')
+    : await provider.getGasPrice()
   const value = balance.sub(gasPrice.mul(gasLimit))
 
   const tx = await wallet.sendTransaction({

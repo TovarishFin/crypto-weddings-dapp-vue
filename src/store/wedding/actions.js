@@ -177,30 +177,39 @@ export const getGiftBalance = async ({ getters, commit }, weddingAddress) => {
 
 export const updateVows = async ({ rootGetters, getters, dispatch }, vows) => {
   const { wallet, userWeddingCursor } = getters
+  const { gasLimit, customGasPrice } = rootGetters
   const wedding = new ethers.Contract(userWeddingCursor, abi, wallet)
-  const { gasLimit } = rootGetters
+  const config = parseInt(customGasPrice)
+    ? { gasLimit, gasPrice: utils.parseUnits(customGasPrice, 'gwei') }
+    : { gasLimit }
 
-  const tx = await wedding.updateVows(vows, { gasLimit })
+  const tx = await wedding.updateVows(vows, config)
 
   dispatch('watchPendingTx', { tx, description: 'update vows' })
 }
 
 export const acceptProposal = async ({ rootGetters, getters, dispatch }) => {
   const { wallet, userWeddingCursor } = getters
-  const { gasLimit } = rootGetters
+  const { gasLimit, customGasPrice } = rootGetters
   const wedding = new ethers.Contract(userWeddingCursor, abi, wallet)
+  const config = parseInt(customGasPrice)
+    ? { gasLimit, gasPrice: utils.parseUnits(customGasPrice, 'gwei') }
+    : { gasLimit }
 
-  const tx = await wedding.acceptProposal({ gasLimit })
+  const tx = await wedding.acceptProposal(config)
 
   dispatch('watchPendingTx', { tx, description: 'accept proposal' })
 }
 
 export const rejectProposal = async ({ rootGetters, getters, dispatch }) => {
   const { wallet, userWeddingCursor } = getters
-  const { gasLimit } = rootGetters
+  const { gasLimit, customGasPrice } = rootGetters
   const wedding = new ethers.Contract(userWeddingCursor, abi, wallet)
+  const config = parseInt(customGasPrice)
+    ? { gasLimit, gasPrice: utils.parseUnits(customGasPrice, 'gwei') }
+    : { gasLimit }
 
-  const tx = await wedding.rejectProposal({ gasLimit })
+  const tx = await wedding.rejectProposal(config)
 
   dispatch('watchPendingTx', { tx, description: 'reject proposal' })
 }
@@ -210,20 +219,26 @@ export const updateWeddingPhoto = async (
   weddingPhoto
 ) => {
   const { wallet, userWeddingCursor } = getters
-  const { gasLimit } = rootGetters
+  const { gasLimit, customGasPrice } = rootGetters
   const wedding = new ethers.Contract(userWeddingCursor, abi, wallet)
+  const config = parseInt(customGasPrice)
+    ? { gasLimit, gasPrice: utils.parseUnits(customGasPrice, 'gwei') }
+    : { gasLimit }
 
-  const tx = await wedding.updateWeddingPhoto(weddingPhoto, { gasLimit })
+  const tx = await wedding.updateWeddingPhoto(weddingPhoto, config)
 
   dispatch('watchPendingTx', { tx, description: 'update wedding photo' })
 }
 
 export const claimWeddingGifts = async ({ rootGetters, getters, dispatch }) => {
   const { wallet, userWeddingCursor } = getters
-  const { gasLimit } = rootGetters
+  const { gasLimit, customGasPrice } = rootGetters
   const wedding = new ethers.Contract(userWeddingCursor, abi, wallet)
+  const config = parseInt(customGasPrice)
+    ? { gasLimit, gasPrice: utils.parseUnits(customGasPrice, 'gwei') }
+    : { gasLimit }
 
-  const tx = await wedding.claimWeddingGifts({ gasLimit })
+  const tx = await wedding.claimWeddingGifts(config)
 
   dispatch('watchPendingTx', { tx, description: 'claim wedding gifts' })
 }
@@ -233,21 +248,27 @@ export const sendWeddingGift = async (
   { message, smallValue }
 ) => {
   const { wallet, weddingCursor } = getters
-  const { gasLimit } = rootGetters
-  const value = utils.parseEther(smallValue.toString(), 'wei')
+  const { gasLimit, customGasPrice } = rootGetters
   const wedding = new ethers.Contract(weddingCursor, abi, wallet)
+  const value = utils.parseEther(smallValue.toString(), 'wei')
+  const config = parseInt(customGasPrice)
+    ? { value, gasLimit, gasPrice: utils.parseUnits(customGasPrice, 'gwei') }
+    : { value, gasLimit }
 
-  const tx = await wedding.sendWeddingGift(message, { gasLimit, value })
+  const tx = await wedding.sendWeddingGift(message, config)
 
   dispatch('watchPendingTx', { tx, description: 'send wedding gift' })
 }
 
 export const divorce = async ({ rootGetters, getters, dispatch }) => {
   const { wallet, userWeddingCursor } = getters
-  const { gasLimit } = rootGetters
+  const { gasLimit, customGasPrice } = rootGetters
   const wedding = new ethers.Contract(userWeddingCursor, abi, wallet)
+  const config = parseInt(customGasPrice)
+    ? { gasLimit, gasPrice: utils.parseUnits(customGasPrice, 'gwei') }
+    : { gasLimit }
 
-  const tx = await wedding.divorce({ gasLimit })
+  const tx = await wedding.divorce(config)
 
   dispatch('watchPendingTx', { tx, description: 'divorce' })
 }

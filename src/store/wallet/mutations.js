@@ -33,3 +33,7 @@ export const setUserBalance = (state, userBalance) => {
 export const setUserQrCode = (state, userQrCode) => {
   state.userQrCode = userQrCode
 }
+
+export const setMetaMaskAddress = (state, metaMaskAddress) => {
+  state.metaMaskAddress = metaMaskAddress
+}

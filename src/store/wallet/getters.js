@@ -20,19 +20,21 @@ export const wallet = (_, getters, __, rootGetters) => {
         )
       : null
   } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(err)
     return null
   }
 }
 
-export const address = (_, getters, __, rootGetters) => {
-  const { wallet: currentWallet } = getters
-  const { useMetaMask } = rootGetters
-  return currentWallet
-    ? useMetaMask
-      ? window.ethereum.selectedAddress
-      : currentWallet.address
-    : null
-}
+export const ownAddress = (_, { wallet: currentWallet }) =>
+  pathOr(null, ['address'], currentWallet)
+
+export const address = (
+  _,
+  { metaMaskAddress: currentMetaMaskAddress, ownAddress: currentOwnAddress },
+  __,
+  { useMetaMask }
+) => (useMetaMask ? currentMetaMaskAddress : currentOwnAddress)
 
 export const mnemonic = state => pathOr(null, ['mnemonic'], state)
 
@@ -51,3 +53,5 @@ export const userBalance = state => pathOr(0, ['userBalance'], state)
 export const userHasGas = state => userBalance(state) >= 0.001
 
 export const userQrCode = state => pathOr(null, ['userQrCode'], state)
+
+export const metaMaskAddress = state => pathOr(null, ['metaMaskAddress'], state)

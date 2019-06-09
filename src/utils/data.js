@@ -21,7 +21,8 @@ export const weddingZero = {
 }
 
 export const networkIdToName = id => {
-  switch (id) {
+  const idInt = parseInt(id)
+  switch (idInt) {
     case 3:
       return 'ropsten'
     case 4:
@@ -31,7 +32,7 @@ export const networkIdToName = id => {
     case 1:
       return 'mainnet'
     default:
-      return 'mainnet'
+      return 'private'
   }
 }
 

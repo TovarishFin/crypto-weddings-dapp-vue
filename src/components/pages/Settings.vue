@@ -1,6 +1,7 @@
 <template>
   <span>
     <v-select
+      :disabled="useMetaMask"
       v-model="networkModel"
       :items="availableNetworks"
       label="select the network you want to use"
@@ -19,14 +20,62 @@
         <v-text-field v-model="gasLimitModel" class="mt-0" type="number" />
       </v-flex>
     </v-layout>
+
+    <v-switch
+      v-if="metaMaskInstalled"
+      v-model="useMetaMaskModel"
+      :label="metamaskMessage"
+    />
+
+    <v-switch
+      v-model="skipConfirmationsModel"
+      :label="skipConfirmationsMessage"
+    />
+
+    <v-text-field
+      v-model="metaMaskPollingIntervalModel"
+      label="interval in milliseconds to check metamask changes"
+      type="number"
+    />
+
+    <v-text-field
+      v-model="customGasPriceModel"
+      label="custom gas price in gwei for txs"
+      type="number"
+    />
+
+    <p class="body-1">
+      You can check gas prices
+      <a target="_blank" href="https://www.ethgasstation.info/">here</a>
+    </p>
+
+    <v-btn color="secondary" @click="clearTransactions">
+      clear transaction history
+    </v-btn>
   </span>
 </template>
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters(['network', 'gasLimit', 'availableNetworks']),
+    ...mapGetters([
+      'network',
+      'gasLimit',
+      'customGasPrice',
+      'availableNetworks',
+      'useMetaMask',
+      'metaMaskPollingInterval',
+      'skipConfirmations'
+    ]),
+    useMetaMaskModel: {
+      get() {
+        return this.useMetaMask
+      },
+      set(useMetaMask) {
+        this.setUseMetaMask(useMetaMask)
+      }
+    },
     networkModel: {
       get() {
         return this.network
@@ -42,10 +91,53 @@ export default {
       set(gasLimit) {
         this.setGasLimit(gasLimit)
       }
+    },
+    customGasPriceModel: {
+      get() {
+        return this.customGasPrice
+      },
+      set(customGasPrice) {
+        this.setCustomGasPrice(customGasPrice)
+      }
+    },
+    metaMaskPollingIntervalModel: {
+      get() {
+        return this.metaMaskPollingInterval
+      },
+      set(metaMaskPollingInterval) {
+        this.setMetaMaskPollingInterval(metaMaskPollingInterval)
+      }
+    },
+    skipConfirmationsModel: {
+      get() {
+        return this.skipConfirmations
+      },
+      set(skipConfirmations) {
+        this.setSkipConfirmations(skipConfirmations)
+      }
+    },
+    metaMaskInstalled() {
+      return !!window.web3 || !!window.ethereum
+    },
+    metamaskMessage() {
+      return this.useMetaMask ? 'disable MetaMask' : 'enable MetaMask'
+    },
+    skipConfirmationsMessage() {
+      return this.skipConfirmations
+        ? 'do not skip confirmations'
+        : 'skip confirmations'
     }
   },
   methods: {
-    ...mapMutations(['setNetwork', 'setGasLimit', 'setPathDerivation'])
+    ...mapMutations([
+      'setNetwork',
+      'setGasLimit',
+      'setCustomGasPrice',
+      'setPathDerivation',
+      'setUseMetaMask',
+      'setMetaMaskPollingInterval'
+    ]),
+    ...mapActions(['clearTransactions', 'setSkipConfirmations'])
   }
 }
 </script>

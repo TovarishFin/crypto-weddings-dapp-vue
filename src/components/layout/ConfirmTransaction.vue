@@ -40,7 +40,7 @@
           Send ether to your account either through the qr code below or direcly
           using the address.
         </p>
-        <v-img :src="userQrCode" />
+        <v-img width="300" :src="userQrCode" />
         <p class="subheading">address: {{ address }}</p>
       </v-card-text>
 

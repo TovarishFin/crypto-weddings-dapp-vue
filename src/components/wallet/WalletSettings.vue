@@ -4,7 +4,7 @@
       <v-text-field
         v-model="mnemonicModel"
         label="mnemonic"
-        :disabled="!customMnemonic"
+        :readonly="!customMnemonic"
       />
       <v-text-field :value="address" label="address" disabled />
 

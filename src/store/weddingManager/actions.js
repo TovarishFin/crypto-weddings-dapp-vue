@@ -1,4 +1,4 @@
-import { ethers } from 'ethers'
+import { ethers, utils } from 'ethers'
 import deployments from 'crypto-weddings-contracts/deployments'
 import { abi } from 'crypto-weddings-contracts/build/WeddingManager'
 
@@ -21,15 +21,17 @@ export const startWedding = async (
   { name1, name2, partner2, weddingType }
 ) => {
   const { weddingManager } = getters
-  const { gasLimit } = rootGetters
+  const { gasLimit, customGasPrice } = rootGetters
+  const config = parseInt(customGasPrice)
+    ? { gasLimit, gasPrice: utils.parseUnits(customGasPrice, 'gwei') }
+    : { gasLimit }
+
   const tx = await weddingManager.startWedding(
     name1,
     partner2,
     name2,
     weddingType,
-    {
-      gasLimit
-    }
+    config
   )
 
   dispatch('watchPendingTx', { tx, description: 'start wedding' })
