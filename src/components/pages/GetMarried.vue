@@ -18,13 +18,15 @@
       type="text"
       required
     />
-    <v-text-field
+
+    <qr-code-input
       v-model="partnerAddress"
       label="partner address"
       :rules="addressRules"
       type="text"
       required
     />
+
     <v-select
       v-model="weddingType"
       :items="weddingTypes"
@@ -39,6 +41,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import { weddingTypeToEnum } from '@/utils/data'
+import QrCodeInput from '@/components/QrCodeInput'
 
 export default {
   data() {
@@ -58,6 +61,9 @@ export default {
       nameRules: [v => !!v || 'name must be non-empty value'],
       addressRules: [v => this.isAddress(v) || 'must be a valid address']
     }
+  },
+  components: {
+    QrCodeInput
   },
   computed: {
     ...mapGetters(['address'])

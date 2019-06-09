@@ -39,7 +39,8 @@ export default {
   mounted() {
     const SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition
-    this.recognition = new SpeechRecognition()
+
+    this.recognition = SpeechRecognition ? new SpeechRecognition() : null
   },
   methods: {
     setError() {
