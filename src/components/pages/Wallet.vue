@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <div class="padded-element">
     <v-tabs v-if="!useMetaMask" grow v-model="tabsIndex">
       <v-tab ripple>Wallet</v-tab>
       <v-tab ripple>Settings</v-tab>
@@ -22,7 +22,7 @@
 
       <p></p
     ></span>
-  </span>
+  </div>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <div class="padded-element">
     <v-select
       :disabled="useMetaMask"
       v-model="networkModel"
@@ -52,7 +52,7 @@
     <v-btn color="secondary" @click="clearTransactions">
       clear transaction history
     </v-btn>
-  </span>
+  </div>
 </template>
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex'

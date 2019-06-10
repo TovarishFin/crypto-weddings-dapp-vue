@@ -4,7 +4,7 @@
     <app-toolbar />
 
     <v-content>
-      <v-container fluid>
+      <v-container fluid pa-0 class="full-height">
         <v-slide-y-transition mode="out-in">
           <router-handler />
         </v-slide-y-transition>
@@ -48,3 +48,11 @@ export default {
   }
 }
 </script>
+<style lang="styl">
+@import '~vuetify/src/stylus/settings/_variables'
+.padded-element
+  padding: $spacer
+
+.full-height-container
+  min-height: "calc(100vh - %s)" % ($toolbar-height + $footer-height)
+</style>

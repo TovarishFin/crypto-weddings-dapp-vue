@@ -1,6 +1,6 @@
 <template>
   <v-bottom-sheet v-model="showTransactionsModel">
-    <v-list class="mb-4">
+    <v-list>
       <v-subheader v-if="sentTxs.length === 0">
         No Transactions
       </v-subheader>

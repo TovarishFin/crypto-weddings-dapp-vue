@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <div class="padded-element">
     <p class="display-2">Basic Info</p>
     <p class="display-1">What is this site?</p>
     <p>
@@ -63,7 +63,7 @@
         </v-card>
       </v-expansion-panel-content>
     </v-expansion-panel>
-  </span>
+  </div>
 </template>
 
 <script>

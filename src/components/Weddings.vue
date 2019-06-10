@@ -1,6 +1,47 @@
 <template>
   <span>
-    <v-data-table :headers="headers" :items="weddingList" class="elevation-1">
+    <h2 class="title" ma-2>
+      Most Recent Weddings
+    </h2>
+    <v-list v-if="$vuetify.breakpoint.xs" two-line ripple>
+      <template v-for="wedding in weddingList">
+        <v-list-tile :key="`${wedding.partner1} + ${wedding.partner2}`">
+          <v-list-tile-content>
+            <v-list-tile-title>
+              status: {{ stageText[wedding.stage] }}
+            </v-list-tile-title>
+            <v-list-tile-sub-title>
+              partner 1: {{ wedding.p1Name }}
+            </v-list-tile-sub-title>
+            <v-list-tile-sub-title>
+              partner 2: {{ wedding.p2Name }}
+            </v-list-tile-sub-title>
+          </v-list-tile-content>
+
+          <v-list-tile-action-text>go to wedding</v-list-tile-action-text>
+
+          <v-list-tile-action>
+            <v-btn
+              icon
+              flat
+              color="primary"
+              @click="goToWedding(wedding.address)"
+            >
+              <v-icon>
+                mdi-walk
+              </v-icon>
+            </v-btn>
+          </v-list-tile-action>
+        </v-list-tile>
+      </template>
+    </v-list>
+
+    <v-data-table
+      v-if="$vuetify.breakpoint.smAndUp"
+      :headers="headers"
+      :items="weddingList"
+      class="elevation-1"
+    >
       <template v-slot:items="props">
         <td>
           <v-tooltip bottom>
@@ -24,7 +65,7 @@
         </td>
         <td>{{ stageText[props.item.stage] }}</td>
         <td>
-          <v-btn @click="goToWedding(props.item.address)">
+          <v-btn color="primary" @click="goToWedding(props.item.address)">
             go to wedding
           </v-btn>
         </td>

@@ -1,42 +1,44 @@
 <template>
-  <v-form
-    @submit="validateAndStartWedding"
-    ref="wedding-form"
-    class="pt-4 pb-4"
-  >
-    <v-text-field
-      v-model="name1"
-      label="your name"
-      :rules="nameRules"
-      type="text"
-      required
-    />
-    <v-text-field
-      v-model="name2"
-      label="partner name"
-      :rules="nameRules"
-      type="text"
-      required
-    />
+  <div class="padded-element">
+    <v-form
+      @submit="validateAndStartWedding"
+      ref="wedding-form"
+      class="pt-4 pb-4"
+    >
+      <v-text-field
+        v-model="name1"
+        label="your name"
+        :rules="nameRules"
+        type="text"
+        required
+      />
+      <v-text-field
+        v-model="name2"
+        label="partner name"
+        :rules="nameRules"
+        type="text"
+        required
+      />
 
-    <qr-code-input
-      v-model="partnerAddress"
-      label="partner address"
-      :rules="addressRules"
-      type="text"
-      required
-    />
+      <qr-code-input
+        v-model="partnerAddress"
+        label="partner address"
+        :rules="addressRules"
+        type="text"
+        required
+      />
 
-    <v-select
-      v-model="weddingType"
-      :items="weddingTypes"
-      label="wedding type"
-      required
-    />
-    <v-btn type="submit">
-      create wedding
-    </v-btn>
-  </v-form>
+      <v-select
+        v-model="weddingType"
+        :items="weddingTypes"
+        label="wedding type"
+        required
+      />
+      <v-btn type="submit">
+        create wedding
+      </v-btn>
+    </v-form>
+  </div>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'

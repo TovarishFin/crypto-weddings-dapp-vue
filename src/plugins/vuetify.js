@@ -11,7 +11,7 @@ import {
   VToolbar,
   transitions
 } from 'vuetify'
-import 'vuetify/src/stylus/app.styl'
+import '@/stylus/main.styl'
 
 Vue.use(Vuetify, {
   components: {

@@ -1,7 +1,7 @@
 <template>
-  <span>
+  <div class="padded-element">
     <component :is="weddingComponent" />
-  </span>
+  </div>
 </template>
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex'

@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 750 1334">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url("#linear-gradient");
+      }
+      .cls-2 {
+        fill: #fce6e9;
+      }
+      .cls-3 {
+        fill: #cb9ca1;
+      }
+      .cls-4 {
+        fill: url("#linear-gradient-2");
+      }
+      .cls-5 {
+        fill: url("#linear-gradient-3");
+      }
+      .cls-6 {
+        fill: url("#linear-gradient-4");
+      }
+      .cls-7 {
+        fill: url("#linear-gradient-5");
+      }
+      .cls-8 {
+        fill: #ffcdd2;
+      }
+      .cls-9 {
+        fill: url("#linear-gradient-6");
+      }
+      .cls-10 {
+        fill: url("#linear-gradient-7");
+      }
+      .cls-11 {
+        fill: url("#linear-gradient-8");
+      }
+      .cls-12 {
+        fill: url("#linear-gradient-9");
+      }
+      .cls-13 {
+        opacity: 0.85;
+        font-size: 60.04px;
+        font-family: Quasimoda-HairLine, Quasimoda;
+      }
+      .cls-14 {
+        letter-spacing: -0.01em;
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="372.72" y1="1011.95" x2="379.3" y2="17.49" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ecd0c0"/><stop offset="0.05" stop-color="#e9d0c1" stop-opacity="0.97"/><stop offset="0.11" stop-color="#e1d1c5" stop-opacity="0.88"/><stop offset="0.2" stop-color="#d4d2cb" stop-opacity="0.74"/><stop offset="0.29" stop-color="#c2d3d4" stop-opacity="0.55"/><stop offset="0.39" stop-color="#abd4df" stop-opacity="0.3"/><stop offset="0.5" stop-color="#8fd6ed" stop-opacity="0"/><stop offset="0.5" stop-color="#8fd6ed" stop-opacity="0"/><stop offset="0.51" stop-color="#8ed4eb" stop-opacity="0.04"/><stop offset="0.69" stop-color="#85c3d0" stop-opacity="0.45"/><stop offset="0.83" stop-color="#7fb7bc" stop-opacity="0.75"/><stop offset="0.94" stop-color="#7bafb0" stop-opacity="0.93"/><stop offset="1" stop-color="#79acab"/></linearGradient>
+    <linearGradient id="linear-gradient-2" x1="397" y1="457.23" x2="377.98" y2="426.18" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fce6e9"/><stop offset="0.85" stop-color="#fed1d6"/><stop offset="1" stop-color="#ffcdd2"/></linearGradient>
+    <linearGradient id="linear-gradient-3" x1="397.59" y1="498.79" x2="397.78" y2="470.5" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ffcdd2"/><stop offset="0.51" stop-color="#fdcbd0"/><stop offset="0.7" stop-color="#f6c5ca"/><stop offset="0.83" stop-color="#ebbabf"/><stop offset="0.93" stop-color="#daaaaf"/><stop offset="1" stop-color="#cb9ca1"/></linearGradient><linearGradient id="linear-gradient-4" x1="325.2" y1="462.28" x2="353.7" y2="439.61" xlink:href="#linear-gradient-2"/><linearGradient id="linear-gradient-5" x1="322.07" y1="507.17" x2="322.3" y2="470.56" xlink:href="#linear-gradient-3"/><linearGradient id="linear-gradient-6" x1="392.92" y1="539.67" x2="384.31" y2="505.04" xlink:href="#linear-gradient-3"/><linearGradient id="linear-gradient-7" x1="388.64" y1="504.79" x2="424.66" y2="481.36" xlink:href="#linear-gradient-2"/><linearGradient id="linear-gradient-8" x1="323.96" y1="538.52" x2="335.65" y2="504.8" xlink:href="#linear-gradient-3"/><linearGradient id="linear-gradient-9" x1="329.31" y1="503.71" x2="293.2" y2="480.42" xlink:href="#linear-gradient-2"/></defs>
+  <title>colors1</title>
+  <g id="backgr"><rect class="cls-1" width="750" height="1334"/></g>
+  <g id="Logo"><polygon class="cls-2" points="333.86 474.39 359.83 510.9 359.83 489.64 333.86 474.39"/><polygon class="cls-3" points="359.83 489.64 359.83 510.9 385.57 474.39 359.83 489.64"/><polygon class="cls-4" points="379.59 445.05 394.74 470.85 416 470.93 379.59 445.05"/><polygon class="cls-5" points="416 470.93 394.74 470.85 379.39 496.77 416 470.93"/><polygon class="cls-6" points="340.32 444.93 303.91 470.8 325.17 470.72 340.32 444.93"/><polygon class="cls-7" points="325.17 470.72 303.91 470.8 340.52 496.64 325.17 470.72"/><polygon class="cls-2" points="359.81 426.46 333.82 469.52 359.81 457.93 359.81 426.46"/><polygon class="cls-8" points="385.78 469.52 359.81 426.46 359.81 457.93 385.78 469.52"/><polygon class="cls-3" points="359.81 457.93 359.81 484.87 385.78 469.52 359.81 457.93"/><polygon class="cls-8" points="333.82 469.52 359.81 484.87 359.81 457.93 333.82 469.52"/><polygon class="cls-9" points="395.41 515.1 402.7 501.16 367.02 513.34 395.41 515.1"/><polygon class="cls-10" points="367.02 513.34 402.7 501.16 409.99 487.21 367.02 513.34"/><polygon class="cls-11" points="352.64 513.34 316.96 501.16 324.25 515.1 352.64 513.34"/><polygon class="cls-12" points="309.67 487.21 316.96 501.16 352.64 513.34 309.67 487.21"/>
+    <text class="cls-13" transform="translate(110 501.15)">cryp<tspan class="cls-14" x="115.4" y="0">t</tspan>
+      <tspan x="134.19" y="0" xml:space="preserve">o wedding</tspan>
+    </text>
+  </g>
+</svg>
