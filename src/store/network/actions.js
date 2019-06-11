@@ -15,7 +15,7 @@ export const bootstrapEth = async ({ commit, dispatch, getters }) => {
     dispatch('setAccountRequestOpen', true)
   }
 
-  if (!useMetaMask && process.env.VUE_APP_AUTO_LOAD_WALLET) {
+  if (!useMetaMask && process.env.VUE_APP_AUTO_LOAD_WALLET === 'true') {
     commit('setMnemonic', process.env.VUE_APP_MNEMONIC)
     dispatch('encryptAndSaveWallet', process.env.VUE_APP_PASSWORD)
   }
@@ -23,7 +23,7 @@ export const bootstrapEth = async ({ commit, dispatch, getters }) => {
   if (
     !useMetaMask &&
     encryptedMnemonicExists &&
-    !process.env.VUE_APP_AUTO_LOAD_WALLET
+    process.env.VUE_APP_AUTO_LOAD_WALLET !== 'true'
   ) {
     dispatch('setAccountRequestOpen', true)
   }

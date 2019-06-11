@@ -1,5 +1,10 @@
 <template>
-  <v-dialog v-model="accountRequestOpenModel" persistent width="500">
+  <v-dialog
+    :fullscreen="$vuetify.breakpoint.xsOnly"
+    v-model="accountRequestOpenModel"
+    width="500"
+    persistent
+  >
     <v-card>
       <v-card-title class="headline primary" primary-title>
         Activate Account
@@ -31,8 +36,6 @@
         </p>
       </v-card-text>
 
-      <v-divider v-if="!encryptedMnemonicExists"></v-divider>
-
       <v-form
         @submit="unlockWallet"
         v-if="encryptedMnemonicExists && !useMetaMask"
@@ -52,7 +55,7 @@
       </v-form>
       <v-card-actions v-if="!useMetaMask">
         <v-btn @click="continueWithoutPermission" color="secondary">
-          Don't Activate Account
+          Don't Activate
         </v-btn>
         <v-btn
           v-if="encryptedMnemonicExists"
@@ -72,7 +75,7 @@
       </v-card-actions>
       <v-card-actions v-if="useMetaMask">
         <v-btn @click="continueWithoutPermission" color="secondary">
-          Don't Activate Account
+          Don't Activate
         </v-btn>
 
         <v-btn color="primary" @click="setupWeb3Provider">

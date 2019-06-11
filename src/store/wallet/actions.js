@@ -43,11 +43,11 @@ export const setPendingTransaction = (
 ) => {
   const { skipConfirmations, accountReady } = rootGetters
 
-  if (accountReady) {
-    commit('setPendingAction', action)
-    commit('setPendingActionDescription', description)
-    commit('setPendingPayload', payload)
+  commit('setPendingAction', action)
+  commit('setPendingActionDescription', description)
+  commit('setPendingPayload', payload)
 
+  if (accountReady) {
     skipConfirmations
       ? dispatch('confirmTransaction')
       : dispatch('setConfirmTransactionOpen', true)

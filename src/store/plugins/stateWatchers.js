@@ -3,10 +3,11 @@ const actionIdWatcher = store => {
     switch (type) {
       case 'setAccountReady':
         if (payload) {
-          store.dispatch('setupWeddingManager')
-          store.dispatch('mapUserToWedding')
-          store.dispatch('getUserQrCode')
+          await store.dispatch('setupWeddingManager')
+          await store.dispatch('mapUserToWedding')
+          await store.dispatch('getUserQrCode')
           store.dispatch('watchBalance')
+          store.dispatch('setConfirmTransactionOpen', true)
         }
 
         break

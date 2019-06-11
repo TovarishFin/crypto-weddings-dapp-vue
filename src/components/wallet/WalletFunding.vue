@@ -1,14 +1,23 @@
 <template>
   <span>
-    <v-text-field
-      readonly
-      :value="address"
-      label="copy your address to clipboard"
-      prepend-icon="mdi-content-copy"
-      @click:prepend="copyAddressToClipboad"
-    />
+    <p class="subheading mt-4">Your Current Balance is: 𝝣 {{ userBalance }}</p>
 
-    <v-img :src="userQrCode" contain width="300">
+    <eth-address-display :shorten="$vuetify.breakpoint.xs" :address="address" />
+
+    <p class="title text-xs-center text-sm-left">
+      Your Address as a QR Code
+    </p>
+
+    <p class="subheading text-xs-center text-sm-left">
+      use for easy address sharing
+    </p>
+
+    <v-img
+      :class="$vuetify.breakpoint.xs ? 'centered-img' : ''"
+      :src="userQrCode"
+      width="300"
+      contain
+    >
       <template v-slot:placeholder>
         <v-layout fill-height align-center justify-center ma-0>
           <v-progress-circular indeterminate />
@@ -33,9 +42,14 @@
 </template>
 
 <script>
+// TODO: show the balance to the user... and perhaps a warning if no balance
 import { mapGetters, mapActions } from 'vuex'
+import EthAddressDisplay from '@/components/EthAddressDisplay'
 
 export default {
+  components: {
+    EthAddressDisplay
+  },
   data() {
     return {
       recipient: '',
@@ -48,7 +62,7 @@ export default {
     ...mapGetters(['address', 'userBalance', 'userQrCode'])
   },
   methods: {
-    ...mapActions(['sweepEther', 'createNotification']),
+    ...mapActions(['sweepEther']),
     clearSweepForm() {
       this.$refs['send-form'].reset()
     },
@@ -58,11 +72,11 @@ export default {
         this.sweepEther(this.recipient)
         this.clearSweepForm()
       }
-    },
-    copyAddressToClipboad() {
-      this.$copyText(this.address)
-      this.createNotification('ethereum address copied to clipboard')
     }
   }
 }
 </script>
+<style lang="styl" scoped>
+.centered-img
+  margin: auto
+</style>

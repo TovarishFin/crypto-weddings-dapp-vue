@@ -1,5 +1,10 @@
 <template>
-  <v-dialog v-model="confirmTransactionModel" persistent width="500">
+  <v-dialog
+    :fullscreen="$vuetify.breakpoint.xsOnly"
+    v-model="confirmTransactionModel"
+    width="500"
+    persistent
+  >
     <v-card v-if="userHasGas">
       <v-card-title class="headline primary" primary-title>
         Confirm Ethereum Transaction
@@ -21,7 +26,6 @@
       </v-card-text>
 
       <v-card-actions>
-        <v-spacer></v-spacer>
         <v-btn @click="confirmTransaction" color="primary">
           Confirm
         </v-btn>
@@ -41,13 +45,16 @@
           using the address.
         </p>
         <v-img width="300" :src="userQrCode" />
-        <p class="subheading">address: {{ address }}</p>
+
+        <eth-address-display
+          :shorten="$vuetify.breakpoint.xs"
+          :address="address"
+        />
       </v-card-text>
 
       <v-card-actions>
-        <v-spacer></v-spacer>
         <v-btn :href="buyEthLink" target="_blank" color="primary">
-          Buy Ether from X
+          Buy Ether
         </v-btn>
         <v-btn @click="cancelTransaction" color="cancel">
           Cancel
@@ -59,8 +66,12 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import EthAddressDisplay from '@/components/EthAddressDisplay'
 
 export default {
+  components: {
+    EthAddressDisplay
+  },
   data() {
     return {
       buyEthLink:

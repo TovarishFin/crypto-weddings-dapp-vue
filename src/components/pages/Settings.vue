@@ -8,7 +8,7 @@
     />
 
     <v-layout row wrap>
-      <v-flex xs9>
+      <v-flex xs9 pr-4>
         <v-slider
           v-model="gasLimitModel"
           min="21000"
@@ -16,6 +16,7 @@
           prepend-icon="mdi-gas-station"
         />
       </v-flex>
+
       <v-flex xs3>
         <v-text-field v-model="gasLimitModel" class="mt-0" type="number" />
       </v-flex>

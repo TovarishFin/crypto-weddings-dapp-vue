@@ -1,10 +1,15 @@
 <template>
   <span>
-    <v-text-field :value="mnemonic" label="mnemonic" readonly />
+    <v-textarea
+      :rows="$vuetify.breakpoint.xs ? 2 : 1"
+      :value="mnemonic"
+      label="mnemonic"
+      readonly
+    />
 
     <v-text-field :value="address" label="address" readonly />
 
-    <v-form @submit="setWallet" ref="wallet-form" class="pt-4 pb-4">
+    <v-form @submit="setWallet" ref="wallet-form" class="pb-4">
       <v-text-field
         v-model="password"
         label="password"
