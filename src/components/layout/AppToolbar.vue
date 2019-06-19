@@ -5,18 +5,41 @@
     <v-spacer />
     <v-progress-circular v-show="hasPendingTxs" indeterminate color="primary" />
     <v-btn
-      v-if="accountReady"
+      v-if="accountReady && $vuetify.breakpoint.smAndUp"
       @click="toggleShowTransactions"
       color="secondary"
     >
       {{ showTransactionsText }}
     </v-btn>
     <v-btn
-      v-if="!accountReady"
+      v-if="!accountReady && $vuetify.breakpoint.smAndUp"
       @click="setAccountRequestOpen(true)"
       color="secondary"
     >
       activate account
+    </v-btn>
+
+    <v-btn
+      v-if="accountReady && !$vuetify.breakpoint.smAndUp"
+      @click="toggleShowTransactions"
+      color="primary"
+      flat
+      icon
+    >
+      <v-icon>
+        mdi-format-list-bulleted
+      </v-icon>
+    </v-btn>
+    <v-btn
+      v-if="!accountReady && !$vuetify.breakpoint.smAndUp"
+      @click="setAccountRequestOpen(true)"
+      color="primary"
+      flat
+      icon
+    >
+      <v-icon>
+        mdi-account-plus
+      </v-icon>
     </v-btn>
   </v-toolbar>
 </template>

@@ -32,8 +32,8 @@
       </v-icon>
     </div>
 
-    <v-sheet class="full-height wedding-container">
-      <weddings id="weddings" />
+    <v-sheet id="weddings" class="full-height wedding-container">
+      <weddings />
     </v-sheet>
   </span>
 </template>
@@ -49,7 +49,7 @@ export default {
 <style lang="styl" scoped>
 @import '~vuetify/src/stylus/settings/_variables'
 .full-height
-  height: "calc(100vh - %s)" % ($toolbar-height + $footer-height)
+  height: "calc(100vh - %s)" % ($toolbar-height)
 
 .landing-screen
   position: relative

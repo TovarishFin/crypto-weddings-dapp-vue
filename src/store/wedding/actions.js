@@ -55,7 +55,6 @@ export const getCompleteWeddingData = async (
     p2Answer,
     married,
     dateMarried,
-    weddingType,
     stage,
     balance
   ] = await Promise.all([
@@ -70,7 +69,6 @@ export const getCompleteWeddingData = async (
     wedding.p2Answer(),
     wedding.married(),
     wedding.dateMarried(),
-    wedding.weddingType(),
     wedding.stage(),
     provider.getBalance(weddingAddress)
   ])
@@ -90,7 +88,6 @@ export const getCompleteWeddingData = async (
     dateMarried: moment(parseInt(dateMarried.toString()) * 1000).format(
       'dddd, MMMM, Do YYYY'
     ),
-    weddingType,
     stage: parseInt(stage.toString()),
     balance: utils.formatEther(balance.toString())
   })
@@ -184,7 +181,6 @@ export const updateVows = async ({ rootGetters, getters, dispatch }, vows) => {
     : { gasLimit }
 
   const tx = await wedding.updateVows(vows, config)
-
   dispatch('watchPendingTx', { tx, description: 'update vows' })
 }
 
@@ -271,4 +267,42 @@ export const divorce = async ({ rootGetters, getters, dispatch }) => {
   const tx = await wedding.divorce(config)
 
   dispatch('watchPendingTx', { tx, description: 'divorce' })
+}
+
+export const updateMinGiftAmount = async (
+  { rootGetters, getters, dispatch },
+  minGiftAmount
+) => {
+  const { wallet, userWeddingCursor } = getters
+  const { gasLimit, customGasPrice } = rootGetters
+  const wedding = new ethers.Contract(userWeddingCursor, abi, wallet)
+  const config = parseInt(customGasPrice)
+    ? { gasLimit, gasPrice: utils.parseUnits(customGasPrice, 'gwei') }
+    : { gasLimit }
+
+  const tx = await wedding.updateMinGiftAmount(
+    utils.parseEther(minGiftAmount.toString(), 'wei'),
+    config
+  )
+
+  dispatch('watchPendingTx', { tx, description: 'update minimum gift amount' })
+}
+
+export const updateUserPermissions = async (
+  { rootGetters, getters, dispatch },
+  { user, banned }
+) => {
+  const { wallet, userWeddingCursor } = getters
+  const { gasLimit, customGasPrice } = rootGetters
+  const wedding = new ethers.Contract(userWeddingCursor, abi, wallet)
+  const config = parseInt(customGasPrice)
+    ? { gasLimit, gasPrice: utils.parseUnits(customGasPrice, 'gwei') }
+    : { gasLimit }
+
+  const tx = await wedding.updateUserPermissions(user, banned, config)
+
+  dispatch('watchPendingTx', {
+    tx,
+    description: `${banned ? 'ban' : 'unban'} user`
+  })
 }

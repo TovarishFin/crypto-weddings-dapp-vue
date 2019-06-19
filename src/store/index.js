@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import { pathOr, dissocPath } from 'ramda'
 import Vuex, { Store } from 'vuex'
 import VuexPersistence from 'vuex-persist'
 import stateWatchers from './plugins/stateWatchers'
@@ -15,11 +16,14 @@ Vue.use(Vuex)
 const vuexLocal = new VuexPersistence({
   storage: window.localStorage,
   reducer: state => ({
-    layout: state.layout,
-    network: state.network,
+    layout: dissocPath(
+      ['confirmTransactionOpen'],
+      dissocPath(['accountRequestOpen'], pathOr({}, ['layout'], state))
+    ),
+    network: pathOr({}, ['network'], state),
     wallet: {
-      encryptedMnemonic: state.wallet.encryptedMnemonic,
-      pathDerivation: state.wallet.pathDerivation
+      encryptedMnemonic: pathOr(null, ['wallet', 'encryptedMnemonic'], state),
+      pathDerivation: pathOr(null, ['wallet', 'pathDerivation'], state)
     }
   })
 })

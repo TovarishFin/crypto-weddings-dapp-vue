@@ -6,10 +6,15 @@ const actionIdWatcher = store => {
           await store.dispatch('setupWeddingManager')
           await store.dispatch('mapUserToWedding')
           await store.dispatch('getUserQrCode')
+
           store.dispatch('watchBalance')
-          store.dispatch('setConfirmTransactionOpen', true)
+          store.dispatch('checkConfirmableTransactions')
         }
 
+        break
+
+      case 'setUseMetaMask':
+        store.dispatch('bootstrapEth')
         break
 
       case 'setWeddingCursor':

@@ -38,7 +38,7 @@
 
       <v-form
         @submit="unlockWallet"
-        v-if="encryptedMnemonicExists && !useMetaMask"
+        v-show="encryptedMnemonicExists && !useMetaMask"
         ref="password-form"
         class="pa-2"
       >

@@ -15,6 +15,7 @@ export const encryptAndSaveWallet = (
   const encrypted = AES.encrypt(mnemonic, password).toString()
   commit('setEncryptedMnemonic', encrypted)
   dispatch('decryptAndLoadWallet', password)
+  dispatch('createNotification', 'wallet has been saved!')
 }
 
 export const decryptAndLoadWallet = (

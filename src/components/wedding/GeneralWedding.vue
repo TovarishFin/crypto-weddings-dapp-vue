@@ -1,16 +1,18 @@
 <template>
   <span>
-    <p class="display-4">
-      Happily Married on:
-    </p>
-    <p class="display-1">{{ selectedWedding.dateMarried }}</p>
-    <v-img :src="selectedWedding.weddingPhoto" contain max-height="300">
-      <template v-slot:placeholder>
-        <v-layout fill-height align-center justify-center ma-0>
-          <v-progress-circular indeterminate />
-        </v-layout>
-      </template>
-    </v-img>
+    <span v-if="isMarried">
+      <p class="display-4">
+        Happily Married on:
+      </p>
+      <p class="display-1">{{ selectedWedding.dateMarried }}</p>
+      <v-img :src="selectedWedding.weddingPhoto" contain max-height="300">
+        <template v-slot:placeholder>
+          <v-layout fill-height align-center justify-center ma-0>
+            <v-progress-circular indeterminate />
+          </v-layout>
+        </template>
+      </v-img>
+    </span>
 
     <v-list two-line subheader>
       <v-subheader>{{ selectedWedding.p1Name }}</v-subheader>
@@ -95,7 +97,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['selectedWedding'])
+    ...mapGetters(['selectedWedding']),
+    isMarried() {
+      return this.selectedWedding.stage <= 2 ? false : true
+    }
   },
   methods: {
     ...mapActions(['sendWeddingGift']),

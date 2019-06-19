@@ -9,14 +9,6 @@ export default {
         '2': 'InProgress',
         '3': 'Married',
         '4': 'Divorced'
-      },
-      weddingType: {
-        '0': 'OtherAndOther',
-        '1': 'Traditional',
-        '2': 'ManAndMan',
-        '3': 'WomanAndWoman',
-        '4': 'ManAndOther',
-        '5': 'WomanAndOther'
       }
     }
   },

@@ -18,8 +18,6 @@
             </v-list-tile-sub-title>
           </v-list-tile-content>
 
-          <v-list-tile-action-text>go to wedding</v-list-tile-action-text>
-
           <v-list-tile-action>
             <v-btn
               icon
@@ -28,7 +26,7 @@
               @click="goToWedding(wedding.address)"
             >
               <v-icon>
-                mdi-walk
+                mdi-play
               </v-icon>
             </v-btn>
           </v-list-tile-action>

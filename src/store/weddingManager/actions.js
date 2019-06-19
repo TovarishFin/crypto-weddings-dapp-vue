@@ -18,7 +18,7 @@ export const setupWeddingManager = ({ commit, rootGetters }) => {
 
 export const startWedding = async (
   { getters, dispatch, rootGetters },
-  { name1, name2, partner2, weddingType }
+  { name1, name2, partner2 }
 ) => {
   const { weddingManager } = getters
   const { gasLimit, customGasPrice } = rootGetters
@@ -26,13 +26,7 @@ export const startWedding = async (
     ? { gasLimit, gasPrice: utils.parseUnits(customGasPrice, 'gwei') }
     : { gasLimit }
 
-  const tx = await weddingManager.startWedding(
-    name1,
-    partner2,
-    name2,
-    weddingType,
-    config
-  )
+  const tx = await weddingManager.startWedding(name1, partner2, name2, config)
 
   dispatch('watchPendingTx', { tx, description: 'start wedding' })
 }
@@ -61,7 +55,6 @@ export const getWeddings = async ({ getters, dispatch }) => {
 export const mapUserToWedding = async ({ getters, commit, rootGetters }) => {
   const { weddingManager } = getters
   const { address: userAddress } = rootGetters
-
   const weddingAddress = await weddingManager.weddingOf(userAddress)
 
   commit('setUserWeddingMap', { userAddress, weddingAddress })

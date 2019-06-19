@@ -16,7 +16,6 @@ export const weddingZero = {
   partner1: addressZero,
   partner2: addressZero,
   weddingPhoto: '',
-  weddingType: 0,
   stage: 0
 }
 
@@ -34,15 +33,6 @@ export const networkIdToName = id => {
     default:
       return 'private'
   }
-}
-
-export const weddingTypeToEnum = {
-  OtherAndOther: 0,
-  Traditional: 1,
-  ManAndMan: 2,
-  WomanAndWoman: 3,
-  ManAndOther: 4,
-  WomanAndOther: 5
 }
 
 export const shortenAddress = address =>

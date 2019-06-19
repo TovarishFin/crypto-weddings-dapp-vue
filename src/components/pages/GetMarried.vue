@@ -28,12 +28,6 @@
         required
       />
 
-      <v-select
-        v-model="weddingType"
-        :items="weddingTypes"
-        label="wedding type"
-        required
-      />
       <v-btn type="submit">
         create wedding
       </v-btn>
@@ -42,7 +36,6 @@
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import { weddingTypeToEnum } from '@/utils/data'
 import QrCodeInput from '@/components/QrCodeInput'
 
 export default {
@@ -51,15 +44,6 @@ export default {
       name1: '',
       name2: '',
       partnerAddress: '',
-      weddingTypes: [
-        'OtherAndOther',
-        'Traditional',
-        'ManAndMan',
-        'WomanAndWoman',
-        'ManAndOther',
-        'WomanAndOther'
-      ],
-      weddingType: '',
       nameRules: [v => !!v || 'name must be non-empty value'],
       addressRules: [v => this.isAddress(v) || 'must be a valid address']
     }
@@ -83,8 +67,7 @@ export default {
           payload: {
             name1: this.name1,
             name2: this.name2,
-            partner2: this.partnerAddress,
-            weddingType: weddingTypeToEnum[this.weddingType]
+            partner2: this.partnerAddress
           },
           description: 'start a wedding on the blockchain'
         })

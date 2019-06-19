@@ -15,12 +15,17 @@ export default {
     shorten: Boolean,
     address: {
       type: String
+    },
+    container: {
+      type: null
     }
   },
   methods: {
     ...mapActions(['createNotification']),
     copyAddressToClipboad() {
-      this.$copyText(this.address)
+      this.container
+        ? this.$copyText(this.address, this.container)
+        : this.$copyText(this.address)
       this.createNotification('ethereum address copied to clipboard')
     }
   }

@@ -19,10 +19,6 @@
         required
       />
 
-      <v-btn @click="generateMnemonic">
-        Generate New
-      </v-btn>
-
       <v-btn type="submit">
         Set Wallet
       </v-btn>
@@ -41,10 +37,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['address', 'mnemonic', 'accountReady', 'pathDerivation'])
+    ...mapGetters(['address', 'mnemonic'])
   },
   methods: {
-    ...mapActions(['generateMnemonic', 'encryptAndSaveWallet']),
+    ...mapActions(['encryptAndSaveWallet']),
     clearWalletForm() {
       this.$refs['wallet-form'].reset()
     },

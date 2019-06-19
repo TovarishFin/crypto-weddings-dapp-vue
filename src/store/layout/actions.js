@@ -36,6 +36,13 @@ export const setConfirmTransactionOpen = (
   commit('setConfirmTransactionOpen', confirmTransactionOpen)
 }
 
+export const checkConfirmableTransactions = ({ commit, rootGetters }) => {
+  const { pendingAction } = rootGetters
+  pendingAction
+    ? commit('setConfirmTransactionOpen', true)
+    : commit('setConfirmTransactionOpen', false)
+}
+
 export const setWeddingInProgressTabs = ({ commit }, tabsIndex) => {
   commit('setWeddingInProgressTabs', tabsIndex)
 }
@@ -46,4 +53,19 @@ export const setWalletTabs = ({ commit }, tabsIndex) => {
 
 export const setShowTransactions = ({ commit }, showTransactions) => {
   commit('setShowTransactions', showTransactions)
+}
+
+export const watchNotifications = ({ getters, commit }) => {
+  setInterval(() => {
+    const { notificationMessage } = getters
+    if (notificationMessage) {
+      commit('removeNotification')
+      commit('setNotificationOpen', false)
+      const { notificationMessage: newMessage } = getters
+
+      if (newMessage) {
+        setTimeout(() => commit('setNotificationOpen', true), 500)
+      }
+    }
+  }, 7000)
 }

@@ -4,6 +4,7 @@
     v-model="confirmTransactionModel"
     width="500"
     persistent
+    ref="confirm-dialog"
   >
     <v-card v-if="userHasGas">
       <v-card-title class="headline primary" primary-title>
@@ -44,12 +45,16 @@
           Send ether to your account either through the qr code below or direcly
           using the address.
         </p>
-        <v-img width="300" :src="userQrCode" />
 
-        <eth-address-display
-          :shorten="$vuetify.breakpoint.xs"
-          :address="address"
-        />
+        <v-img class="centered-img" width="300" :src="userQrCode" />
+
+        <span ref="address-container">
+          <eth-address-display
+            :shorten="$vuetify.breakpoint.xs"
+            :address="address"
+            :container="$refs['address-container']"
+          />
+        </span>
       </v-card-text>
 
       <v-card-actions>
@@ -75,7 +80,8 @@ export default {
   data() {
     return {
       buyEthLink:
-        'https://duckduckgo.com/?q=buy+ether+with+credit+card&t=ffab&ia=web'
+        'https://duckduckgo.com/?q=buy+ether+with+credit+card&t=ffab&ia=web',
+      dialogRef: null
     }
   },
   computed: {
@@ -105,3 +111,7 @@ export default {
   }
 }
 </script>
+<style lang="styl" scoped>
+.centered-img
+  margin: auto
+</style>

@@ -21,7 +21,15 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['setNotificationOpen', 'dismissNotification'])
+    ...mapActions([
+      'setNotificationOpen',
+      'dismissNotification',
+      'watchNotifications',
+      'createNotification'
+    ])
+  },
+  mounted() {
+    this.watchNotifications()
   }
 }
 </script>

@@ -18,11 +18,6 @@
       width="300"
       contain
     >
-      <template v-slot:placeholder>
-        <v-layout fill-height align-center justify-center ma-0>
-          <v-progress-circular indeterminate />
-        </v-layout>
-      </template>
     </v-img>
 
     <v-form @submit="validateAndSweepEther" ref="send-form" class="pt-4 pb-4">

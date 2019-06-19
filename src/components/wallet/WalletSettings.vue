@@ -1,6 +1,13 @@
 <template>
   <span>
-    <v-form @submit="setWallet" ref="wallet-form" class="pt-4 pb-4">
+    <v-select
+      class="pt-4"
+      v-model="pathDerivationModel"
+      :items="pathLevels"
+      label="which account do you want to use from this mnemonic?"
+    />
+
+    <v-form @submit="setWallet" ref="wallet-form" class="pb-4">
       <v-textarea
         :rows="$vuetify.breakpoint.xs ? 2 : 1"
         v-model="mnemonicModel"
@@ -19,11 +26,11 @@
         required
       />
       <v-checkbox v-model="customMnemonic" label="use custom mnemonic" />
-      <v-select
-        v-model="pathDerivationModel"
-        :items="pathLevels"
-        label="which account do you want to use from this mnemonic?"
-      />
+
+      <v-btn @click="generateMnemonic">
+        Generate New
+      </v-btn>
+
       <v-btn type="submit">
         Set Wallet
       </v-btn>
@@ -78,15 +85,17 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['encryptAndSaveWallet']),
+    ...mapActions(['encryptAndSaveWallet', 'generateMnemonic']),
     ...mapMutations(['setMnemonic', 'setPathDerivation']),
     clearWalletForm() {
-      this.$refs['wallet-form'].reset()
+      this.password = ''
+      this.$refs['wallet-form'].resetValidation()
     },
-    setWallet() {
+    setWallet(e) {
+      e.preventDefault()
+
       if (this.$refs['wallet-form'].validate()) {
         this.encryptAndSaveWallet(this.password)
-        this.clearWalletForm()
       }
     }
   }

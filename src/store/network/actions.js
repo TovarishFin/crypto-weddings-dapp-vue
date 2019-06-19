@@ -13,14 +13,10 @@ export const bootstrapEth = async ({ commit, dispatch, getters }) => {
 
   if (useMetaMask && !window.ethereum.selectedAddress) {
     dispatch('setAccountRequestOpen', true)
-  }
-
-  if (!useMetaMask && process.env.VUE_APP_AUTO_LOAD_WALLET === 'true') {
+  } else if (!useMetaMask && process.env.VUE_APP_AUTO_LOAD_WALLET === 'true') {
     commit('setMnemonic', process.env.VUE_APP_MNEMONIC)
     dispatch('encryptAndSaveWallet', process.env.VUE_APP_PASSWORD)
-  }
-
-  if (
+  } else if (
     !useMetaMask &&
     encryptedMnemonicExists &&
     process.env.VUE_APP_AUTO_LOAD_WALLET !== 'true'
@@ -50,11 +46,12 @@ export const watchPendingTx = ({ commit }, { tx, description }) => {
         description
       })
     )
-    .catch(() =>
+    .catch(err =>
       commit('setSentTransaction', {
         transactionHash: tx.hash,
         status: 'error',
-        description
+        description,
+        error: err.toString()
       })
     )
 }
@@ -83,32 +80,39 @@ export const setupWeb3Provider = async ({ dispatch, commit }) => {
   }
 }
 
-export const watchMetaMask = async ({ getters, rootGetters, commit }) => {
+const checkMetaMask = ({ commit, getters, rootGetters }) => {
+  const { network, useMetaMask } = getters
+  const { metaMaskAddress } = rootGetters
+  const currentNetwork = networkIdToName(
+    pathOr(null, ['ethereum', 'networkVersion'], window)
+  )
+  const currentAddress = utils.getAddress(
+    pathOr(constants.AddressZero, ['ethereum', 'selectedAddress'], window)
+  )
+
+  if (network !== currentNetwork) {
+    if (useMetaMask) {
+      commit('setNetwork', currentNetwork)
+    }
+  }
+
+  if (metaMaskAddress !== currentAddress) {
+    commit('setMetaMaskAddress', currentAddress)
+
+    if (useMetaMask) {
+      commit('setAccountReady', true)
+    }
+  }
+}
+
+export const watchMetaMask = async context => {
+  const { commit, getters } = context
   const { metaMaskPollingInterval } = getters
-  const metaMaskPoller = setInterval(() => {
-    const { network, useMetaMask } = getters
-    const { metaMaskAddress } = rootGetters
-    const currentNetwork = networkIdToName(
-      pathOr(null, ['ethereum', 'networkVersion'], window)
-    )
-    const currentAddress = utils.getAddress(
-      pathOr(constants.AddressZero, ['ethereum', 'selectedAddress'], window)
-    )
-
-    if (network !== currentNetwork) {
-      if (useMetaMask) {
-        commit('setNetwork', currentNetwork)
-      }
-    }
-
-    if (metaMaskAddress !== currentAddress) {
-      commit('setMetaMaskAddress', currentAddress)
-
-      if (useMetaMask) {
-        commit('setAccountReady', true)
-      }
-    }
-  }, metaMaskPollingInterval)
+  checkMetaMask(context)
+  const metaMaskPoller = setInterval(
+    () => checkMetaMask(context),
+    metaMaskPollingInterval
+  )
 
   commit('setMetaMaskPoller', metaMaskPoller)
 }
