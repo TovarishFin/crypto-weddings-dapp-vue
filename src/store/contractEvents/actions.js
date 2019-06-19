@@ -17,6 +17,11 @@ export const watchWeddingManagerEvents = context => {
   weddingManager.on('Divorced', handleDivorced(context))
   weddingManager.on('GiftReceived', handleGiftReceived(context))
   weddingManager.on('GiftClaimed', handleGiftClaimed(context))
+  weddingManager.on(
+    'UserPermissionUpdated',
+    handleUserPermissonUpdated(context)
+  )
+  weddingManager.on('MinGiftAmountUpdated', handleMinGiftAmountUpdated(context))
 }
 
 export const unwatchWeddingManagerEvents = ({ getters }) => {
@@ -237,6 +242,48 @@ export const handleGiftClaimed = ({ rootGetters, dispatch }) => (
     dispatch('getGiftBalance', wedding)
     dispatch('createNotification', `${name} has claimed the wedding gifts!`)
   }
+}
+
+export const handleUserPermissonUpdated = ({ rootGetters, dispatch }) => (
+  wedding,
+  user,
+  banned
+) => {
+  const { address } = rootGetters
+
+  if (address === user) {
+    dispatch(
+      'createNotification',
+      `You have been ${banned ? 'banned' : 'unbanned'}!`
+    )
+  }
+
+  // TODO: update event filtering using this information
+}
+
+export const handleMinGiftAmountUpdated = ({ rootGetters, dispatch }) => (
+  wedding,
+  newGiftAmount
+) => {
+  const { weddingCursor, weddingAddressOfUser } = rootGetters
+
+  if (wedding === weddingAddressOfUser) {
+    dispatch(
+      'createNotification',
+      `Your wedding's Minimum wedding gift amount has been updated to ${utils
+        .formatEther(newGiftAmount)
+        .toString()}`
+    )
+  } else if (wedding === weddingCursor) {
+    dispatch(
+      'createNotification',
+      `Minimum wedding gift amount has been updated to ${utils
+        .formatEther(newGiftAmount)
+        .toString()}`
+    )
+  }
+
+  // TODO: update minGiftAmount state once that is part of normal flow
 }
 
 // TODO: event listeners need to be removed at when navigating away / to another wedding somehow...
