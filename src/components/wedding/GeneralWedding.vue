@@ -59,38 +59,21 @@
     </v-list>
 
     <send-wedding-gift />
-
-    <v-checkbox v-model="showMessages" label="show messages" />
-    <v-list two-line subheader v-if="showMessages">
-      <v-subheader>Gift Messages</v-subheader>
-
-      <v-list-tile
-        v-for="(giftEvent, i) in selectedWedding.giftEvents"
-        :key="`${giftEvent.gifter}-${i}`"
-      >
-        <v-list-tile-content>
-          <v-list-tile-title>
-            from address: {{ giftEvent.gifter }}
-          </v-list-tile-title>
-          <v-list-tile-sub-title>
-            {{ giftEvent.message }}
-          </v-list-tile-sub-title>
-        </v-list-tile-content>
-      </v-list-tile>
-    </v-list>
+    <gift-messages />
   </span>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import SendWeddingGift from '@/components/wedding/SendWeddingGift.vue'
+import GiftMessages from '@/components/wedding/GiftMessages.vue'
 
 export default {
   components: {
-    SendWeddingGift
+    SendWeddingGift,
+    GiftMessages
   },
   data() {
     return {
-      showMessages: true,
       giftValue: 0,
       giftMessage: '',
       valueRules: [v => !!v || 'value must be more than 0']

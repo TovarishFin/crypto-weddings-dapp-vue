@@ -80,6 +80,18 @@
       <v-btn color="primary" type="submit">update</v-btn>
     </form>
 
+    <form
+      @submit="validateAndUpdateShouldHideGiftEvents"
+      ref="hide-gift-events-form"
+    >
+      <v-radio-group v-model="shouldHideGiftEventsModel">
+        <v-radio label="show" :value="false" />
+        <v-radio label="hide" :value="true" />
+      </v-radio-group>
+
+      <v-btn color="primary" type="submit">update</v-btn>
+    </form>
+
     <form @submit="validateAndUpdateMinGiftAmount" ref="gift-amount-form">
       <v-text-field
         v-model="minGiftAmount"
@@ -104,6 +116,7 @@ export default {
     return {
       addressToUpdate: '',
       permissionStatus: false,
+      shouldHideGiftEventsModel: false,
       minGiftAmount: 0,
       addressRules: [v => this.isAddress(v) || 'must be a valid address']
     }
@@ -190,21 +203,41 @@ export default {
     ...mapActions([
       'clearTransactions',
       'setSkipConfirmations',
-      'updateUserPermissions',
-      'updateMinGiftAmount'
+      'setPendingTransaction'
     ]),
     // TODO: validate this shit!
     validateAndUpdateUserPermissions(e) {
       e.preventDefault()
-      this.updateUserPermissions({
-        user: this.addressToUpdate,
-        banned: this.permissionStatus
+      this.setPendingTransaction({
+        action: 'updateUserPermissions',
+        payload: {
+          user: this.addressToUpdate,
+          banned: this.permissionStatus
+        },
+        description: `${this.permissionStatus ? 'ban user' : 'unban user'}`
       })
     },
     // TODO: validate this shit!
     validateAndUpdateMinGiftAmount(e) {
       e.preventDefault()
-      this.updateMinGiftAmount(this.minGiftAmount)
+      this.setPendingTransaction({
+        action: 'updateMinGiftAmount',
+        payload: this.minGiftAmount,
+        description: `update minimum gift amount to ${this.minGiftAmount} ether`
+      })
+    },
+    // TODO: validate this shit!
+    validateAndUpdateShouldHideGiftEvents(e) {
+      e.preventDefault()
+      this.setPendingTransaction({
+        action: 'updateShouldHideGiftEvents',
+        payload: this.shouldHideGiftEventsModel,
+        description: `${
+          this.shouldHideGiftEventsModel
+            ? 'hide wedding gift messages'
+            : 'show wedding gift messages'
+        }`
+      })
     }
   }
 }

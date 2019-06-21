@@ -56,6 +56,8 @@ export const getCompleteWeddingData = async (
     married,
     dateMarried,
     stage,
+    shouldHideGiftEvents,
+    minGiftAmount,
     balance
   ] = await Promise.all([
     wedding.partner1(),
@@ -70,6 +72,8 @@ export const getCompleteWeddingData = async (
     wedding.married(),
     wedding.dateMarried(),
     wedding.stage(),
+    wedding.shouldHideGiftEvents(),
+    wedding.minGiftAmount(),
     provider.getBalance(weddingAddress)
   ])
 
@@ -89,6 +93,8 @@ export const getCompleteWeddingData = async (
       'dddd, MMMM, Do YYYY'
     ),
     stage: parseInt(stage.toString()),
+    shouldHideGiftEvents,
+    minGiftAmount: utils.formatEther(minGiftAmount.toString()),
     balance: utils.formatEther(balance.toString())
   })
 }
@@ -304,5 +310,29 @@ export const updateUserPermissions = async (
   dispatch('watchPendingTx', {
     tx,
     description: `${banned ? 'ban' : 'unban'} user`
+  })
+}
+
+export const updateShouldHideGiftEvents = async (
+  { rootGetters, getters, dispatch },
+  shouldHideGiftEvents
+) => {
+  const { wallet, userWeddingCursor } = getters
+  const { gasLimit, customGasPrice } = rootGetters
+  const wedding = new ethers.Contract(userWeddingCursor, abi, wallet)
+  const config = parseInt(customGasPrice)
+    ? { gasLimit, gasPrice: utils.parseUnits(customGasPrice, 'gwei') }
+    : { gasLimit }
+
+  const tx = await wedding.updateShouldHideGiftEvents(
+    shouldHideGiftEvents,
+    config
+  )
+
+  dispatch('watchPendingTx', {
+    tx,
+    description: `${
+      shouldHideGiftEvents ? 'hide gift events' : 'show gift events'
+    }`
   })
 }

@@ -1,7 +1,9 @@
 import router from '@/router'
 import { ethers, utils } from 'ethers'
-import { abi } from 'crypto-weddings-contracts/build/WeddingManager'
+import { abi as wmrAbi } from 'crypto-weddings-contracts/build/WeddingManager'
 import deployments from 'crypto-weddings-contracts/deployments'
+import { abi as wngAbi } from 'crypto-weddings-contracts/build/Wedding'
+import { shortenAddress } from '@/utils/data'
 
 export const watchWeddingManagerEvents = context => {
   const { getters } = context
@@ -22,6 +24,10 @@ export const watchWeddingManagerEvents = context => {
     handleUserPermissonUpdated(context)
   )
   weddingManager.on('MinGiftAmountUpdated', handleMinGiftAmountUpdated(context))
+  weddingManager.on(
+    'ShouldHideGiftEventsUpdated',
+    handleShouldHideGiftEventsUpdated(context)
+  )
 }
 
 export const unwatchWeddingManagerEvents = ({ getters }) => {
@@ -38,6 +44,9 @@ export const unwatchWeddingManagerEvents = ({ getters }) => {
   weddingManager.removeAllListeners('Divorced')
   weddingManager.removeAllListeners('GiftReceived')
   weddingManager.removeAllListeners('GiftClaimed')
+  weddingManager.removeAllListeners('UserPermissionUpdated')
+  weddingManager.removeAllListeners('MinGiftAmountUpdated')
+  weddingManager.removeAllListeners('ShouldHideGiftEventsUpdated')
 }
 
 export const handleWeddingAdded = ({ dispatch, rootGetters }) => (
@@ -249,12 +258,22 @@ export const handleUserPermissonUpdated = ({ rootGetters, dispatch }) => (
   user,
   banned
 ) => {
-  const { address } = rootGetters
+  const { weddingCursor, weddingAddressOfUser, address } = rootGetters
 
   if (address === user) {
     dispatch(
       'createNotification',
       `You have been ${banned ? 'banned' : 'unbanned'}!`
+    )
+  } else if (weddingCursor === wedding) {
+    dispatch('getCompleteWeddingData')
+  } else if (weddingAddressOfUser === wedding) {
+    dispatch('getCompleteWeddingData')
+    dispatch(
+      'createNotification',
+      `user with address of ${shortenAddress(user)} has been ${
+        banned ? 'banned' : 'unbanned'
+      }`
     )
   }
 
@@ -268,6 +287,7 @@ export const handleMinGiftAmountUpdated = ({ rootGetters, dispatch }) => (
   const { weddingCursor, weddingAddressOfUser } = rootGetters
 
   if (wedding === weddingAddressOfUser) {
+    dispatch('getCompleteWeddingData', wedding)
     dispatch(
       'createNotification',
       `Your wedding's Minimum wedding gift amount has been updated to ${utils
@@ -275,6 +295,7 @@ export const handleMinGiftAmountUpdated = ({ rootGetters, dispatch }) => (
         .toString()}`
     )
   } else if (wedding === weddingCursor) {
+    dispatch('getCompleteWeddingData', wedding)
     dispatch(
       'createNotification',
       `Minimum wedding gift amount has been updated to ${utils
@@ -284,6 +305,35 @@ export const handleMinGiftAmountUpdated = ({ rootGetters, dispatch }) => (
   }
 
   // TODO: update minGiftAmount state once that is part of normal flow
+}
+
+export const handleShouldHideGiftEventsUpdated = ({
+  rootGetters,
+  dispatch
+}) => (wedding, shouldHideGiftEvents) => {
+  const { weddingCursor, weddingAddressOfUser } = rootGetters
+
+  if (wedding === weddingAddressOfUser) {
+    dispatch('getCompleteWeddingData', wedding)
+    dispatch(
+      'createNotification',
+      `${
+        shouldHideGiftEvents
+          ? 'wedding gift events now hidden'
+          : 'wedding gift events now showing'
+      }`
+    )
+  } else if (wedding === weddingCursor) {
+    dispatch('getCompleteWeddingData', wedding)
+    dispatch(
+      'createNotification',
+      `${
+        shouldHideGiftEvents
+          ? 'wedding owners have hidden wedding gift messages'
+          : 'wedding owners have enabled wedding gift messages'
+      }`
+    )
+  }
 }
 
 // TODO: event listeners need to be removed at when navigating away / to another wedding somehow...
@@ -301,11 +351,20 @@ export const getWeddingGiftEvents = async (
       ? new ethers.providers.JsonRpcProvider('http://localhost:8545')
       : new ethers.getDefaultProvider(network)
 
-  const wmr = new ethers.Contract(address, abi, provider)
+  const wmr = new ethers.Contract(address, wmrAbi, provider)
   const filter = wmr.filters.GiftReceived(weddingAddress, null, null, null)
-  wmr.on(filter, (wedding, gifter, bigValue, message) => {
+  wmr.on(filter, async (wedding, gifter, bigValue, message) => {
+    const wng = new ethers.Contract(wedding, wngAbi, provider)
+    const banned = await wng.banned(gifter)
     const value = utils.formatEther(bigValue.toString())
-    commit('addGiftEvent', { wedding, gifter, value, message })
+    const sanitizedMessage = banned ? 'best wishes!' : message
+
+    commit('addGiftEvent', {
+      wedding,
+      gifter,
+      value,
+      message: sanitizedMessage
+    })
   })
   provider.resetEventsBlock(deploymentBlock)
 }
