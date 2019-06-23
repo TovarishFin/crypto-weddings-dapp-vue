@@ -261,14 +261,15 @@ export const handleUserPermissonUpdated = ({ rootGetters, dispatch }) => (
   const { weddingCursor, weddingAddressOfUser, address } = rootGetters
 
   if (address === user) {
+    dispatch('getCompleteWeddingData', wedding)
     dispatch(
       'createNotification',
       `You have been ${banned ? 'banned' : 'unbanned'}!`
     )
   } else if (weddingCursor === wedding) {
-    dispatch('getCompleteWeddingData')
+    dispatch('getCompleteWeddingData', wedding)
   } else if (weddingAddressOfUser === wedding) {
-    dispatch('getCompleteWeddingData')
+    dispatch('getCompleteWeddingData', wedding)
     dispatch(
       'createNotification',
       `user with address of ${shortenAddress(user)} has been ${
@@ -336,11 +337,11 @@ export const handleShouldHideGiftEventsUpdated = ({
   }
 }
 
-// TODO: event listeners need to be removed at when navigating away / to another wedding somehow...
 export const getWeddingGiftEvents = async (
   { rootGetters, commit },
   weddingAddress
 ) => {
+  await commit('clearWeddingGiftEvents', weddingAddress)
   const { network } = rootGetters
   const {
     [network]: { deploymentBlock, weddingManager: address }
@@ -353,6 +354,7 @@ export const getWeddingGiftEvents = async (
 
   const wmr = new ethers.Contract(address, wmrAbi, provider)
   const filter = wmr.filters.GiftReceived(weddingAddress, null, null, null)
+  wmr.removeAllListeners(filter)
   wmr.on(filter, async (wedding, gifter, bigValue, message) => {
     const wng = new ethers.Contract(wedding, wngAbi, provider)
     const banned = await wng.banned(gifter)

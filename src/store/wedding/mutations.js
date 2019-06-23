@@ -4,6 +4,13 @@ export const setWedding = (state, wedding) =>
     [wedding.address]: { ...state.weddings[wedding.address], ...wedding }
   })
 
+export const clearWeddingGiftEvents = (state, weddingAddress) => {
+  state.weddings = {
+    ...state.weddings,
+    [weddingAddress]: { ...state.weddings[weddingAddress], giftEvents: [] }
+  }
+}
+
 export const removeWedding = (state, weddingAddress) => {
   const weddingsCopy = { ...state.weddings }
   delete weddingsCopy[weddingAddress]
