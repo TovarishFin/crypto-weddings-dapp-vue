@@ -46,6 +46,18 @@ export const setWalletTabs = (state, tabsIndex) => {
   state.walletTabs = tabsIndex
 }
 
+export const setSettingsTabs = (state, tabsIndex) => {
+  state.settingsTabs = tabsIndex
+}
+
 export const setShowTransactions = (state, showTransactions) => {
   state.showTransactions = showTransactions
+}
+
+export const setShowParticles = (state, showParticles) => {
+  state.showParticles = showParticles
+}
+
+export const setUseDarkMode = (state, useDarkMode) => {
+  state.useDarkMode = useDarkMode
 }

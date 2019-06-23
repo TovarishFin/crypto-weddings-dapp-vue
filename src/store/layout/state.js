@@ -7,5 +7,8 @@ export default {
   weddingInProgressTabs: 0,
   weddingMarriedTabs: 0,
   walletTabs: 0,
-  showTransactions: false
+  settingsTabs: 0,
+  showTransactions: false,
+  showParticles: true,
+  useDarkMode: true
 }

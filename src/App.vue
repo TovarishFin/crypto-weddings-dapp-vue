@@ -1,5 +1,5 @@
 <template>
-  <v-app dark>
+  <v-app :dark="useDarkMode">
     <app-drawer />
     <app-toolbar />
 
@@ -31,6 +31,7 @@ import ConfirmTransaction from '@/components/layout/ConfirmTransaction'
 import RouterHandler from '@/components/layout/RouterHandler'
 import AppTransactions from '@/components/Transactions'
 import store from '@/store'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -42,6 +43,9 @@ export default {
     ConfirmTransaction,
     RouterHandler,
     AppTransactions
+  },
+  computed: {
+    ...mapGetters(['useDarkMode'])
   },
   beforeCreate() {
     store.dispatch('bootstrapEth')

@@ -2,10 +2,12 @@
   <span>
     <div class="landing-screen">
       <vue-particles
+        v-if="showParticles"
         class="full-height"
         color="#ee44aa"
         lines-color="#82B1FF"
       />
+      <div v-if="!showParticles" class="full-height" />
       <div class="landing-text">
         <p class="display-3 primary--text">Crypto Weddings</p>
         <p class="headline accent--text">
@@ -39,10 +41,14 @@
 </template>
 <script>
 import Weddings from '@/components/Weddings'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
     Weddings
+  },
+  computed: {
+    ...mapGetters(['showParticles'])
   }
 }
 </script>

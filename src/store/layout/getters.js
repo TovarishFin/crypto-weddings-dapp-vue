@@ -16,4 +16,10 @@ export const weddingMarriedTabs = state => state.weddingInProgressTabs
 
 export const walletTabs = state => state.walletTabs
 
+export const settingsTabs = state => state.settingsTabs
+
 export const showTransactions = state => state.showTransactions
+
+export const showParticles = state => state.showParticles
+
+export const useDarkMode = state => state.useDarkMode
