@@ -5,16 +5,30 @@
 <script>
 import { mapGetters } from 'vuex'
 import NoEthereum from './NoEthereum.vue'
+import Loading from './Loading.vue'
 
 /* eslint-disable vue/no-unused-components */
 export default {
   components: {
-    NoEthereum
+    NoEthereum,
+    Loading
   },
   computed: {
-    ...mapGetters(['providerReady']),
+    ...mapGetters(['providerReady', 'loading']),
     page() {
-      return this.providerReady ? 'router-view' : NoEthereum
+      switch (true) {
+        case this.loading:
+          return Loading
+
+        case !this.providerReady:
+          return NoEthereum
+
+        case this.providerReady:
+          return 'router-view'
+
+        default:
+          return Loading
+      }
     }
   }
 }

@@ -61,3 +61,7 @@ export const setShowParticles = (state, showParticles) => {
 export const setUseDarkMode = (state, useDarkMode) => {
   state.useDarkMode = useDarkMode
 }
+
+export const setLoading = (state, loading) => {
+  state.loading = loading
+}

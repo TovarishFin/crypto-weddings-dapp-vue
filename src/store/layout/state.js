@@ -10,5 +10,6 @@ export default {
   settingsTabs: 0,
   showTransactions: false,
   showParticles: true,
-  useDarkMode: true
+  useDarkMode: true,
+  loading: false
 }

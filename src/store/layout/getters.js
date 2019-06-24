@@ -23,3 +23,5 @@ export const showTransactions = state => state.showTransactions
 export const showParticles = state => state.showParticles
 
 export const useDarkMode = state => state.useDarkMode
+
+export const loading = state => state.loading

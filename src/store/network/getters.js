@@ -11,8 +11,10 @@ export const gasLimit = state => pathOr(5e6, ['gasLimit'], state)
 export const customGasPrice = state => pathOr(null, ['customGasPrice'], state)
 
 export const provider = (_, getters) => {
-  const { network: currentNetwork } = getters
-  return currentNetwork === 'private'
+  const { network: currentNetwork, useMetaMask } = getters
+  return useMetaMask
+    ? new ethers.providers.Web3Provider(window.ethereum)
+    : currentNetwork === 'private'
     ? new ethers.providers.JsonRpcProvider('http://localhost:8545')
     : new ethers.getDefaultProvider(currentNetwork)
 }

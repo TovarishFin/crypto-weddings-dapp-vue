@@ -13,7 +13,7 @@ module.exports = {
       registry: undefined,
       awsProfile: 'default',
       region: 'eu-central-1',
-      bucket: 'crypto-weddings',
+      bucket: 'crypto-weddings-dapp',
       createBucket: true,
       staticHosting: true,
       staticIndexPage: 'index.html',
