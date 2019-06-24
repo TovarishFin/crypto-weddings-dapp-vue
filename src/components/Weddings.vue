@@ -1,6 +1,6 @@
 <template>
   <span>
-    <h2 class="title" ma-2>
+    <h2 class="title mb-2" ma-2>
       Most Recent Weddings
     </h2>
     <v-list v-if="$vuetify.breakpoint.xs" two-line ripple>

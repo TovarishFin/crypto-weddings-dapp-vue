@@ -1,9 +1,12 @@
 <template>
   <span>
+    <mnemonic-display readonly :value="mnemonic" />
+
     <v-textarea
       :rows="$vuetify.breakpoint.xs ? 2 : 1"
       :value="mnemonic"
       label="mnemonic"
+      type="password"
       readonly
     />
 
@@ -11,6 +14,7 @@
 
     <v-form @submit="setWallet" ref="wallet-form" class="pb-4">
       <v-text-field
+        autofocus
         v-model="password"
         label="password"
         placeholder=""
@@ -28,12 +32,18 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import MnemonicDisplay from '@/components/MnemonicDisplay'
 
 export default {
+  components: {
+    MnemonicDisplay
+  },
   data() {
     return {
       password: '',
-      passwordRules: [v => !!v || 'must be non empty value']
+      passwordRules: [
+        v => v.length >= 10 || 'password must be at least 10 characters long'
+      ]
     }
   },
   computed: {

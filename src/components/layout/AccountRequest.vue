@@ -11,7 +11,11 @@
       </v-card-title>
 
       <v-card-text v-if="!useMetaMask">
-        <v-switch v-model="useMetaMaskModel" :label="metamaskMessage" />
+        <v-switch
+          v-if="metaMaskInstalled"
+          v-model="useMetaMaskModel"
+          :label="metamaskMessage"
+        />
         <p class="subheading" v-if="encryptedMnemonicExists">
           An encrypted account has been detected. Please enter your password to
           continue.
@@ -29,7 +33,11 @@
         </p>
       </v-card-text>
       <v-card-text v-if="useMetaMask">
-        <v-switch v-model="useMetaMaskModel" :label="metamaskMessage" />
+        <v-switch
+          v-if="metaMaskInstalled"
+          v-model="useMetaMaskModel"
+          :label="metamaskMessage"
+        />
         <p class="subheading">
           In order to use MetMask you need to give permission. Click "Activate
           MetaMask" below.

@@ -8,6 +8,7 @@
     />
 
     <v-form @submit="setWallet" ref="wallet-form" class="pb-4">
+      <mnemonic-display v-model="mnemonicModel" :readonly="!customMnemonic" />
       <v-textarea
         :rows="$vuetify.breakpoint.xs ? 2 : 1"
         v-model="mnemonicModel"
@@ -40,8 +41,12 @@
 
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex'
+import MnemonicDisplay from '@/components/MnemonicDisplay'
 
 export default {
+  components: {
+    MnemonicDisplay
+  },
   data() {
     return {
       customMnemonic: false,
