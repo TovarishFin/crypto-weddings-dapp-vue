@@ -10,7 +10,7 @@
       readonly
     />
 
-    <v-text-field :value="address" label="address" readonly />
+    <eth-address-display :shorten="$vuetify.breakpoint.xs" :address="address" />
 
     <v-form @submit="setWallet" ref="wallet-form" class="pb-4">
       <v-text-field
@@ -33,10 +33,12 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import MnemonicDisplay from '@/components/MnemonicDisplay'
+import EthAddressDisplay from '@/components/EthAddressDisplay'
 
 export default {
   components: {
-    MnemonicDisplay
+    MnemonicDisplay,
+    EthAddressDisplay
   },
   data() {
     return {

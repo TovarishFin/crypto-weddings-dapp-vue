@@ -3275,10 +3275,10 @@ crypto-js@^3.1.9-1:
   resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-3.1.9-1.tgz#fda19e761fc077e01ffbfdc6e9fdfc59e8806cd8"
   integrity sha1-/aGedh/Ad+Af+/3G6f38WeiAbNg=
 
-crypto-weddings-contracts@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/crypto-weddings-contracts/-/crypto-weddings-contracts-0.2.0.tgz#b49ecd9c4ba607f8112af682aa60544d36924b90"
-  integrity sha512-8mlGfdJC3lNk9u0OYM1L2Fm1Kia6Z0FFOZ+VS8+93WItUP0BIflkWRiJ8AW2Smenjh0857aYy+YlAYL5zueaWA==
+crypto-weddings-contracts@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/crypto-weddings-contracts/-/crypto-weddings-contracts-0.3.1.tgz#5cbb5d78ae9709bc621605efef69debe5b3d80a1"
+  integrity sha512-G2Fv8sIS4cFw2vfeIWj682If/YL/I5GrLTgGmO9LEY1yrv+EvMUbmq5ouSq9QLL+igFpQG1G+OZWhsWAcO6FjQ==
   dependencies:
     dotenv "^8.0.0"
     openzeppelin-solidity "^2.2.0"

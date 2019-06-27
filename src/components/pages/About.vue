@@ -27,7 +27,7 @@
       <a id="Does_this_mean_anything_in_real_life_7"></a>Does this mean anything
       in real life?
     </h2>
-    <p>At the moment no. In the future? Who knows�</p>
+    <p>At the moment no. In the future? Who knows?</p>
 
     <v-divider class="mt-4 mb-4" />
 

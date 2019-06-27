@@ -9,14 +9,11 @@
 
     <v-form @submit="setWallet" ref="wallet-form" class="pb-4">
       <mnemonic-display v-model="mnemonicModel" :readonly="!customMnemonic" />
-      <v-textarea
-        :rows="$vuetify.breakpoint.xs ? 2 : 1"
-        v-model="mnemonicModel"
-        label="mnemonic"
-        :disabled="!customMnemonic"
-      />
 
-      <v-text-field :value="address" label="address" readonly />
+      <eth-address-display
+        :shorten="$vuetify.breakpoint.xs"
+        :address="address"
+      />
 
       <v-text-field
         v-model="password"
@@ -42,10 +39,12 @@
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 import MnemonicDisplay from '@/components/MnemonicDisplay'
+import EthAddressDisplay from '@/components/EthAddressDisplay'
 
 export default {
   components: {
-    MnemonicDisplay
+    MnemonicDisplay,
+    EthAddressDisplay
   },
   data() {
     return {
