@@ -45,3 +45,10 @@ export const clearTransactions = state => {
 export const setSkipConfirmations = (state, skipConfirmations) => {
   state.skipConfirmations = skipConfirmations
 }
+
+export const setBlockingPendingTransactionHash = (
+  state,
+  blockingPendingTransactionHash
+) => {
+  state.blockingPendingTransactionHash = blockingPendingTransactionHash
+}

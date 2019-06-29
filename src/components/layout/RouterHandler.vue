@@ -4,17 +4,23 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import NoEthereum from './NoEthereum.vue'
-import Loading from './Loading.vue'
+import NoEthereum from './NoEthereum'
+import Loading from './Loading'
+import TxPending from './TxPending'
 
 /* eslint-disable vue/no-unused-components */
 export default {
   components: {
     NoEthereum,
-    Loading
+    Loading,
+    TxPending
   },
   computed: {
-    ...mapGetters(['providerReady', 'loading']),
+    ...mapGetters([
+      'providerReady',
+      'loading',
+      'hasBlockingPendingTransaction'
+    ]),
     page() {
       switch (true) {
         case this.loading:
@@ -22,6 +28,9 @@ export default {
 
         case !this.providerReady:
           return NoEthereum
+
+        case this.hasBlockingPendingTransaction:
+          return TxPending
 
         case this.providerReady:
           return 'router-view'

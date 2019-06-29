@@ -200,7 +200,11 @@ export const acceptProposal = async ({ rootGetters, getters, dispatch }) => {
 
   const tx = await wedding.acceptProposal(config)
 
-  dispatch('watchPendingTx', { tx, description: 'accept proposal' })
+  dispatch('watchPendingTx', {
+    tx,
+    description: 'accept proposal',
+    blocking: true
+  })
 }
 
 export const rejectProposal = async ({ rootGetters, getters, dispatch }) => {
@@ -213,7 +217,11 @@ export const rejectProposal = async ({ rootGetters, getters, dispatch }) => {
 
   const tx = await wedding.rejectProposal(config)
 
-  dispatch('watchPendingTx', { tx, description: 'reject proposal' })
+  dispatch('watchPendingTx', {
+    tx,
+    description: 'reject proposal',
+    blocking: true
+  })
 }
 
 export const updateWeddingPhoto = async (

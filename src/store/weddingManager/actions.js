@@ -28,7 +28,11 @@ export const startWedding = async (
 
   const tx = await weddingManager.startWedding(name1, partner2, name2, config)
 
-  dispatch('watchPendingTx', { tx, description: 'start wedding' })
+  dispatch('watchPendingTx', {
+    tx,
+    description: 'start wedding',
+    blocking: true
+  })
 }
 
 export const getWeddingsLength = async ({ getters, commit }) => {

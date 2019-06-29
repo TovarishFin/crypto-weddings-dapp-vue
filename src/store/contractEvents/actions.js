@@ -355,6 +355,7 @@ export const getWeddingGiftEvents = async (
   const wmr = new ethers.Contract(address, wmrAbi, provider)
   const filter = wmr.filters.GiftReceived(weddingAddress, null, null, null)
   wmr.removeAllListeners(filter)
+  wmr.removeAllListeners('GiftReceived')
   wmr.on(filter, async (wedding, gifter, bigValue, message) => {
     const wng = new ethers.Contract(wedding, wngAbi, provider)
     const banned = await wng.banned(gifter)

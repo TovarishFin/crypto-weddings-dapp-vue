@@ -3,10 +3,10 @@
     <v-tabs v-if="!useMetaMask" grow v-model="tabsIndex">
       <v-tab ripple>Wallet</v-tab>
       <v-tab ripple>Settings</v-tab>
-      <v-tab ripple>Funding</v-tab>
+      <v-tab v-if="accountReady" ripple>Funding</v-tab>
       <v-tab-item> <wallet-basic /> </v-tab-item>
       <v-tab-item> <wallet-settings /> </v-tab-item>
-      <v-tab-item> <wallet-funding /> </v-tab-item>
+      <v-tab-item v-if="accountReady"> <wallet-funding /> </v-tab-item>
     </v-tabs>
     <span v-if="useMetaMask" class="display-2">
       <p class="display-2">

@@ -1,5 +1,5 @@
 export default {
-  network: 'ropsten',
+  network: 'mainnet',
   gasLimit: 5e6,
   customGasPrice: null,
   accountReady: false,
@@ -8,5 +8,6 @@ export default {
   useMetaMask: false,
   metaMaskPollingInterval: 2000,
   metaMaskPoller: null,
-  skipConfirmations: false
+  skipConfirmations: false,
+  blockingPendingTransactionHash: null
 }

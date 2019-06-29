@@ -31,29 +31,41 @@ export const bootstrapEth = async ({ commit, dispatch, getters }) => {
   dispatch('getWeddings')
 }
 
-export const watchPendingTx = ({ commit }, { tx, description }) => {
+export const watchPendingTx = ({ commit }, { tx, description, blocking }) => {
   commit('setSentTransaction', {
     transactionHash: tx.hash,
     status: 'pending',
     description
   })
 
+  if (blocking) {
+    commit('setBlockingPendingTransactionHash', tx.hash)
+  }
+
   tx.wait()
-    .then(receipt =>
+    .then(receipt => {
       commit('setSentTransaction', {
         ...receipt,
         status: 'complete',
         description
       })
-    )
-    .catch(err =>
+
+      if (blocking) {
+        commit('setBlockingPendingTransactionHash', null)
+      }
+    })
+    .catch(err => {
       commit('setSentTransaction', {
         transactionHash: tx.hash,
         status: 'error',
         description,
         error: err.toString()
       })
-    )
+
+      if (blocking) {
+        commit('setBlockingPendingTransactionHash', null)
+      }
+    })
 }
 
 export const clearTransactions = ({ dispatch, commit }) => {

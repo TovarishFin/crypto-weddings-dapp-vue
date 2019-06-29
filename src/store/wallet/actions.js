@@ -127,12 +127,16 @@ export const sweepEther = async ({ getters, rootGetters, dispatch }, to) => {
   dispatch('watchPendingTx', { tx, description: 'send ether' })
 }
 
-export const watchBalance = ({ rootGetters, getters, commit }) => {
+export const watchBalance = ({ rootGetters, getters, commit, dispatch }) => {
   const { address } = getters
   const { provider } = rootGetters
   provider.removeAllListeners(address)
   provider.on(address, balance => {
     const etherBalance = parseFloat(utils.formatEther(balance.toString()))
     commit('setUserBalance', etherBalance)
+    dispatch(
+      'createNotification',
+      `Your current account balance is ${etherBalance} ether.`
+    )
   })
 }

@@ -1,62 +1,58 @@
 <template>
   <span>
     <span v-if="isMarried">
-      <p class="display-4">
-        Happily Married on:
-      </p>
-      <p class="display-1">{{ selectedWedding.dateMarried }}</p>
-      <v-img :src="selectedWedding.weddingPhoto" contain max-height="300">
+      <v-img :src="selectedWedding.weddingPhoto" contain max-height="500">
         <template v-slot:placeholder>
           <v-layout fill-height align-center justify-center ma-0>
             <v-progress-circular indeterminate />
           </v-layout>
         </template>
       </v-img>
+      <p class="display-1 text-sm-center mt-2">
+        Married on {{ selectedWedding.dateMarried }}
+      </p>
     </span>
 
-    <v-list two-line subheader>
-      <v-subheader>{{ selectedWedding.p1Name }}</v-subheader>
+    <v-layout wrap>
+      <v-flex md6 pt-2 pb-2>
+        <v-card color="primary">
+          <v-card-title>
+            <p class="display-1">{{ selectedWedding.p1Name }}</p>
+          </v-card-title>
 
-      <v-list-tile>
-        <v-list-tile-content>
-          <v-list-tile-title>Has Accepted?</v-list-tile-title>
-          <v-list-tile-sub-title>
-            {{ selectedWedding.p1Answer }}
-          </v-list-tile-sub-title>
-        </v-list-tile-content>
-      </v-list-tile>
+          <v-card-text class="title" font-weight-bold>
+            {{
+              selectedWedding.p1Answer
+                ? `${selectedWedding.p1Name} has said yes!`
+                : `${selectedWedding.p1Name} has not answered yet.`
+            }}
+          </v-card-text>
 
-      <v-list-tile>
-        <v-list-tile-content>
-          <v-list-tile-title>Vows</v-list-tile-title>
-          <v-list-tile-sub-title>
+          <v-card-text class="subheading" font-weight-bold>
             {{ selectedWedding.p1Vows }}
-          </v-list-tile-sub-title>
-        </v-list-tile-content>
-      </v-list-tile>
-    </v-list>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+      <v-flex md6 pt-2 pb-2>
+        <v-card color="accent">
+          <v-card-title>
+            <p class="display-1">{{ selectedWedding.p2Name }}</p>
+          </v-card-title>
 
-    <v-list two-line subheader>
-      <v-subheader>{{ selectedWedding.p2Name }}</v-subheader>
+          <v-card-text class="title" font-weight-bold>
+            {{
+              selectedWedding.p2Answer
+                ? `${selectedWedding.p2Name} has said yes!`
+                : `${selectedWedding.p2Name} has not answered yet.`
+            }}
+          </v-card-text>
 
-      <v-list-tile>
-        <v-list-tile-content>
-          <v-list-tile-title>Has Accepted?</v-list-tile-title>
-          <v-list-tile-sub-title>
-            {{ selectedWedding.p2Answer }}
-          </v-list-tile-sub-title>
-        </v-list-tile-content>
-      </v-list-tile>
-
-      <v-list-tile>
-        <v-list-tile-content>
-          <v-list-tile-title>Vows</v-list-tile-title>
-          <v-list-tile-sub-title>
+          <v-card-text class="subheading" font-weight-bold>
             {{ selectedWedding.p2Vows }}
-          </v-list-tile-sub-title>
-        </v-list-tile-content>
-      </v-list-tile>
-    </v-list>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+    </v-layout>
 
     <send-wedding-gift />
     <gift-messages />

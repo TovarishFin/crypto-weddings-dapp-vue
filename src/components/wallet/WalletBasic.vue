@@ -2,14 +2,6 @@
   <span>
     <mnemonic-display readonly :value="mnemonic" />
 
-    <v-textarea
-      :rows="$vuetify.breakpoint.xs ? 2 : 1"
-      :value="mnemonic"
-      label="mnemonic"
-      type="password"
-      readonly
-    />
-
     <eth-address-display :shorten="$vuetify.breakpoint.xs" :address="address" />
 
     <v-form @submit="setWallet" ref="wallet-form" class="pb-4">

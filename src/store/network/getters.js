@@ -1,4 +1,4 @@
-import { pathOr } from 'ramda'
+import { pathOr, pathSatisfies } from 'ramda'
 import { ethers } from 'ethers'
 import deployments from 'crypto-weddings-contracts/deployments'
 
@@ -32,6 +32,15 @@ export const pendingTxs = state =>
   Object.values(pathOr({}, ['sentTransactions'], state)).filter(
     tx => tx.status === 'pending'
   )
+
+export const blockingPendingTransactionHash = state =>
+  pathOr(false, ['blockingPendingTransactionHash'], state)
+
+export const hasBlockingPendingTransaction = state =>
+  pathSatisfies(x => !!x, ['blockingPendingTransactionHash'], state)
+
+export const blockingPendingTransaction = state =>
+  pathOr(null, [blockingPendingTransactionHash(state), 'pendingTxs'], state)
 
 export const completeTxs = state =>
   Object.values(pathOr({}, ['sentTransactions'], state)).filter(

@@ -1,64 +1,58 @@
 <template>
   <span>
-    <p class="display-4">
-      Happily Married on:
-    </p>
-    <p class="display-1">{{ userWedding.dateMarried }}</p>
-    <v-img :src="userWedding.weddingPhoto" contain max-height="300">
+    <v-img :src="userWedding.weddingPhoto" contain max-height="500">
       <template v-slot:placeholder>
         <v-layout fill-height align-center justify-center ma-0>
           <v-progress-circular indeterminate />
         </v-layout>
       </template>
     </v-img>
+    <p class="display-1 text-sm-center mt-2">
+      Married on {{ userWedding.dateMarried }}
+    </p>
 
     <p v-if="giftsClaimable">
       You have a claimable gift balance of {{ userWedding.balance }} ether!
     </p>
 
-    <v-list two-line subheader>
-      <v-subheader>You</v-subheader>
+    <v-layout wrap>
+      <v-flex md6 pt-2 pb-2>
+        <v-card color="primary">
+          <v-card-title>
+            <p class="display-1">You</p>
+          </v-card-title>
 
-      <v-list-tile>
-        <v-list-tile-content>
-          <v-list-tile-title>Has Accepted?</v-list-tile-title>
-          <v-list-tile-sub-title>
-            {{ userAnswer }}
-          </v-list-tile-sub-title>
-        </v-list-tile-content>
-      </v-list-tile>
+          <v-card-text class="title" font-weight-bold>
+            {{
+              userAnswer ? 'You have said yes!' : 'You have not answered yet.'
+            }}
+          </v-card-text>
 
-      <v-list-tile>
-        <v-list-tile-content>
-          <v-list-tile-title>Vows</v-list-tile-title>
-          <v-list-tile-sub-title>
+          <v-card-text class="subheading" font-weight-bold>
             {{ userVows }}
-          </v-list-tile-sub-title>
-        </v-list-tile-content>
-      </v-list-tile>
-    </v-list>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+      <v-flex md6 pt-2 pb-2>
+        <v-card color="accent">
+          <v-card-title>
+            <p class="display-1">{{ partnerName }}</p>
+          </v-card-title>
 
-    <v-list two-line subheader>
-      <v-subheader>{{ partnerName }}</v-subheader>
+          <v-card-text class="title" font-weight-bold>
+            {{
+              partnerAnswer
+                ? `${partnerName} has said yes!`
+                : `${partnerName} has not answered yet.`
+            }}
+          </v-card-text>
 
-      <v-list-tile>
-        <v-list-tile-content>
-          <v-list-tile-title>Has Accepted?</v-list-tile-title>
-          <v-list-tile-sub-title>
-            {{ partnerAnswer }}
-          </v-list-tile-sub-title>
-        </v-list-tile-content>
-      </v-list-tile>
-
-      <v-list-tile>
-        <v-list-tile-content>
-          <v-list-tile-title>Vows</v-list-tile-title>
-          <v-list-tile-sub-title>
+          <v-card-text class="subheading" font-weight-bold>
             {{ partnerVows }}
-          </v-list-tile-sub-title>
-        </v-list-tile-content>
-      </v-list-tile>
-    </v-list>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+    </v-layout>
 
     <v-tabs grow v-model="tabsIndex">
       <v-tab ripple>Set Wedding Photo</v-tab>
