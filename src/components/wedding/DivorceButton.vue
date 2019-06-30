@@ -12,7 +12,8 @@ export default {
     confirmDivorce() {
       this.setPendingTransaction({
         action: 'divorce',
-        description: 'submit a divorce'
+        description: 'submit a divorce',
+        requireConfirmation: true
       })
     }
   }

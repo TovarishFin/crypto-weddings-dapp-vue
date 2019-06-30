@@ -40,7 +40,7 @@ export const decryptAndLoadWallet = (
 
 export const setPendingTransaction = (
   { rootGetters, commit, dispatch },
-  { action, description, payload }
+  { action, description, payload, requireConfirmation }
 ) => {
   const { skipConfirmations, accountReady } = rootGetters
 
@@ -49,7 +49,7 @@ export const setPendingTransaction = (
   commit('setPendingPayload', payload)
 
   if (accountReady) {
-    skipConfirmations
+    skipConfirmations && !requireConfirmation
       ? dispatch('confirmTransaction')
       : dispatch('setConfirmTransactionOpen', true)
 
