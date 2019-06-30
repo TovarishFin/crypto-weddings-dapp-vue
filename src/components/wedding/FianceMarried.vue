@@ -24,7 +24,9 @@
 
           <v-card-text class="title" font-weight-bold>
             {{
-              userAnswer ? 'You have said yes!' : 'You have not answered yet.'
+              userAnswer
+                ? 'You are happily married.'
+                : 'You have started a divorce.'
             }}
           </v-card-text>
 
@@ -42,8 +44,8 @@
           <v-card-text class="title" font-weight-bold>
             {{
               partnerAnswer
-                ? `${partnerName} has said yes!`
-                : `${partnerName} has not answered yet.`
+                ? `${partnerName} is happily married.`
+                : `${partnerName} has started a divorce.`
             }}
           </v-card-text>
 

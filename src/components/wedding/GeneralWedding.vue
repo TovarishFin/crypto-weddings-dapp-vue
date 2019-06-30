@@ -21,11 +21,7 @@
           </v-card-title>
 
           <v-card-text class="title" font-weight-bold>
-            {{
-              selectedWedding.p1Answer
-                ? `${selectedWedding.p1Name} has said yes!`
-                : `${selectedWedding.p1Name} has not answered yet.`
-            }}
+            {{ statusText(selectedWedding.p1Answer, selectedWedding.p1Name) }}
           </v-card-text>
 
           <v-card-text class="subheading" font-weight-bold>
@@ -40,11 +36,7 @@
           </v-card-title>
 
           <v-card-text class="title" font-weight-bold>
-            {{
-              selectedWedding.p2Answer
-                ? `${selectedWedding.p2Name} has said yes!`
-                : `${selectedWedding.p2Name} has not answered yet.`
-            }}
+            {{ statusText(selectedWedding.p2Answer, selectedWedding.p2Name) }}
           </v-card-text>
 
           <v-card-text class="subheading" font-weight-bold>
@@ -93,6 +85,24 @@ export default {
           smallValue: this.giftValue
         })
         this.clearGiftForm()
+      }
+    },
+    statusText(answer, name) {
+      switch (true) {
+        case !this.isMarried && !answer:
+          return `${name} has not answered yet`
+
+        case !this.isMarried && answer:
+          return `${name} has said yes!`
+
+        case this.isMarried && answer:
+          return `${name} is happily married.`
+
+        case this.isMarried && !answer:
+          return `${name} has started a divorce.`
+
+        default:
+          return 'sorry a weird error occurred... try refreshing the page...'
       }
     }
   }
