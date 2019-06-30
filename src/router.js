@@ -47,6 +47,11 @@ export default new Router({
       component: () => loadPage(import('@/components/pages/Wedding.vue'))
     },
     {
+      path: '/synthwave',
+      name: 'Synthwave',
+      component: () => loadPage(import('@/components/pages/Synthwave.vue'))
+    },
+    {
       path: '*',
       name: 'Not Found',
       component: () => loadPage(import('@/components/layout/NotFound.vue'))

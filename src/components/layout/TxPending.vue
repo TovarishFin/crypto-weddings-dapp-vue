@@ -21,16 +21,7 @@
         </a>
       </p>
 
-      <v-checkbox
-        v-model="showClear"
-        label="I have waited at least 5 minutes"
-      />
-
-      <v-btn
-        v-show="showClear"
-        color="primary"
-        @click="setBlockingPendingTransactionHash(null)"
-      >
+      <v-btn color="primary" @click="setBlockingPendingTransactionHash(null)">
         clear transaction
       </v-btn>
     </div>
@@ -40,11 +31,6 @@
 import { mapGetters, mapMutations } from 'vuex'
 
 export default {
-  data() {
-    return {
-      showClear: false
-    }
-  },
   computed: {
     ...mapGetters(['blockingPendingTransactionHash'])
   },
