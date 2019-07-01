@@ -2,8 +2,8 @@ const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
 const publicPath = process.env.NODE_ENV === 'production' ? '/' : '/'
 const prodBucket = process.env.VUE_APP_S3D_BUCKET_PROD
 const stagingBucket = process.env.VUE_APP_S3D_BUCKET_STAGING
-const prodCloudfrontId = process.env.VUE_APPS3D_CLOUDFRONT_ID_PROD
-const stagingCloudfrontId = process.env.VUE_APPS3D_CLOUDFRONT_ID_STAGING
+const prodCloudfrontId = process.env.VUE_APP_S3D_CLOUDFRONT_ID_PROD
+const stagingCloudfrontId = process.env.VUE_APP_S3D_CLOUDFRONT_ID_STAGING
 
 const bucket =
   process.env.NODE_ENV === 'production' ? prodBucket : stagingBucket
