@@ -6,7 +6,8 @@
     "build": "vue-cli-service build",
     "test": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "deploy": "vue-cli-service s3-deploy",
+    "deploy:prod": "NODE_ENV=production vue-cli-service s3-deploy",
+    "deploy:staging": "NODE_ENV=staging vue-cli-service s3-deploy",
     "clean:install": "rimraf node_modules && yarn install",
     "serve:dev": "vue-cli-service serve",
     "test:e2e": "vue-cli-service test:e2e"
