@@ -9,7 +9,7 @@
       />
       <div v-if="!showParticles" class="full-height" />
       <div class="landing-text">
-        <p class="display-3 primary--text">Crypto Weddings</p>
+        <p class="display-3 primary-neon">Crypto Weddings</p>
         <p class="headline accent--text">
           Get Married on the Blockchain
         </p>

@@ -59,4 +59,13 @@ export default {
 
 .full-height-container
   min-height: "calc(100vh - %s)" % ($toolbar-height + $footer-height)
+
+/* neon text */
+.primary-neon
+  color: var(--v-primary-lighten2)
+  text-shadow:
+    0 0 2px var(--v-primary-lighten1),
+    0 0 4px var(--v-primary-base),
+    0 0 6px var(--v-primary-darken1),
+    0 0 8px var(--v-primary-darken2)
 </style>

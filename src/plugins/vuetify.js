@@ -14,6 +14,9 @@ import {
 import '@/stylus/main.styl'
 
 Vue.use(Vuetify, {
+  options: {
+    customProperties: true
+  },
   components: {
     VApp,
     VNavigationDrawer,
