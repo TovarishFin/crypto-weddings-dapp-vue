@@ -1,6 +1,6 @@
 <template>
   <div class="padded-element">
-    <v-tabs v-if="!useMetaMask" grow v-model="tabsIndex">
+    <v-tabs color="synthwaveLight" v-if="!useMetaMask" grow v-model="tabsIndex">
       <v-tab ripple>Wallet</v-tab>
       <v-tab ripple>Settings</v-tab>
       <v-tab v-if="accountReady" ripple>Funding</v-tab>

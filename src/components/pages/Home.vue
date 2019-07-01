@@ -10,21 +10,21 @@
       <div v-if="!showParticles" class="full-height" />
       <div class="landing-text">
         <p class="display-3 primary-neon">Crypto Weddings</p>
-        <p class="headline accent--text">
+        <p class="headline accent-neon">
           Get Married on the Blockchain
         </p>
         <v-container>
           <v-layout align-items-center>
             <v-flex xs-6>
-              <v-btn to="/get-married" color="primary">
+              <neon-primary-button to="/get-married">
                 get married
-              </v-btn>
+              </neon-primary-button>
             </v-flex>
 
             <v-flex xs-6>
-              <v-btn v-scroll-to="'#weddings'" color="accent">
+              <neon-accent-button v-scroll-to="'#weddings'" color="accent">
                 view weddings
-              </v-btn>
+              </neon-accent-button>
             </v-flex>
           </v-layout>
         </v-container>
@@ -34,18 +34,26 @@
       </v-icon>
     </div>
 
-    <v-sheet id="weddings" class="full-height wedding-container">
+    <v-sheet
+      color="synthwaveLight"
+      id="weddings"
+      class="full-height wedding-container"
+    >
       <weddings />
     </v-sheet>
   </span>
 </template>
 <script>
 import Weddings from '@/components/Weddings'
+import NeonPrimaryButton from '@/components/common/NeonPrimaryButton'
+import NeonAccentButton from '@/components/common/NeonAccentButton'
 import { mapGetters } from 'vuex'
 
 export default {
   components: {
-    Weddings
+    Weddings,
+    NeonPrimaryButton,
+    NeonAccentButton
   },
   computed: {
     ...mapGetters(['showParticles'])

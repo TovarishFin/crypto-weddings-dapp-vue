@@ -1,6 +1,6 @@
 <template>
   <div class="padded-element">
-    <v-tabs grow v-model="tabsIndex">
+    <v-tabs color="synthwaveLight" grow v-model="tabsIndex">
       <v-tab ripple>Network</v-tab>
       <v-tab ripple>Display</v-tab>
       <v-tab ripple>Wedding</v-tab>

@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar app>
+  <v-toolbar color="synthwave" app>
     <v-toolbar-side-icon @click.stop="toggleDrawer"></v-toolbar-side-icon>
     <v-toolbar-title v-text="name"></v-toolbar-title>
     <v-spacer />

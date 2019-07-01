@@ -1,5 +1,5 @@
 <template>
-  <v-app :dark="useDarkMode">
+  <v-app :dark="useDarkMode" class="synthwave">
     <app-drawer />
     <app-toolbar />
 
@@ -64,8 +64,16 @@ export default {
 .primary-neon
   color: var(--v-primary-lighten2)
   text-shadow:
-    0 0 2px var(--v-primary-lighten1),
-    0 0 4px var(--v-primary-base),
-    0 0 6px var(--v-primary-darken1),
-    0 0 8px var(--v-primary-darken2)
+    0 0 3px var(--v-primary-lighten1),
+    0 0 6px var(--v-primary-base),
+    0 0 12px var(--v-primary-darken1),
+    0 0 24px var(--v-primary-darken2)
+
+.accent-neon
+  color: var(--v-accent-lighten2)
+  text-shadow:
+    0 0 1.5px var(--v-accent-lighten1),
+    0 0 3px var(--v-accent-base),
+    0 0 6px var(--v-accent-darken1),
+    0 0 12px var(--v-accent-darken2)
 </style>

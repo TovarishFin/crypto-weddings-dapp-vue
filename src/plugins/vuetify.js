@@ -29,6 +29,8 @@ Vue.use(Vuetify, {
     transitions
   },
   theme: {
+    synthwave: '#2a2139',
+    synthwaveLight: '#34294f',
     primary: '#ee44aa',
     secondary: '#424242',
     accent: '#82B1FF',
