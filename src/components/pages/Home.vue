@@ -74,6 +74,7 @@ grid-purple=#7B1FA2
 
 .grid-background
   position: relative
+  overflow: hidden
 
 .grid-sky
   height: 100%
