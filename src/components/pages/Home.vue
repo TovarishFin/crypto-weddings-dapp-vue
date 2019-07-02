@@ -7,7 +7,10 @@
         color="#ee44aa"
         lines-color="#82B1FF"
       />
-      <div v-if="!showParticles" class="full-height" />
+      <div v-if="!showParticles" class="full-height grid-background">
+        <div class="grid-sky" />
+        <div class="grid-surface" />
+      </div>
       <div class="landing-text">
         <p class="display-3 primary-neon">Crypto Weddings</p>
         <p class="headline accent-neon">
@@ -16,15 +19,20 @@
         <v-container>
           <v-layout align-items-center>
             <v-flex xs-6>
-              <neon-primary-button to="/get-married">
+              <v-btn class="primary-neon-button" flat to="/get-married">
                 get married
-              </neon-primary-button>
+              </v-btn>
             </v-flex>
 
             <v-flex xs-6>
-              <neon-accent-button v-scroll-to="'#weddings'" color="accent">
+              <v-btn
+                class="accent-neon-button"
+                flat
+                v-scroll-to="'#weddings'"
+                color="accent"
+              >
                 view weddings
-              </neon-accent-button>
+              </v-btn>
             </v-flex>
           </v-layout>
         </v-container>
@@ -45,15 +53,11 @@
 </template>
 <script>
 import Weddings from '@/components/Weddings'
-import NeonPrimaryButton from '@/components/common/NeonPrimaryButton'
-import NeonAccentButton from '@/components/common/NeonAccentButton'
 import { mapGetters } from 'vuex'
 
 export default {
   components: {
-    Weddings,
-    NeonPrimaryButton,
-    NeonAccentButton
+    Weddings
   },
   computed: {
     ...mapGetters(['showParticles'])
@@ -62,8 +66,84 @@ export default {
 </script>
 <style lang="styl" scoped>
 @import '~vuetify/src/stylus/settings/_variables'
+
+grid-purple=#7B1FA2
+
 .full-height
   height: "calc(100vh - %s)" % ($toolbar-height)
+
+.grid-background
+  position: relative
+
+.grid-sky
+  height: 100%
+  width: 100%
+  position: absolute
+  left: 0
+  top: 0
+  box-shadow:
+    0 0 100px 100px grid-purple,
+    inset 0 0 50px 50px grid-purple
+  background-position: center center
+  background-image:
+    linear-gradient(
+      transparent 0px,
+      transparentify(lighten(grid-purple, 15%), .5) 14px,
+      transparent 14px 15px,
+      lighten(grid-purple, 40%) 15px 20px,
+      transparent 20px 21px,
+      transparentify(lighten(grid-purple, 15%), .5) 21px,
+      transparent 35px
+    ),
+    linear-gradient(
+      90deg,
+      transparent 0px,
+      transparentify(lighten(grid-purple, 15%), .5) 14px,
+      transparent 14px 15px,
+      lighten(grid-purple, 40%) 15px 20px,
+      transparent 20px 21px,
+      transparentify(lighten(grid-purple, 15%), .5) 21px,
+      transparent 35px
+    )
+  background-size: 100px 100px
+  background-repeat: repeat
+  transform:
+    perspective(600px) rotateX(90deg) translateZ(300px)
+
+.grid-surface
+  height: 100%
+  width: 100%
+  position: absolute
+  left: 0
+  top: 0
+  box-shadow:
+    0 0 100px 100px grid-purple,
+    inset 0 0 50px 50px grid-purple
+  background-position: center center
+  background-image:
+    linear-gradient(
+      transparent 0px,
+      transparentify(lighten(grid-purple, 15%), .5) 14px,
+      transparent 14px 15px,
+      lighten(grid-purple, 40%) 15px 20px,
+      transparent 20px 21px,
+      transparentify(lighten(grid-purple, 15%), .5) 21px,
+      transparent 35px
+    ),
+    linear-gradient(
+      90deg,
+      transparent 0px,
+      transparentify(lighten(grid-purple, 15%), .5) 14px,
+      transparent 14px 15px,
+      lighten(grid-purple, 40%) 15px 20px,
+      transparent 20px 21px,
+      transparentify(lighten(grid-purple, 15%), .5) 21px,
+      transparent 35px
+    )
+  background-size: 100px 100px
+  background-repeat: repeat
+  transform:
+    perspective(600px) rotateX(90deg) translateZ(-300px)
 
 .landing-screen
   position: relative

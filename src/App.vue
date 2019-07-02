@@ -76,4 +76,42 @@ export default {
     0 0 3px var(--v-accent-base),
     0 0 6px var(--v-accent-darken1),
     0 0 12px var(--v-accent-darken2)
+
+.primary-neon-button
+  border: 1px solid var(--v-primary-lighten2)
+  border-radius: 5px
+  box-shadow:
+    0 0 2px var(--v-primary-lighten1),
+    0 0 4px var(--v-primary-base),
+    0 0 8px var(--v-primary-darken1),
+    0 0 16px var(--v-primary-darken2),
+    inset 0 0 2px var(--v-primary-lighten1),
+    inset 0 0 4px var(--v-primary-base),
+    inset 0 0 8px var(--v-primary-darken1)
+  >.v-btn__content
+    color: var(--v-primary-lighten2)
+    text-shadow:
+      0 0 1px var(--v-primary-lighten1),
+      0 0 2px var(--v-primary-base),
+      0 0 4px var(--v-primary-darken1),
+      0 0 8px var(--v-primary-darken2)
+
+.accent-neon-button
+  border: 1px solid var(--v-accent-lighten2)
+  border-radius: 5px
+  box-shadow:
+    0 0 2px var(--v-accent-lighten1),
+    0 0 4px var(--v-accent-base),
+    0 0 8px var(--v-accent-darken1),
+    0 0 16px var(--v-accent-darken2),
+    inset 0 0 2px var(--v-accent-lighten1),
+    inset 0 0 4px var(--v-accent-base),
+    inset 0 0 8px var(--v-accent-darken1)
+  >.v-btn__content
+    color: var(--v-accent-lighten2)
+    text-shadow:
+      0 0 1px var(--v-accent-lighten1),
+      0 0 2px var(--v-accent-base),
+      0 0 4px var(--v-accent-darken1),
+      0 0 8px var(--v-accent-darken2)
 </style>
