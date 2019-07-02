@@ -151,7 +151,7 @@ grid-purple=#7B1FA2
   background-image: url("/img/logo-background.svg")
   background-repeat:no-repeat
   background-position: center
-  background-size: 100% auto
+  background-size: contain
 
   .landing-text
     position: absolute
