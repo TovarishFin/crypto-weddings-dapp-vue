@@ -32,7 +32,7 @@ Vue.use(Vuetify, {
     synthwave: '#2a2139',
     synthwaveLight: '#34294f',
     primary: '#ee44aa',
-    secondary: '#8E24AA',
+    secondary: '#bc13fe',
     accent: '#82B1FF',
     error: '#FF5252',
     info: '#2196F3',

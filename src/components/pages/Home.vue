@@ -67,7 +67,7 @@ export default {
 <style lang="styl" scoped>
 @import '~vuetify/src/stylus/settings/_variables'
 
-grid-purple=#7B1FA2
+grid-purple=#bc13fe
 
 .full-height
   height: "calc(100vh - %s)" % ($toolbar-height)
