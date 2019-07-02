@@ -22,7 +22,7 @@
             <v-btn
               icon
               flat
-              color="primary"
+              class="primary-neon-button"
               @click="goToWedding(wedding.address)"
             >
               <v-icon>
@@ -63,7 +63,11 @@
         </td>
         <td>{{ stageText[props.item.stage] }}</td>
         <td>
-          <v-btn color="primary" @click="goToWedding(props.item.address)">
+          <v-btn
+            flat
+            class="primary-neon-button"
+            @click="goToWedding(props.item.address)"
+          >
             go to wedding
           </v-btn>
         </td>

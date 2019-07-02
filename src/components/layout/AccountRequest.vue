@@ -62,17 +62,24 @@
         />
       </v-form>
       <v-card-actions v-if="!useMetaMask">
-        <v-btn @click="continueWithoutPermission" color="secondary">
+        <v-btn
+          flat
+          class="secondary-neon-button"
+          @click="continueWithoutPermission"
+        >
           Don't Activate
         </v-btn>
         <v-btn
+          flat
+          class="primary-neon-button"
           v-if="encryptedMnemonicExists"
           @click="unlockWallet"
-          color="primary"
         >
           Unlock Account
         </v-btn>
         <v-btn
+          flat
+          class="primary-neon-button"
           @click="setAccountRequestOpen(false)"
           v-if="!encryptedMnemonicExists"
           color="primary"
@@ -82,11 +89,15 @@
         </v-btn>
       </v-card-actions>
       <v-card-actions v-if="useMetaMask">
-        <v-btn @click="continueWithoutPermission" color="secondary">
+        <v-btn
+          flat
+          class="secondary-neon-button"
+          @click="continueWithoutPermission"
+        >
           Don't Activate
         </v-btn>
 
-        <v-btn color="primary" @click="setupWeb3Provider">
+        <v-btn flat class="primary-neon-button" @click="setupWeb3Provider">
           activate MetaMask
         </v-btn>
       </v-card-actions>

@@ -1,5 +1,5 @@
 <template>
-  <v-btn @click="confirmDivorce" flat icon color="secondary">
+  <v-btn flat class="secondary-neon-button" @click="confirmDivorce" icon>
     <v-icon>mdi-heart-broken</v-icon>
   </v-btn>
 </template>

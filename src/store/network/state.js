@@ -1,5 +1,5 @@
 export default {
-  network: 'mainnet',
+  network: 'ropsten',
   gasLimit: 5e6,
   customGasPrice: null,
   accountReady: false,

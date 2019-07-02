@@ -1,6 +1,6 @@
 <template>
   <span>
-    <v-btn @click="claimWeddingGifts">
+    <v-btn flat class="secondary-neon-button" @click="claimWeddingGifts">
       claim wedding gifts
     </v-btn>
   </span>

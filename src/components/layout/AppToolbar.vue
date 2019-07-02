@@ -5,25 +5,27 @@
     <v-spacer />
     <v-progress-circular v-show="hasPendingTxs" indeterminate color="primary" />
     <v-btn
+      flat
+      class="secondary-neon-button"
       v-if="accountReady && $vuetify.breakpoint.smAndUp"
       @click="toggleShowTransactions"
-      color="secondary"
     >
       {{ showTransactionsText }}
     </v-btn>
     <v-btn
+      flat
+      class="secondary-neon-button"
       v-if="!accountReady && $vuetify.breakpoint.smAndUp"
       @click="setAccountRequestOpen(true)"
-      color="secondary"
     >
       activate account
     </v-btn>
 
     <v-btn
+      flat
+      class="primary-neon-button"
       v-if="accountReady && !$vuetify.breakpoint.smAndUp"
       @click="toggleShowTransactions"
-      color="primary"
-      flat
       icon
     >
       <v-icon>
@@ -31,10 +33,10 @@
       </v-icon>
     </v-btn>
     <v-btn
+      flat
+      class="primary-neon-button"
       v-if="!accountReady && !$vuetify.breakpoint.smAndUp"
       @click="setAccountRequestOpen(true)"
-      color="primary"
-      flat
       icon
     >
       <v-icon>

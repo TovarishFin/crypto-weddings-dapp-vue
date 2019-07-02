@@ -7,7 +7,7 @@
       type="text"
       required
     />
-    <v-btn type="submit">
+    <v-btn flat class="secondary-neon-button" type="submit">
       set vows
     </v-btn>
   </v-form>

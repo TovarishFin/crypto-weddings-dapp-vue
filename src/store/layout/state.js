@@ -9,7 +9,7 @@ export default {
   walletTabs: 0,
   settingsTabs: 0,
   showTransactions: false,
-  showParticles: true,
+  showParticles: false,
   useDarkMode: true,
   loading: false
 }

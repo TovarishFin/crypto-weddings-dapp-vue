@@ -53,7 +53,7 @@
       <a target="_blank" href="https://www.ethgasstation.info/">here</a>
     </p>
 
-    <v-btn color="secondary" @click="clearTransactions">
+    <v-btn flat class="secondary-neon-button" @click="clearTransactions">
       clear transaction history
     </v-btn>
   </span>

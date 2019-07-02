@@ -1,9 +1,9 @@
 <template>
   <span>
-    <v-btn @click="checkAndAcceptProposal">
+    <v-btn flat class="primary-neon-button" @click="checkAndAcceptProposal">
       accept
     </v-btn>
-    <v-btn @click="checkAndRejectProposal">
+    <v-btn flat class="secondary-neon-button" @click="checkAndRejectProposal">
       reject
     </v-btn>
 

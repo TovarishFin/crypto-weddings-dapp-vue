@@ -31,7 +31,7 @@
           </p>
         </v-card-text>
         <v-card-actions>
-          <v-btn @click="closeQrCodeScanner">
+          <v-btn flat class="secondary-neon-button" @click="closeQrCodeScanner">
             cancel
           </v-btn>
         </v-card-actions>

@@ -32,8 +32,8 @@ export default {
     },
     showParticlesMessage() {
       return this.showParticles
-        ? 'hide particles on home page'
-        : 'show particles on home pag'
+        ? 'show synthwave grid on home page'
+        : 'show particles on home page'
     }
   },
   methods: {

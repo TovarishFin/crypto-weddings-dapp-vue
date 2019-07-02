@@ -1,7 +1,9 @@
 <template>
   <v-snackbar v-model="notificationStatus" multi-line :timeout="0">
     {{ notificationMessage }}
-    <v-btn flat @click="dismissNotification"> close </v-btn>
+    <v-btn flat class="secondary-neon-button" @click="dismissNotification">
+      close
+    </v-btn>
   </v-snackbar>
 </template>
 

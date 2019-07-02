@@ -15,7 +15,7 @@
         required
       />
 
-      <v-btn type="submit">
+      <v-btn flat class="secondary-neon-button" type="submit">
         Set Wallet
       </v-btn>
     </v-form>

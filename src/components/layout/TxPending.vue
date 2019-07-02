@@ -21,7 +21,11 @@
         </a>
       </p>
 
-      <v-btn color="primary" @click="setBlockingPendingTransactionHash(null)">
+      <v-btn
+        flat
+        class="primary-neon-button"
+        @click="setBlockingPendingTransactionHash(null)"
+      >
         clear transaction
       </v-btn>
     </div>

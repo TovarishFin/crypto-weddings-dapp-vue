@@ -96,6 +96,25 @@ export default {
       0 0 4px var(--v-primary-darken1),
       0 0 8px var(--v-primary-darken2)
 
+.secondary-neon-button
+  border: 1px solid var(--v-secondary-lighten2)
+  border-radius: 5px
+  box-shadow:
+    0 0 2px var(--v-secondary-lighten1),
+    0 0 4px var(--v-secondary-base),
+    0 0 8px var(--v-secondary-darken1),
+    0 0 16px var(--v-secondary-darken2),
+    inset 0 0 2px var(--v-secondary-lighten1),
+    inset 0 0 4px var(--v-secondary-base),
+    inset 0 0 8px var(--v-secondary-darken1)
+  >.v-btn__content
+    color: var(--v-secondary-lighten2)
+    text-shadow:
+      0 0 1px var(--v-secondary-lighten1),
+      0 0 2px var(--v-secondary-base),
+      0 0 4px var(--v-secondary-darken1),
+      0 0 8px var(--v-secondary-darken2)
+
 .accent-neon-button
   border: 1px solid var(--v-accent-lighten2)
   border-radius: 5px

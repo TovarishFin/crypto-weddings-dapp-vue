@@ -19,7 +19,7 @@
           <v-radio label="ban" :value="true" />
         </v-radio-group>
 
-        <v-btn color="primary" type="submit">update</v-btn>
+        <v-btn flat class="primary-neon-button" type="submit">update</v-btn>
       </v-form>
 
       <v-form
@@ -31,7 +31,7 @@
           <v-radio label="hide" :value="true" />
         </v-radio-group>
 
-        <v-btn color="primary" type="submit">update</v-btn>
+        <v-btn flat class="primary-neon-button" type="submit">update</v-btn>
       </v-form>
 
       <v-form @submit="validateAndUpdateMinGiftAmount" ref="gift-amount-form">
@@ -43,7 +43,7 @@
           required
         />
 
-        <v-btn color="primary" type="submit">update</v-btn>
+        <v-btn flat class="primary-neon-button" type="submit">update</v-btn>
       </v-form>
     </span>
 

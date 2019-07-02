@@ -27,10 +27,10 @@
       </v-card-text>
 
       <v-card-actions>
-        <v-btn @click="confirmTransaction" color="primary">
+        <v-btn flat class="primary-neon-button" @click="confirmTransaction">
           Confirm
         </v-btn>
-        <v-btn @click="cancelTransaction" color="cancel">
+        <v-btn flat class="secondary-neon-button" @click="cancelTransaction">
           Cancel
         </v-btn>
       </v-card-actions>
@@ -58,10 +58,15 @@
       </v-card-text>
 
       <v-card-actions>
-        <v-btn :href="buyEthLink" target="_blank" color="primary">
+        <v-btn
+          flat
+          class="primary-neon-button"
+          :href="buyEthLink"
+          target="_blank"
+        >
           Buy Ether
         </v-btn>
-        <v-btn @click="cancelTransaction" color="cancel">
+        <v-btn flat class="secondary-neon-button" @click="cancelTransaction">
           Cancel
         </v-btn>
       </v-card-actions>
