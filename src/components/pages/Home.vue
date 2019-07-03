@@ -12,7 +12,7 @@
         <div class="grid-surface" />
       </div>
       <div class="landing-text">
-        <p class="display-3 primary-neon">Crypto Weddings</p>
+        <p class="display-3 primary-neon neon-pulse">Crypto Weddings</p>
         <p class="headline accent-neon">
           Get Married on the Blockchain
         </p>
@@ -37,7 +37,7 @@
           </v-layout>
         </v-container>
       </div>
-      <v-icon color="primary" size="100" class="landing-down-arrow">
+      <v-icon color="accent" size="100" class="landing-down-arrow">
         mdi-chevron-down
       </v-icon>
     </div>
@@ -162,16 +162,27 @@ grid-purple=#bc13fe
 
   .landing-down-arrow
     position: absolute
-    bottom: 10%
+    bottom: 20px
     left: 50%
     transform: translate(-50%, 0%)
-    animation: arrow-down 3s linear infinite
+    animation: neon-pulse 5s linear infinite
+
+@keyframes neon-pulse
+  0%
+    text-shadow:
+      0 0 3px var(--v-accent-lighten1),
+      0 0 6px var(--v-accent-base)
+  50%
+    text-shadow:
+      0 0 3px var(--v-accent-lighten1),
+      0 0 6px var(--v-accent-base),
+      0 0 12px var(--v-accent-darken1),
+      0 0 24px var(--v-accent-darken2)
+  100%
+    text-shadow:
+      0 0 3px var(--v-accent-lighten1),
+      0 0 6px var(--v-accent-base)
 
 .wedding-container
   padding: $spacer
-
-@keyframes arrow-down
-  to
-    opacity: 0
-    transform: translate(-50%, 100%)
 </style>
