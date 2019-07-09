@@ -12,3 +12,5 @@ export const weddingAddressOfUser = (state, _, __, { address }) =>
 
 export const weddingExists = state => weddingAddress =>
   pathOr(false, ['weddingExists', weddingAddress], state)
+
+export const paused = state => pathOr(false, ['paused'], state)

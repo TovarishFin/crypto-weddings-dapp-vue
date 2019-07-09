@@ -28,6 +28,8 @@ export const watchWeddingManagerEvents = context => {
     'ShouldHideGiftEventsUpdated',
     handleShouldHideGiftEventsUpdated(context)
   )
+  weddingManager.on('Paused', handlePaused(context))
+  weddingManager.on('Unpaused', handleUnpaused(context))
 }
 
 export const unwatchWeddingManagerEvents = ({ getters }) => {
@@ -47,6 +49,8 @@ export const unwatchWeddingManagerEvents = ({ getters }) => {
   weddingManager.removeAllListeners('UserPermissionUpdated')
   weddingManager.removeAllListeners('MinGiftAmountUpdated')
   weddingManager.removeAllListeners('ShouldHideGiftEventsUpdated')
+  weddingManager.removeAllListeners('Paused')
+  weddingManager.removeAllListeners('Unpaused')
 }
 
 export const handleWeddingAdded = ({ dispatch, rootGetters }) => (
@@ -335,6 +339,22 @@ export const handleShouldHideGiftEventsUpdated = ({
       }`
     )
   }
+}
+
+export const handlePaused = ({ commit, dispatch }) => {
+  commit('setPaused', true)
+  dispatch(
+    'createNotification',
+    'Weddings have been paused. No new weddings can be created at this time.'
+  )
+}
+
+export const handleUnpaused = ({ commit, dispatch }) => {
+  commit('setPaused', false)
+  dispatch(
+    'createNotification',
+    'Weddings have been unpaused. New weddings can be now be created.'
+  )
 }
 
 export const getWeddingGiftEvents = async (

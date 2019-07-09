@@ -2,7 +2,7 @@ import { ethers, utils } from 'ethers'
 import deployments from 'crypto-weddings-contracts/deployments'
 import { abi } from 'crypto-weddings-contracts/build/WeddingManager'
 
-export const setupWeddingManager = ({ commit, rootGetters }) => {
+export const setupWeddingManager = async ({ commit, rootGetters }) => {
   const { provider, network, wallet } = rootGetters
   const {
     [network]: { weddingManager: address }
@@ -13,7 +13,10 @@ export const setupWeddingManager = ({ commit, rootGetters }) => {
       ? new ethers.Contract(address, abi, wallet)
       : new ethers.Contract(address, abi, provider)
 
+  const paused = await weddingManager.paused()
+
   commit('setWeddingManager', weddingManager)
+  commit('setPaused', paused)
 }
 
 export const startWedding = async (

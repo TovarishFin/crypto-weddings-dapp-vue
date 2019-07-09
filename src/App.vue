@@ -16,17 +16,6 @@
     <account-request />
     <confirm-transaction />
     <app-transactions />
-    <v-card class="notifier" v-show="network === 'mainnet'">
-      <v-card-text>
-        CryptoWeddings is paused until July 10th when the first wedding will
-        take place. After July 10th anyone is free to marry at anytime to anyone
-        :)
-      </v-card-text>
-      <v-card-text>
-        You will be able to see the wedding live on twitch
-        <a target="_blank" href="https://twitch.tv/TovarishFin">here</a>
-      </v-card-text>
-    </v-card>
 
     <app-footer />
   </v-app>
@@ -56,7 +45,7 @@ export default {
     AppTransactions
   },
   computed: {
-    ...mapGetters(['useDarkMode', 'network'])
+    ...mapGetters(['useDarkMode'])
   },
   beforeCreate() {
     store.dispatch('bootstrapEth')

@@ -19,3 +19,7 @@ export const setWeddingExists = (state, existanceMap) => {
     [existanceMap.weddingAddress]: existanceMap.exists
   }
 }
+
+export const setPaused = (state, paused) => {
+  state.paused = paused
+}
