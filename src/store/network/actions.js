@@ -9,7 +9,6 @@ export const bootstrapEth = async ({ commit, dispatch, getters }) => {
   commit('setProviderReady', false)
   commit('setAccountReady', false)
   dispatch('watchMetaMask')
-  commit('setProviderReady', true)
 
   if (useMetaMask && !window.ethereum.selectedAddress) {
     dispatch('setAccountRequestOpen', true)
@@ -29,6 +28,7 @@ export const bootstrapEth = async ({ commit, dispatch, getters }) => {
   dispatch('unwatchWeddingManagerEvents')
   dispatch('watchWeddingManagerEvents')
   dispatch('getWeddings')
+  commit('setProviderReady', true)
 }
 
 export const watchPendingTx = ({ commit }, { tx, description, blocking }) => {
