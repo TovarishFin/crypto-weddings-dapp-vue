@@ -28,8 +28,8 @@
         required
       />
 
-      <v-btn type="submit">
-        create wedding
+      <v-btn :disabled="paused" type="submit">
+        {{ buttonText }}
       </v-btn>
     </v-form>
   </div>
@@ -52,7 +52,10 @@ export default {
     QrCodeInput
   },
   computed: {
-    ...mapGetters(['address'])
+    ...mapGetters(['address', 'paused']),
+    buttonText() {
+      return this.paused ? 'wedding creation paused' : 'create wedding'
+    }
   },
   methods: {
     ...mapActions(['setPendingTransaction']),

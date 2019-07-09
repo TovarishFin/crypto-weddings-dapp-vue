@@ -341,7 +341,7 @@ export const handleShouldHideGiftEventsUpdated = ({
   }
 }
 
-export const handlePaused = ({ commit, dispatch }) => {
+export const handlePaused = ({ commit, dispatch }) => () => {
   commit('setPaused', true)
   dispatch(
     'createNotification',
@@ -349,7 +349,7 @@ export const handlePaused = ({ commit, dispatch }) => {
   )
 }
 
-export const handleUnpaused = ({ commit, dispatch }) => {
+export const handleUnpaused = ({ commit, dispatch }) => () => {
   commit('setPaused', false)
   dispatch(
     'createNotification',
