@@ -65,5 +65,8 @@
     "stylus-loader": "^3.0.2",
     "vue-template-compiler": "^2.5.17",
     "vuetify-loader": "^1.0.8"
+  },
+  "resolutions": {
+    "lodash": "^4.17.13"
   }
 }
