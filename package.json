@@ -67,6 +67,6 @@
     "vuetify-loader": "^1.0.8"
   },
   "resolutions": {
-    "lodash": "^4.6.2"
+    "lodash": "4.6.2"
   }
 }
