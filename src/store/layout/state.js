@@ -4,6 +4,8 @@ export default {
   notificationMessages: [],
   accountRequestOpen: false,
   confirmTransactionOpen: false,
+  warningDialogOpen: true,
+  warningComponent: '',
   weddingInProgressTabs: 0,
   weddingMarriedTabs: 0,
   walletTabs: 0,

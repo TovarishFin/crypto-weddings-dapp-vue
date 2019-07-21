@@ -15,6 +15,7 @@
 
     <account-request />
     <confirm-transaction />
+    <warning-dialog />
     <app-transactions />
 
     <app-footer />
@@ -28,6 +29,7 @@ import AppFooter from '@/components/layout/AppFooter'
 import AppNotifier from '@/components/layout/AppNotifier'
 import AccountRequest from '@/components/layout/AccountRequest'
 import ConfirmTransaction from '@/components/layout/ConfirmTransaction'
+import WarningDialog from '@/components/layout/WarningDialog'
 import RouterHandler from '@/components/layout/RouterHandler'
 import AppTransactions from '@/components/Transactions'
 import store from '@/store'
@@ -41,6 +43,7 @@ export default {
     AppNotifier,
     AccountRequest,
     ConfirmTransaction,
+    WarningDialog,
     RouterHandler,
     AppTransactions
   },

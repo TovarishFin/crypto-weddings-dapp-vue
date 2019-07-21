@@ -36,6 +36,11 @@ export const setConfirmTransactionOpen = (
   commit('setConfirmTransactionOpen', confirmTransactionOpen)
 }
 
+export const warnUser = ({ commit }, warningComponent) => {
+  commit('setWarningComponent', warningComponent)
+  commit('setWarningDialogOpen', true)
+}
+
 export const checkConfirmableTransactions = ({ commit, rootGetters }) => {
   const { pendingAction } = rootGetters
   pendingAction

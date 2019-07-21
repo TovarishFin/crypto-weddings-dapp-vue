@@ -50,7 +50,9 @@ export default {
     return {
       customMnemonic: false,
       password: '',
-      passwordRules: [v => !!v || 'must be non empty value'],
+      passwordRules: [
+        v => v.length >= 10 || 'password must be at least 10 characters long'
+      ],
       pathLevels: [
         '0',
         '1',
@@ -89,7 +91,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['encryptAndSaveWallet', 'generateMnemonic']),
+    ...mapActions(['encryptAndSaveWallet', 'generateMnemonic', 'warnUser']),
     ...mapMutations(['setMnemonic', 'setPathDerivation']),
     clearWalletForm() {
       this.password = ''
@@ -99,6 +101,7 @@ export default {
       e.preventDefault()
 
       if (this.$refs['wallet-form'].validate()) {
+        this.warnUser('MnemonicWarning')
         this.encryptAndSaveWallet(this.password)
       }
     }

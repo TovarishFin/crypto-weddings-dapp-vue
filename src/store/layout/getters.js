@@ -10,6 +10,10 @@ export const accountRequestOpen = state => state.accountRequestOpen
 
 export const confirmTransactionOpen = state => state.confirmTransactionOpen
 
+export const warningDialogOpen = state => state.warningDialogOpen
+
+export const warningComponent = state => state.warningComponent
+
 export const weddingInProgressTabs = state => state.weddingInProgressTabs
 
 export const weddingMarriedTabs = state => state.weddingInProgressTabs

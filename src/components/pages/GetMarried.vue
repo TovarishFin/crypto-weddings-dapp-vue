@@ -58,13 +58,14 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['setPendingTransaction']),
+    ...mapActions(['setPendingTransaction', 'warnUser']),
     clearWeddingForm() {
       this.$refs['wedding-form'].reset()
     },
     validateAndStartWedding(e) {
       e.preventDefault()
       if (this.$refs['wedding-form'].validate()) {
+        this.warnUser('PrivacyWarning')
         this.setPendingTransaction({
           action: 'startWedding',
           payload: {

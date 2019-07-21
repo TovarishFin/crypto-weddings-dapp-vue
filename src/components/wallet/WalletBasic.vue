@@ -44,13 +44,14 @@ export default {
     ...mapGetters(['address', 'mnemonic'])
   },
   methods: {
-    ...mapActions(['encryptAndSaveWallet']),
+    ...mapActions(['encryptAndSaveWallet', 'warnUser']),
     clearWalletForm() {
       this.$refs['wallet-form'].reset()
     },
     setWallet(e) {
       e.preventDefault()
       if (this.$refs['wallet-form'].validate()) {
+        this.warnUser('MnemonicWarning')
         this.encryptAndSaveWallet(this.password)
         this.clearWalletForm()
       }

@@ -34,6 +34,14 @@ export const setConfirmTransactionOpen = (state, confirmTransactionOpen) => {
   state.confirmTransactionOpen = confirmTransactionOpen
 }
 
+export const setWarningDialogOpen = (state, warningDialogOpen) => {
+  state.warningDialogOpen = warningDialogOpen
+}
+
+export const setWarningComponent = (state, warningComponent) => {
+  state.warningComponent = warningComponent
+}
+
 export const setWeddingInProgressTabs = (state, tabsIndex) => {
   state.weddingInProgressTabs = tabsIndex
 }
