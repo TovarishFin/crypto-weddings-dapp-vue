@@ -27,6 +27,11 @@ export default new Router({
       component: () => loadPage(import('@/components/pages/About.vue'))
     },
     {
+      path: '/help',
+      name: 'Help',
+      component: () => loadPage(import('@/components/pages/Help.vue'))
+    },
+    {
       path: '/wallet',
       name: 'Wallet',
       component: () => loadPage(import('@/components/pages/Wallet.vue'))

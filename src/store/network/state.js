@@ -1,5 +1,5 @@
 export default {
-  network: 'private',
+  network: 'mainnet',
   gasLimit: 5e6,
   customGasPrice: null,
   accountReady: false,

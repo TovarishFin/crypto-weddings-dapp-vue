@@ -86,7 +86,7 @@ export default {
     ...mapGetters(['address', 'userBalance', 'userQrCode'])
   },
   methods: {
-    ...mapActions(['sweepEther', 'sendEther']),
+    ...mapActions(['setPendingTransaction']),
     clearSweepForm() {
       this.$refs['sweep-form'].reset()
     },
@@ -96,17 +96,30 @@ export default {
     validateAndSweepEther(e) {
       e.preventDefault()
       if (this.$refs['sweep-form'].validate()) {
-        this.sweepEther(this.sweepDestination)
+        this.setPendingTransaction({
+          action: 'sweepEther',
+          payload: this.sweepDestination,
+          description: `send all ether in this account to ${
+            this.sweepDestination
+          }`
+        })
         this.clearSweepForm()
       }
     },
     validateAndSendEther(e) {
       e.preventDefault()
       if (this.$refs['send-form'].validate()) {
-        this.sendEther({
-          to: this.recipient,
-          smallValue: this.sendAmount
+        this.setPendingTransaction({
+          action: 'sendEther',
+          payload: {
+            to: this.recipient,
+            smallValue: this.sendAmount
+          },
+          description: `send ${this.sendAmount} ether in this account to ${
+            this.recipient
+          }`
         })
+
         this.clearSweepForm()
       }
     },

@@ -63,6 +63,11 @@ export default {
           to: '/about'
         },
         {
+          icon: 'mdi-help-circle',
+          title: 'Help',
+          to: '/help'
+        },
+        {
           icon: 'mdi-wallet',
           title: 'Wallet',
           to: '/wallet'
