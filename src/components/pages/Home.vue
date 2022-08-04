@@ -76,7 +76,6 @@ export default {
     bottom: 10%
     left: 50%
     transform: translate(-50%, 0%)
-    animation: arrow-down 3s linear infinite
 
 .wedding-container
   padding: $spacer
